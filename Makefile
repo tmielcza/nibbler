@@ -6,7 +6,7 @@
 #    By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/17 17:23:01 by rduclos           #+#    #+#              #
-#    Updated: 2015/11/17 17:26:36 by rduclos          ###   ########.fr        #
+#    Updated: 2015/11/17 17:53:54 by rduclos          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,7 +19,7 @@ DIROBJ = objs/
 DIRSRC = srcs/
 HEADERS = headers/
 
-SRC =	ABonus.cpp AEntity.cpp AGameMode.cpp Food.cpp GameManager.cpp \
+SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp \
 		GraphicsManager.cpp MapManager.cpp Point.cpp Segment.cpp Snake.cpp \
 		Wall.cpp
 

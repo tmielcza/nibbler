@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:00:36 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/25 17:06:37 by rduclos          ###   ########.fr       //
+//   Updated: 2015/11/17 17:59:58 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,6 +18,7 @@
 # include "ABonus.hpp"
 # include "Wall.hpp"
 # include "Point.hpp"
+# include "IDisplayer.hpp"
 # include <list>
 
 enum e_PopMode

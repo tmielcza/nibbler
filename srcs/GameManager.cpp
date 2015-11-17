@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:19:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/29 18:32:08 by rduclos          ###   ########.fr       //
+//   Updated: 2015/11/17 18:05:01 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -61,9 +61,10 @@ void		GameManager::init(int nbplayer, int width, int height, double speed)
 	MapManager::Instance().init(nbplayer, width, height);
 }
 
-void		GameManager::loop(e_mode mode)
+void		GameManager::loop(e_Mode mode)
 {
-	
+	(void)mode;
+	(void)this->_mode;
 }
 
 /* Loop of Mode Solo

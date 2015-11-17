@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 21:34:58 by tmielcza          #+#    #+#             //
-//   Updated: 2015/04/14 17:58:00 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/11/17 17:52:13 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -20,5 +20,5 @@ AGameMode::AGameMode(int nplayers, int x, int y)
 
 void	NormalMode::run(void)
 {
-	GraphicsManager::setLib(sfml, this->x, this->y);
+	GraphicsManager::setLib(sfml, this->_x, this->_y);
 }

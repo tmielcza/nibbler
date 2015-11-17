@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/29 18:28:36 by rduclos          ###   ########.fr       //
+//   Updated: 2015/11/17 18:02:35 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -21,9 +21,9 @@
 
 enum	e_SDir
 {
-	Forward,
-	Left,
-	Right
+	SForward,
+	SLeft,
+	SRight
 };
 
 class Snake

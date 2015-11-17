@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:04:14 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/29 18:21:57 by rduclos          ###   ########.fr       //
+//   Updated: 2015/11/17 18:03:50 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -17,7 +17,7 @@
 
 # include "MapManager.hpp"
 # include "GraphicsManager.hpp"
-# include "GameMode.hpp"
+# include "AGameMode.hpp"
 
 typedef std::chrono::high_resolution_clock Clock;
 
@@ -26,7 +26,7 @@ enum	e_Mode
 	Solo,
 	Multi,
 	DeathNote
-}
+};
 
 class GameManager
 {

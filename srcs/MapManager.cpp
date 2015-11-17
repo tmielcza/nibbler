@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:43:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/25 17:07:36 by rduclos          ###   ########.fr       //
+//   Updated: 2015/11/17 18:06:11 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -159,12 +159,13 @@ void	MapManager::verify_snaketaken(void)
 
 void		MapManager::move(int index)
 {
-
+	(void)index;
 }
 
 void		MapManager::setSnakeDir(int index, e_Dir dir)
 {
-
+	(void)index;
+	(void)dir;
 }
 
 bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode mode)
