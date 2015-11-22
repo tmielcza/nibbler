@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/10 23:19:17 by tmielcza          #+#    #+#             //
-//   Updated: 2015/11/17 17:53:44 by rduclos          ###   ########.fr       //
+//   Updated: 2015/11/22 17:04:04 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,7 +15,7 @@
 
 class AGameMode
 {
-public:
+	public:
 					AGameMode(void);
 					AGameMode(const AGameMode& src);
 					~AGameMode(void);
