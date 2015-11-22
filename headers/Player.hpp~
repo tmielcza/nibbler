@@ -1,36 +1,40 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   Player.cpp                                         :+:      :+:    :+:   //
+//   Player.hpp                                         :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/11/22 17:19:45 by rduclos          ###   ########.fr       //
+//   Created: 2015/04/29 19:17:33 by rduclos           #+#    #+#             //
+//   Updated: 2015/04/29 19:28:43 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#include "Player.hpp"
+#ifndef PLAYER_HPP
+# define PLAYER_HPP
 
-Player::Player(Snake *snake)
+#include "Snake.hpp"
+
+
+class Player
 {
-	this->_Snake = snake;
-}
+	private:
 
-Player::Player(const Player & copy)
-{
-	*this = copy;
-}
+	Snake		*_Snake;
+	e_Input		_lastInput;
+	double		_nextMove;
 
-Player::~Player(void)
-{
+	Player(void);
 
-}
+	public:
 
-Player	&	Player::operator=(const Player & ass)
-{
-	this->_Snake = ass._Snake;
-	this->_lastInput = ass._lastInput;
-	this->_nextMove = ass._nextMove;
-	return (*this);
-}
+	Player(Snake *snake);
+	Player(const Player & copy);
+	~Player(void);
+
+	Player	&	operator=(const Player & ass);
+	
+
+};
+
+#endif

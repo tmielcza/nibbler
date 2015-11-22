@@ -19,7 +19,7 @@ DIROBJ = objs/
 DIRSRC = srcs/
 HEADERS = headers/
 
-SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp Player.cpp \
+SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp \
 		GraphicsManager.cpp MapManager.cpp Point.cpp Segment.cpp Snake.cpp \
 		Wall.cpp
 

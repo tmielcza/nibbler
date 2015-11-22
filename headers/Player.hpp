@@ -13,6 +13,9 @@
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
+# include "Snake.hpp"
+# include "IDisplayer.hpp"
+
 class Player
 {
 	private:

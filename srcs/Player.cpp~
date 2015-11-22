@@ -27,7 +27,7 @@ Player::~Player(void)
 
 }
 
-Player	&	Player::operator=(const Player & ass)
+Player	&	operator=(const Player & ass)
 {
 	this->_Snake = ass._Snake;
 	this->_lastInput = ass._lastInput;
