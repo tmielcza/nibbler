@@ -54,7 +54,7 @@ class Snake
 	void						init(int direction, int x, int y);
 	std::list<Segment>		&	get_snake(void);
 	void						add_to_tail(void);
-	void						befor_move(void);
+	void						verify_befor_move(void);
 	void						move(void);
 	void						turn_left(void);
 	void						turn_right(void);

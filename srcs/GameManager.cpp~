@@ -61,7 +61,7 @@ void		GameManager::init(int nbplayer, int width, int height, double speed)
 	MapManager::Instance().init(nbplayer, width, height);
 }
 
-void		GameManager::loop(e_preMode mode)
+void		GameManager::loop(e_Mode mode)
 {
 	(void)mode;
 	(void)this->_mode;

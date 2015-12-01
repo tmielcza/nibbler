@@ -29,6 +29,7 @@ Food::Food(int value, int x, int y)
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = true;
+	MapManager::Instance()._Map[x][y] = this;
 }
 
 Food::~Food(void)

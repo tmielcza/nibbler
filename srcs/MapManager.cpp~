@@ -58,7 +58,7 @@ void	MapManager::init(int nbplayer, int width, int height)
 	x = (width + 2) / 2;
 	y = (height + 2) / 2;
 	direction = 1;
-	Snake *snake = new Snake((e_Cardinal)direction, x, y);
+	Snake snake((e_Cardinal)direction, x, y);
 	this->_snakes.push_back(snake);
 }
 

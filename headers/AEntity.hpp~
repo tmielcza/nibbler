@@ -1,47 +1,44 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   Point.hpp                                          :+:      :+:    :+:   //
+//   AEntity.hpp                                        :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/04/05 15:11:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/08 15:47:23 by rduclos          ###   ########.fr       //
+//   Created: 2015/04/04 12:58:05 by rduclos           #+#    #+#             //
+//   Updated: 2015/04/07 15:06:42 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#ifndef POINT_HPP
-# define POINT_HPP
+#ifndef AENTITY_HPP
+# define AENTITY_HPP
 
+# include "Point.hpp"
 # include <iostream>
 # include <string>
 
-class Point
+class AEntity
 {
-	protected :
+	protected:
 
-	int		_x;
-	int		_y;
+	Point	_pos;
+	bool	_eatable;
 
 	public:
 
-	Point(void);
-	Point(const Point& src);
-	Point(int x, int y);
-	~Point(void);
+	AEntity(void);
+	AEntity(AEntity const & copy);
+	~AEntity(void);
 
-	Point&		operator=(const Point& rhs);
-	bool		operator==(const Point& rhs) const;
-	bool		operator!=(const Point& rhs) const;
-	Point		operator+(const Point& rhs) const;
-	Point		operator-(const Point& rhs) const;
-	Point		operator+(const int rhs) const;
-	Point		operator-(const int rhs) const;
+	AEntity	&	operator=(AEntity const & ass);
 
+	Point	&	getPos(void);
 	int			getX(void) const;
 	int			getY(void) const;
 	void		setX(int x);
 	void		setY(int y);
+	bool		getEatable(void);
+
 };
 
-#endif // POINT_HPP
+#endif

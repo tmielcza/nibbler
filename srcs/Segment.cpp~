@@ -41,13 +41,3 @@ Segment	&	Segment::operator=(const Segment & ass)
 	this->_direction = ass._direction;
 	return (*this);
 }
-
-e_Cardinal	Segment::get_Direc(void)
-{
-	return (this->_direction);
-}
-
-void		Segment::set_Direc(e_Cardinal direc)
-{
-	this->_direction = direc;
-}

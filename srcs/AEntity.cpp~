@@ -58,7 +58,7 @@ void		AEntity::setY(int y)
 	this->_pos.setY(y);
 }
 
-bool		AEntity::getEatable(void) const
+void		AEntity::getEatable(void)
 {
 	return (this->_eatable);
 }

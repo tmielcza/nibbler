@@ -23,16 +23,22 @@ enum e_Cardinal
 	West
 };
 
-struct Segment : public AEntity
+class Segment : public AEntity
 {
+	protected :
+
+	e_Cardinal		_direction;
+
+	public:
+
 	Segment(void);
 	Segment(const Segment & copy);
 	Segment(int x, int y, e_Cardinal direction);
 	~Segment(void);
 
 	Segment&		operator=(const Segment& ass);
-
-	e_Cardinal		_direction;
+	e_Cardinal		get_Direc(void);
+	void			set_Direc(e_Cardinal direc);
 };
 
 #endif

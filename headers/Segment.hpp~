@@ -1,44 +1,42 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   AEntity.hpp                                        :+:      :+:    :+:   //
+//   Segment.hpp                                        :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/04/04 12:58:05 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/07 15:06:42 by rduclos          ###   ########.fr       //
+//   Created: 2015/04/06 17:53:12 by rduclos           #+#    #+#             //
+//   Updated: 2015/04/06 19:04:56 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#ifndef AENTITY_HPP
-# define AENTITY_HPP
+#ifndef SEGMENT_HPP
+# define SEGMENT_HPP
 
-# include "Point.hpp"
-# include <iostream>
-# include <string>
+# include "AEntity.hpp"
 
-class AEntity
+enum e_Cardinal
 {
-	protected:
+	North,
+	South,
+	East,
+	West
+};
 
-	Point	_pos;
-	bool	_eatable;
+class Segment : public AEntity
+{
+	protected :
+
+	e_Cardinal		_direction;
 
 	public:
 
-	AEntity(void);
-	AEntity(AEntity const & copy);
-	~AEntity(void);
+	Segment(void);
+	Segment(const Segment & copy);
+	Segment(int x, int y, e_Cardinal direction);
+	~Segment(void);
 
-	AEntity	&	operator=(AEntity const & ass);
-
-	Point	&	getPos(void);
-	int			getX(void) const;
-	int			getY(void) const;
-	void		setX(int x);
-	void		setY(int y);
-	bool		getEatable(void) const;
-
+	Segment&		operator=(const Segment& ass);
 };
 
 #endif

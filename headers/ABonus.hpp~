@@ -34,7 +34,7 @@ class ABonus : public AEntity
 	public:
 
 	ABonus(ABonus const & copy);
-	ABonus(int value, int x, int y);
+	ABonus(int value, bool alive);
 	~ABonus(void);
 
 	ABonus	&			operator=(ABonus const & ass);

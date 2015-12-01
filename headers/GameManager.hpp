@@ -21,11 +21,11 @@
 
 typedef std::chrono::high_resolution_clock Clock;
 
-enum	e_Mode
+enum	e_preMode
 {
 	Solo,
 	Multi,
-	DeathNote
+	Network
 };
 
 class GameManager
@@ -50,7 +50,7 @@ class GameManager
 	GameManager	&	operator=(const GameManager & ass);
 
 	void			init(int nbplayer, int width, int height, double speed);
-	void			loop(e_Mode mode);
+	void			loop(e_preMode mode);
 
 };
 

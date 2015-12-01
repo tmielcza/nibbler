@@ -17,11 +17,9 @@ Wall::Wall(void)
 	std::cout << "Wall Builed !!!" << std::endl;
 }
 
-Wall::Wall(Point pos)
+Wall::Wall(Point pos) : _pos(pos)
 {
 	std::cout << "Wall Builed !!!" << std::endl;
-	this->_pos.setX(pos.getX());
-	this->_pos.setY(pos.getY());
 }
 
 Wall::Wall(int x, int y)
@@ -30,6 +28,7 @@ Wall::Wall(int x, int y)
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = false;
+	MapManager::Instance()._Map[x][y] = this;
 }
 
 Wall::Wall(Wall const & copy)

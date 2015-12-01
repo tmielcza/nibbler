@@ -17,13 +17,19 @@ ABonus::ABonus(const ABonus & copy)
 	*this = copy;
 }
 
-ABonus::ABonus(int value, int x, int y)
+ABonus::ABonus(int value, bool alive)
 {
 	this->_value = value;
-	this->_isalive = true;
+	this->_isalive = alive;
 	this->_eatable = true;
-	this->_pos.setX(x);
-	this->_pos.setY(y);
+	int x = rand() % MapManager::Instance().getWidth();
+	int y = rand() % MapManager::Instance().getHeight();
+	while (MapManager::Instance._map[x][y] != NULL)
+	{
+		x = rand() % MapManager::Instance().getWidth();
+		y = rand() % MapManager::Instance().getHeight();
+	}
+	MapManaget::Instance()._Map[x][y] = this;
 }
 
 ABonus::~ABonus(void)
@@ -33,10 +39,8 @@ ABonus::~ABonus(void)
 
 ABonus	&	ABonus::operator=(const ABonus & ass)
 {
-	this->_value = ass._value;
 	this->_pos = ass._pos;
 	this->_eatable = true;
-	this->_isalive = true;
 	return (*this);
 }
 

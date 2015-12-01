@@ -16,28 +16,19 @@
 # include <iostream>
 # include <string>
 # include "Point.hpp"
+# include "AEntity.hpp"
 
-class Wall
+class Wall : public AEntity
 {
-	private:
-
-	Point	_size;
-
-	Wall(Wall const & copy);
-
-	Wall	&	operator=(Wall const & ass);
-
 	public:
 
 	Wall(void);
-	Wall(Point size);
-	Wall(int width, int height);
 	~Wall(void);
-
-	void	initWall(int width, int height);
-	int		getWidth(void) const;
-	int		getHeight(void) const;
-	Point	getSize(void) const;
+	Wall(Point pos);
+	Wall(int x, int y);
+	Wall(Wall const & copy);
+	Wall	&	operator=(Wall const & ass);
+	void		initWall(int x, int y);
 };
 
 #endif

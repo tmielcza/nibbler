@@ -36,10 +36,10 @@ class MapManager
 	MapManager(void);
 	~MapManager(void);
 
-	std::list<Snake*>	_snakes;
-	std::list<Food*>	_foods;
+	std::list<Snake>	_snakes;
+	std::list<Food>		_foods;
 	std::list<ABonus*>	_bonus;
-	std::list<Wall*>	_wall;
+	std::list<Wall>		_wall;
 	int					_nbPlayer;
 	int					_width;
 	int					_height;

@@ -1,50 +1,33 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   ABonus.hpp                                         :+:      :+:    :+:   //
+//   Wall.hpp                                           :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2015/04/04 12:58:05 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/07 16:32:30 by rduclos          ###   ########.fr       //
+//   Created: 2015/04/03 16:31:40 by rduclos           #+#    #+#             //
+//   Updated: 2015/04/05 18:12:43 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#ifndef ABONUS_HPP
-# define ABONUS_HPP
+#ifndef WALL_HPP
+# define WALL_HPP
 
-# include "AEntity.hpp"
 # include <iostream>
 # include <string>
+# include "Point.hpp"
 
-class Snake;
-class MapManager;
-
-class ABonus : public AEntity
+class Wall : public AEntity
 {
-	private:
-
-	ABonus(void);
-
-	protected:
-
-	int		_value;
-	bool	_isalive;
-
 	public:
 
-	ABonus(ABonus const & copy);
-	ABonus(int value, int x, int y);
-	~ABonus(void);
-
-	ABonus	&			operator=(ABonus const & ass);
-
-	bool				isalive(void);
-	void				bonus_taken(const Snake & snake);
-
-	virtual void		update(float time) = 0;
-	virtual void		draw(float time) = 0;
-
+	Wall(void);
+	~Wall(void);
+	Wall(Point pos);
+	Wall(int x, int y);
+	Wall(Wall const & copy);
+	Wall	&	operator=(Wall const & ass);
+	void		initWall(int x, int y);
 };
 
 #endif

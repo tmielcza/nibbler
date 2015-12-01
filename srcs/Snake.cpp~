@@ -159,7 +159,7 @@ void							Snake::eat(Food const & eaten)
 	while (tmp != end)
 		tmp++;
 	tmp--;
-	seg->set_Direc(this->_tail->get_Direc());
+	seg->set_Direc(this->_tail->_direction);
 	if (seg->get_Direc() == North)
 	{
 		seg->setX(tmp->getX());

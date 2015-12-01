@@ -38,8 +38,8 @@ class Point
 	Point		operator+(const int rhs) const;
 	Point		operator-(const int rhs) const;
 
-	int			getX(void) const;
-	int			getY(void) const;
+	int			getX(void);
+	int			getY(void);
 	void		setX(int x);
 	void		setY(int y);
 };

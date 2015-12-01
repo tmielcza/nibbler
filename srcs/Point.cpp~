@@ -72,12 +72,12 @@ bool		Point::operator!=(const Point& rhs) const
 	return (true);
 }
 
-int			Point::getX(void) const
+int			Point::getX(void)
 {
 	return (this->_x);
 }
 
-int			Point::getY(void) const
+int			Point::getY(void)
 {
 	return (this->_y);
 }
