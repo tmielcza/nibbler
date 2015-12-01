@@ -32,11 +32,12 @@ class GameManager
 {
 	private:
 
-	int			_nbPlayer;
-	int			_width;
-	int			_height;
-	double		_speed;
-	AGameMode	*_mode;
+	int						_nbPlayer;
+	int						_width;
+	int						_height;
+	double					_speed;
+	AGameMode				*_mode;
+	std::list<Player*>		_players;
 
 	double			deltaTime(void);
 

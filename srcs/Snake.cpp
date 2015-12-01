@@ -50,19 +50,6 @@ Snake::~Snake(void)
 	}
 }
 
-/*
-Snake						&	Snake::operator=(Snake const & ass)
-{
-	auto								head = ass._snake.begin();
-
-	this->init(head->get_Direc(), head->getX(), head->getY());
-	this->_score = ass._score;
-	this->_nbmove = ass._nbmove;
-	this->_speed = ass._speed;
-	return (*this);
-}
-*/
-
 void							Snake::setNextDir(e_SDir NextDir)
 {
 	this->_nextDir = NextDir;
