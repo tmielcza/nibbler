@@ -1,0 +1,63 @@
+#version 120
+
+uniform float	time;
+uniform vec2	coord;
+uniform vec2	resolution;
+
+vec4 color(int r, int g, int b, int a)
+{
+	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+}
+
+void main()
+{
+	vec4	snakeCol = color(0x37, 0xc5, 0x5d, 0xff);
+	vec4	eyeCol = color(0xff, 0x43, 0x43, 0xff);
+
+	float	PI = 3.14159265358979323846264;
+	float	radius = 0.42;
+	float	seg = 4;
+	float	size = radius * sin(PI / seg);	// segment size / 2
+	float	apot = radius * cos(PI / seg);	// segment distance from center
+	vec2	pos = (gl_FragCoord.xy - coord) / resolution;	// Point from center
+
+	float	d = 0;
+
+	float	a = PI / 4;
+	pos *= mat2(cos(a), -sin(a), sin(a), cos(a));	// Rotation
+
+	for (float i = 1; i <= seg; i++)	// Computes distance from each segment
+	{
+		float	a = i / seg * (2 * PI);
+		vec2	p = pos * mat2(cos(a), -sin(a), sin(a), cos(a));	// Put segment horizontaly
+		float	dst = 0;
+
+		if (p.x > -size && p.x < size)
+		{
+			dst = abs(apot - p.y);
+		}
+		else if (p.x <= -size)
+		{
+			dst = length(vec2(-size, apot) - p);
+		}
+		else if (p.x >= size)
+		{
+			dst = length(vec2(size, apot) - p);
+		}
+		if (d == 0 && dst != 0)
+			d = dst;
+		else if (dst != 0)
+			d = min(d, dst);
+	}
+
+	float	col = 1 - pow(abs(d) * 15, 2);	// Glow factor
+//		* (cos(time * 4 * PI) * 0.4 + 0.7);	// Time factor
+	col = min(1, col);
+	col = max(0, col);
+	float	colEye = 1 - pow(length(pos) * 6, 2)
+		* (cos(time * 4 * PI) * 0.5 + 0.9);	// Time factor
+	colEye = min(1, colEye);
+	colEye = max(0, colEye);
+
+	gl_FragColor = eyeCol * colEye + col * snakeCol;
+}

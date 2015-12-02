@@ -1,0 +1,44 @@
+#version 120
+
+uniform float time;
+uniform vec2 coord;
+uniform vec2 resolution;
+
+vec4 color(int r, int g, int b, int a)
+{
+	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+}
+
+void main()
+{
+	float	radius = 0.8;	// circle radius
+	float	miniRadius = 0.40;	// mini circles radius
+	vec4	theColor = color(0xff, 0xed, 0x81, 0xff);
+	float	PI = 3.14159265358979323846264;
+	vec2	realPos = (gl_FragCoord.xy - coord) / resolution * 2;	// normalized position from center
+	float	realL = length(realPos);
+	float	a = 2.0;	// rotation angle
+	vec2	uv = vec2(0.5 + asin(realPos.x / radius) / PI,	// sphere texture coords
+					  0.5 + asin(realPos.y / radius) / PI);
+	vec2	pos = uv;
+	pos *= mat2(cos(a), -sin(a), sin(a), cos(a));	// rotation
+	pos += vec2(sin(time * PI * 2), cos(time * PI * 2)) * 0.1;		// movement
+	pos *= 4;	// scale
+	float t = floor(mod(pos.x, 2)) * 2 + floor(mod(pos.y, 2)) * 2; // mini circle position factor
+	pos.x = mod(pos.x, 1);	// lil' circles
+	pos.y = mod(pos.y, 1);	// bis
+	vec2 fromCenter = pos - vec2(0.5, 0.5);	// normalized position from center
+	float	tst = length(fromCenter);		// distance from center
+	float	col = pow(abs(tst - miniRadius) * 7, 2);	// glow
+	col *= cos(time * 4 * PI + t) * 0.3 + 0.5;	// time glow factor
+	col = 1 - col;
+	float	circle = pow(abs(realL - radius) * 7, 2);	// glow
+	circle *= cos(time * 4 * PI) * 0.4 + 0.7;	// time factor
+	circle = 1 - circle;
+	circle = min(1, max(0, circle));
+
+	if (realL < radius)	// circle interior
+		gl_FragColor = theColor * min(1, col + 0.04 / (radius - realL) * circle);
+	else				// circle exterior
+		gl_FragColor = theColor * circle;
+}

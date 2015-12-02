@@ -1,0 +1,28 @@
+#version 120
+
+uniform float	time;
+uniform vec2	coord;
+uniform vec2	resolution;
+uniform float	branches;
+
+vec4 color(int r, int g, int b, int a)
+{
+	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+}
+
+void main()
+{
+	float	PI = 3.14159265358979323846264;
+	float	radius = 0.42;
+	float	a = cos(time * PI * 2) * 0.5;			// Rotation angle
+	vec2	pos = (gl_FragCoord.xy - coord) / resolution;	// Point from center
+	pos *= mat2(cos(a), -sin(a), sin(a), cos(a));	// Rotation
+	float	truc = atan(pos.x / pos.y) * branches;	// Position on circle
+	if (pos.y < 0)
+		truc += mod(branches, 2.0) * PI;			// Symmetry
+	float	dst = length(pos) * (cos(truc) + 4 ) / 3;	// Curved distance
+	float	col = 1 - pow(abs(dst - radius) * 10, 2)	// Glow factor
+		* (cos(time * 4 * PI) + 1.5);	// Time factor
+
+	gl_FragColor = color(0xff, 0xa8, 0xf7, 0xff) * col;
+}

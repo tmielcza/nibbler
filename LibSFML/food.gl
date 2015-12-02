@@ -1,0 +1,31 @@
+#version 120
+
+uniform float	time;
+uniform vec2	coord;
+uniform vec2	resolution;
+uniform bool	on;
+
+vec4 color(int r, int g, int b, int a)
+{
+	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+}
+
+void main()
+{
+	float	radius = 0.42;
+	float	PI = 3.14159265358979323846264;
+	vec2	pos = (gl_FragCoord.xy - coord) / resolution;
+	float	tst = length(pos);
+	float	col;
+
+	if (on)
+	{
+		col = 1 - pow(abs(tst - radius) * 10, 2) * (cos(time * 4 * PI) + 2);
+		gl_FragColor = color(0xff, 0xed, 0x81, 0xff) * col;
+	}
+	else
+	{
+		col = 1 - pow(abs(tst - radius) * 10, 1);
+		gl_FragColor = color(0xff, 0xb1, 0x50, 0xff) * col;
+	}
+}

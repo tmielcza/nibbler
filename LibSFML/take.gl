@@ -1,0 +1,24 @@
+#version 120
+
+uniform sampler2D texture;
+uniform vec2 pos;
+uniform float size;
+
+void main()
+{
+	float	PI = 3.14159265358979323846264;
+
+	vec2 tpos = pos;
+	float tsize = size;
+	vec2 texPos = gl_TexCoord[0].xy - tpos;
+	float dst = (length(texPos) - tsize) * 16;
+	float coef = 1;
+	if (dst < 1 && dst > -1)
+		coef = cos(dst * PI + PI);
+	texPos *= (coef + 15) / 16;
+	texPos += tpos;
+
+	vec4	col = vec4(texture2D(texture, texPos));
+
+	gl_FragColor = vec4(col.rgb * (1 + (1 - (coef + 1) / 2)), 1);
+}

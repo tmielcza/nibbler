@@ -1,0 +1,43 @@
+#version 120
+
+uniform float time;
+uniform vec2 resolution;
+uniform vec2 coord;
+
+vec4 color(int r, int g, int b, int a)
+{
+	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+}
+
+void main()
+{
+	vec4 firstCol = color(0x16, 0x18, 0x1e, 0xff);
+	vec4 secondCol = color(0x22, 0x28, 0x3a, 0xff);
+	vec4 thirdCol = color(0x08, 0x09, 0x0B, 0xff);
+	vec2 test = coord;
+
+	vec2 pos = (gl_FragCoord.xy) / resolution;
+	vec2 tex;
+
+	vec2 fromCenter = vec2(abs(pos.x - 0.5), abs(pos.y - 0.5));
+	float stripe;
+	float fromBorder = max(fromCenter.x, fromCenter.y);
+
+	if (fromCenter.x > fromCenter.y)
+	{
+		stripe = mod(fromCenter.x + (1 - time * 4) * .05, .05);
+	}
+	else
+	{
+		stripe = mod(fromCenter.y + (1 - time * 4) * .05, .05);
+	}
+
+	vec4 fcolor;
+
+	if (stripe > .025)
+		fcolor = firstCol;
+	else
+		fcolor = secondCol;
+
+	gl_FragColor = mix(fcolor, thirdCol, min(1, 1 - fromBorder * 2 + 0.1));
+}
