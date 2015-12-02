@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include "Snake.hpp"
+#include "MapManager.hpp"
 
 int		Snake::_curIndex = 0;
 
@@ -94,12 +95,52 @@ void							Snake::add_to_tail(void)
 
 void							Snake::befor_move(void)
 {
+	std::list<Segment>::iterator		head = this->_snake.begin();
 
+	
+	int x = head->getX();
+	int y = head->getY();
+	e_Cardinal direc = head->get_Direc();
+	if (direc == North)
+		y++;
+	else if (direc == South)
+		y--;
+	else if (direc == East)
+		x++;
+	else if (direc == West)
+		x--;
+	if (MapManager::Instance()._Map[x][y] != NULL)
+	{
+		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
+			;//dead
+		else
+			;//eat/take
+	}
 }
 
 void							Snake::move(void)
 {
+	std::list<Segment>::iterator		seg = this->_snake.begin();
+	std::list<Segment>::iterator		end = this->_snake.end();
 
+	Point tmp = seg->getPos();
+	e_Cardinal direc = seg->get_Direc();
+	if (direc == North)
+		seg->setY(seg->getY() + 1);
+	else if (direc == South)
+		seg->setY(seg->getY() - 1);
+	else if (direc == East)
+		seg->setX(seg->getX() + 1);
+	else if (direc == West)
+		seg->setX(seg->getX() - 1);
+	seg++;
+	while (seg != end)
+	{
+		Point tmp2 = seg->getPos();
+		seg->setPos(tmp);
+		tmp = tmp2;
+		seg++;
+	}
 }
 
 void							Snake::turn_left(void)
@@ -138,36 +179,33 @@ void							Snake::turn_right(void)
 
 void							Snake::eat(Food const & eaten)
 {
-	std::list<Segment>::iterator		tmp = this->_snake.begin();
-	std::list<Segment>::iterator		end = this->_snake.end();
 	Segment								*seg = new Segment();
 
 	(void)eaten;
-	while (tmp != end)
-		tmp++;
-	tmp--;
 	seg->set_Direc(this->_tail->get_Direc());
 	if (seg->get_Direc() == North)
 	{
-		seg->setX(tmp->getX());
-		seg->setY(tmp->getY() - 1);
+		seg->setX(this->_tail->getX());
+		seg->setY(this->_tail->getY() - 1);
 	}
 	else if (seg->get_Direc() == South)
 	{
-		seg->setX(tmp->getX());
-		seg->setY(tmp->getY() + 1);
+		seg->setX(this->_tail->getX());
+		seg->setY(this->_tail->getY() + 1);
 	}
 	else if (seg->get_Direc() == East)
 	{
-		seg->setX(tmp->getX() - 1);
-				  seg->setY(tmp->getY());
+		seg->setX(this->_tail->getX() - 1);
+		seg->setY(this->_tail->getY());
 	}
 	else if (seg->get_Direc() == West)
 	{
-		seg->setX(tmp->getX() + 1);
-				  seg->setY(tmp->getY());
+		seg->setX(this->_tail->getX() + 1);
+		seg->setY(this->_tail->getY());
 	}
+	seg->set_Direc(this->_tail->get_Direc());
 	this->_snake.push_back(*seg);
+	this->_tail = seg;
 	if (this->_nbmove <= 2 && this->_nbmove >= 0)
 		this->_score = eaten.get_value() * 2;
 	else

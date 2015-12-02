@@ -18,6 +18,7 @@
 # include "MapManager.hpp"
 # include "GraphicsManager.hpp"
 # include "AGameMode.hpp"
+# include "Player.hpp"
 
 typedef std::chrono::high_resolution_clock Clock;
 

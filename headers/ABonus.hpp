@@ -18,7 +18,6 @@
 # include <string>
 
 class Snake;
-class MapManager;
 
 class ABonus : public AEntity
 {
@@ -42,6 +41,7 @@ class ABonus : public AEntity
 	bool				isalive(void);
 	void				bonus_taken(const Snake & snake);
 
+	virtual void		taken(Snake & snake) = 0;
 	virtual void		update(float time) = 0;
 	virtual void		draw(float time) = 0;
 

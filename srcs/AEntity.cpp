@@ -38,6 +38,11 @@ Point	&	AEntity::getPos(void)
 	return (this->_pos);
 }
 
+void		AEntity::setPos(Point & set)
+{
+	this->_pos = set;
+}
+
 int			AEntity::getX(void) const
 {
 	return (this->_pos.getX());

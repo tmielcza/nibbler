@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include "Segment.hpp"
+#include "MapManager.hpp"
 
 Segment::Segment(void)
 {
@@ -28,6 +29,7 @@ Segment::Segment(int x, int y, e_Cardinal direction)
 	this->_pos.setY(y);
 	this->_eatable = false;
 	this->_direction = direction;
+	MapManager::Instance()._Map[x][y] = this;
 }
 
 Segment::~Segment(void)

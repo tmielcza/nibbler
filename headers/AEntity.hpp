@@ -33,6 +33,7 @@ class AEntity
 	AEntity	&	operator=(AEntity const & ass);
 
 	Point	&	getPos(void);
+	void		setPos(Point & set);
 	int			getX(void) const;
 	int			getY(void) const;
 	void		setX(int x);

@@ -64,6 +64,16 @@ void	MapManager::init(int nbplayer, int width, int height)
 
 void		MapManager::move(int index)
 {
+/*	std::list<Snake*>::iterator		snake = this->_snakes.begin();
+	std::list<Snake*>::iterator		end = this->_snakes.end();
+
+	while (snake != end)
+	{
+		snake->befor_move();
+		snake->move();
+		snake++;
+	}
+*/
 	(void)index;
 }
 
@@ -100,27 +110,74 @@ bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode m
 
 void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideMode)
 {
-	(void)upleft;
-	(void)downright;
-	(void)mode;
+	if (mode == InsideMode)
+	{
+		int x = upleft.getX() + (rand() % downright.getX());
+		int y = upleft.getY() + (rand() % downright.getY());
+		while (this->_Map[x][y] != NULL || x > this->_width || y > this->_height)
+		{
+			x = upleft.getX() + (rand() % downright.getX());
+			y = upleft.getY() + (rand() % downright.getY());
+		}
+		int r = rand() % 10;
+		int value;
+		if (r == 6)
+			value = 10;
+		else
+			value = 1;
+		Food *f = new Food(value, x, y);
+		this->_Map[x][y] = f;
+		this->_foods.push_front(f);
+	}
 }
 
 void	MapManager::foodpop(Point center, int radius, e_PopMode mode = InsideMode)
 {
-	(void)center;
-	(void)radius;
-	(void)mode;
+	if (mode == InsideMode)
+	{
+		int tmpx = center.getX() - radius;
+		int tmpy = center.getY() - radius;
+		if (tmpx < 0)
+			tmpx = 0;
+		if (tmpy < 0)
+			tmpy = 0;
+		int x = tmpx + (rand() % (radius * 2));
+		int y = tmpy + (rand() % (radius * 2));
+		while (this->_Map[x][y] != NULL || x > this->_width || y > this->_height)
+		{
+			x = tmpx + (rand() % (radius * 2));
+			y = tmpy + (rand() % (radius * 2));
+		}
+		int r = rand() % 10;
+		int value;
+		if (r == 6)
+			value = 10;
+		else
+			value = 1;
+		Food *f = new Food(value, x, y);
+		this->_Map[x][y] = f;
+		this->_foods.push_front(f);
+	}
 }
 
 void	MapManager::foodeaten(Snake & eater, Food & eaten)
 {
-	(void)eater;
-	(void)eaten;
+	eater.eat(eaten);
 }
 
 void	MapManager::bonuspop(void)
 {
+	int x = rand() % this->_width;
+	int y = rand() % this->_height;
+	while (this->_Map[x][y] != NULL)
+	{
+		x = rand() % this->_width;
+		y = rand() % this->_height;
+	}
+/*	
 
+	this->_Map[x][y] =
+*/
 }
 
 void	MapManager::bonustaken(Snake & taker, ABonus *taken)
