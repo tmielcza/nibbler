@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:19:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/11/17 18:05:01 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:57:25 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -43,13 +43,13 @@ GameManager	&	GameManager::operator=(const GameManager & ass)
 
 double			GameManager::deltaTime(void)
 {
-    static auto             last = Clock::now();
-    auto                    time = Clock::now();
-    float                   tmp;
+	static auto             last = Clock::now();
+	auto                    time = Clock::now();
+	float                   tmp;
 
-    tmp = std::chrono::duration_cast<std::chrono::microseconds>(time - last).count() / 1000000.f;
-    last = time;
-    return (tmp);
+	tmp = std::chrono::duration_cast<std::chrono::microseconds>(time - last).count() / 1000000.f;
+	last = time;
+	return (tmp);
 }
 
 void		GameManager::init(int nbplayer, int width, int height, double speed)
