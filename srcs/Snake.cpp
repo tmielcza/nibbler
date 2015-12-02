@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/29 18:26:55 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:25:21 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -22,11 +22,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_nbmove = 0;
 	this->_speed = 1;
 	this->init(East, 7, 7);
-}
-
-Snake::Snake(const Snake & copy) : _index(copy._index)
-{
-	*this = copy;
+	this->_alive = true;
 }
 
 Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
@@ -36,6 +32,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 	this->_nbmove = 0;
 	this->_speed = 1;
 	this->init(direction, x, y);
+	this->_alive = true;
 }
 
 Snake::~Snake(void)
@@ -43,22 +40,12 @@ Snake::~Snake(void)
 	std::list<Segment>::iterator		tmp = this->_snake.begin();
 	std::list<Segment>::iterator		end = this->_snake.end();
 
-	std::cout << "Destroyng snake !!" << std::endl;
+	std::cout << "Destroying snake !!" << std::endl;
 	while (tmp != end)
 	{
 		this->_snake.pop_front();
 		tmp = this->_snake.begin();
 	}
-}
-
-void							Snake::setNextDir(e_SDir NextDir)
-{
-	this->_nextDir = NextDir;
-}
-
-e_SDir							Snake::getNextDir(void)
-{
-	return (this->_nextDir);
 }
 
 void							Snake::init(int direction, int x, int y)
@@ -86,18 +73,19 @@ std::list<Segment>	&			Snake::get_snake(void)
 	return (this->_snake);
 }
 
+/*
 void							Snake::add_to_tail(void)
 {
 //	std::list<Segment>::iterator	head = this->_snake.begin();
 //	std::list<Segment>::iterator	tail = this->_snake.end();
 
 }
+*/
 
 void							Snake::befor_move(void)
 {
 	std::list<Segment>::iterator		head = this->_snake.begin();
 
-	
 	int x = head->getX();
 	int y = head->getY();
 	e_Cardinal direc = head->get_Direc();
@@ -112,9 +100,9 @@ void							Snake::befor_move(void)
 	if (MapManager::Instance()._Map[x][y] != NULL)
 	{
 		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
-			;//dead
+			this->_alive = false;
 		else
-			;//eat/take
+			this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
 	}
 }
 
@@ -217,6 +205,7 @@ void							Snake::eat(Food const & eaten)
 void							Snake::take_bonus(ABonus const & taken)
 {
 	(void)taken;
+//	taken.bonus(this);
 }
 
 int								Snake::getHeadSnakeX(void)
@@ -231,4 +220,9 @@ int								Snake::getHeadSnakeY(void)
 	std::list<Segment>::iterator			head = this->_snake.begin();
 
 	return (head->getY());
+}
+
+int								Snake::getIndex(void)
+{
+	return (this->_index);
 }

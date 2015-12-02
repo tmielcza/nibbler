@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:43:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/11/17 18:06:11 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:13:30 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -64,23 +64,31 @@ void	MapManager::init(int nbplayer, int width, int height)
 
 void		MapManager::move(int index)
 {
-/*	std::list<Snake*>::iterator		snake = this->_snakes.begin();
-	std::list<Snake*>::iterator		end = this->_snakes.end();
-
-	while (snake != end)
+	for (auto i = this->_snakes.begin(), end = this->_snakes.end(); i != end; i++)
 	{
-		snake->befor_move();
-		snake->move();
-		snake++;
+		if ((*i)->getIndex() == index)
+		{
+			(*i)->befor_move();
+			(*i)->move();
+			return ;
+		}
 	}
-*/
-	(void)index;
 }
 
-void		MapManager::setSnakeDir(int index, e_Dir dir)
+void		MapManager::setSnakeDir(int index, bool left)
 {
-	(void)index;
-	(void)dir;
+	for (auto i = this->_snakes.begin(), end = this->_snakes.end(); i != end; i++)
+	{
+		if ((*i)->getIndex() == index)
+		{
+			if (left == true)
+				(*i)->turn_left();
+			else
+				(*i)->turn_right();
+			return ;
+		}
+	}
+
 }
 
 bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode mode)

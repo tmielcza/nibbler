@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/11/17 18:02:35 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:10:38 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,13 +19,6 @@
 # include "Segment.hpp"
 # include <list>
 
-enum	e_SDir
-{
-	SForward,
-	SLeft,
-	SRight
-};
-
 class Snake
 {
 	private:
@@ -37,7 +30,7 @@ class Snake
 	int							_nbmove;
 	int						 	_score;
 	double						_speed;
-	e_SDir						_nextDir;
+	bool						_alive;
 
 	Snake(void);
 	Snake(Snake const & copy);
@@ -49,8 +42,6 @@ class Snake
 	Snake(e_Cardinal direction, int x, int y);
 	~Snake(void);
 
-	void						setNextDir(e_SDir NextDir);
-	e_SDir						getNextDir(void);
 	void						init(int direction, int x, int y);
 	std::list<Segment>		&	get_snake(void);
 	void						add_to_tail(void);
@@ -62,6 +53,7 @@ class Snake
 	void						take_bonus(ABonus const & taken);
 	int							getHeadSnakeX(void);
 	int							getHeadSnakeY(void);
+	int							getIndex(void);
 
 };
 

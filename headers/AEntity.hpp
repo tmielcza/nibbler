@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/04 12:58:05 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/07 15:06:42 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:32:16 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -16,6 +16,14 @@
 # include "Point.hpp"
 # include <iostream>
 # include <string>
+
+enum e_Cardinal
+{
+	North,
+	South,
+	East,
+	West
+};
 
 class AEntity
 {
@@ -28,7 +36,7 @@ class AEntity
 
 	AEntity(void);
 	AEntity(AEntity const & copy);
-	~AEntity(void);
+	virtual ~AEntity(void);
 
 	AEntity	&	operator=(AEntity const & ass);
 

@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:00:36 by rduclos           #+#    #+#             //
-//   Updated: 2015/11/17 17:59:58 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:11:45 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -56,7 +56,7 @@ class MapManager
 	static MapManager&	Instance(void);
 	void				init(int nbplayer, int width, int height);
 	void				move(int index);
-	void				setSnakeDir(int index, e_Dir dir);
+	void				setSnakeDir(int index, bool left);
 	bool				InZone(Point point, Point upleft, Point downright, e_PopMode mode);
 	void				foodpop(e_PopMode mode);
 	void				foodpop(Point upleft, Point downright, e_PopMode mode);

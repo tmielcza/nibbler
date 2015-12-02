@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/06 17:53:12 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/06 19:04:56 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/02 16:30:59 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,13 +15,6 @@
 
 # include "AEntity.hpp"
 
-enum e_Cardinal
-{
-	North,
-	South,
-	East,
-	West
-};
 
 class Segment : public AEntity
 {
