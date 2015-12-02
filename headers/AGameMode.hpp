@@ -15,23 +15,24 @@
 
 class AGameMode
 {
+	protected:
+
+	int		_width;
+	int		_height;
+	int		_nbPlayers;
+
 	public:
-					AGameMode(void);
-					AGameMode(const AGameMode& src);
-					~AGameMode(void);
-					AGameMode(int nplayers, int x, int y);
-	virtual void	run(void) = 0;
+
+	AGameMode(void);
+	AGameMode(const AGameMode& src);
+	~AGameMode(void);
+	AGameMode(int nplayers, int width, int height);
+
 	AGameMode&		operator=(const AGameMode& src);
 
-private:
-	int		_x;
-	int		_y;
-	int		_nplayers;
+	virtual void	init(void) = 0;
+	virtual void	run(void) = 0;
+
 };
 
-class NormalMode
-{
-	void	run(void);
-};
-
-#endif //AGAMEMODE_HPP
+#endif

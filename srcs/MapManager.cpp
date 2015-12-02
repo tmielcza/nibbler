@@ -192,3 +192,13 @@ void	MapManager::bonustaken(Snake & taker, ABonus *taken)
 {
 	taken->bonus_taken(taker);
 }
+
+void	MapManager::getWidth(void)
+{
+	return (this->_width);
+}
+
+void	MapManager::getHeight(void)
+{
+	return (this->_height);
+}

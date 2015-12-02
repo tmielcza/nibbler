@@ -114,7 +114,13 @@ void							Snake::move(void)
 	Point tmp = seg->getPos();
 	e_Cardinal direc = seg->get_Direc();
 	if (direc == North)
-		seg->setY(seg->getY() + 1);
+	{
+		if ((int x = seg->getY() + 1) < MapManager::Instance().getHeight())
+			seg->setY(x);
+		else
+			seg->setY(0);
+		
+	}
 	else if (direc == South)
 		seg->setY(seg->getY() - 1);
 	else if (direc == East)

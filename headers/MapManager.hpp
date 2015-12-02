@@ -66,6 +66,9 @@ class MapManager
 	void				bonustaken(Snake & taker, ABonus *taken);
 	int					getFoodnb(void);
 	int					getBonusnb(void);
+	int					getWidth(void);
+	int					getHeight(void);
+
 };
 
 #endif
