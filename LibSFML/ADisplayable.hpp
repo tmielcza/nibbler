@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:01:32 by tmielcza          #+#    #+#             //
-//   Updated: 2015/04/13 19:53:38 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 16:42:38 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -93,6 +93,43 @@ class	Background : public ADisplayable
 {
 public:
 					Background(vec2 pos);
+	virtual void	draw(Displayer& dis);
+};
+
+class	Tail : public ADisplayable
+{
+public:
+					Tail(void);
+					~Tail(void);
+					Tail(const Tail& src);
+	Tail&			operator=(const Tail& rhs);
+
+					Tail(vec2 pos, vec2 last);
+	virtual void	draw(Displayer& dis);
+
+private:
+	vec2			_last;
+};
+
+class	Head : public ADisplayable
+{
+public:
+					Head(void);
+					~Head(void);
+					Head(const Head& src);
+	Head&			operator=(const Head& rhs);
+
+					Head(vec2 pos, vec2 last);
+	virtual void	draw(Displayer& dis);
+
+private:
+	vec2			_last;
+};
+
+class	Wall : public ADisplayable
+{
+public:
+					Wall(vec2 pos);
 	virtual void	draw(Displayer& dis);
 };
 
