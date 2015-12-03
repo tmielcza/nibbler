@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/06 17:53:12 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:30:59 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:06:49 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,7 +14,6 @@
 # define SEGMENT_HPP
 
 # include "AEntity.hpp"
-
 
 class Segment : public AEntity
 {

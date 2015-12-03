@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 18:46:23 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:02:38 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -49,6 +49,7 @@ class Snake
 	void						add_to_tail(void);
 	void						befor_move(void);
 	void						move(void);
+	void						turn(e_Cardinal direction);
 	void						turn_left(void);
 	void						turn_right(void);
 	void						eat(Food const & eaten);

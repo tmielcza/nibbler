@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 12:14:41 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 19:41:44 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:06:17 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -33,7 +33,7 @@ class GraphicsManager
 	~GraphicsManager(void);	
 	GraphicsManager(const GraphicsManager& copy);
 	GraphicsManager&		operator=(const GraphicsManager& copy);
-	
+
 	static IDisplayer*		_instance;
 	static void*			_handle;
 	

@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:04:14 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 19:43:15 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:39:07 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -29,12 +29,11 @@ class GameManager
 	int						_width;
 	int						_height;
 	bool					_master;
-	Player					*_me;
 	std::list<Player*>		_players;
 
-	double			deltaTime(void);
-
 	public:
+
+	Player					*_me;
 
 	GameManager(void);
 	GameManager(int nbplayer, int width, int height);
@@ -43,6 +42,7 @@ class GameManager
 
 	GameManager	&	operator=(const GameManager & ass);
 
+	double			deltaTime(void);
 	void			init(int nbplayer, int width, int height);
 	bool			IsAlive(void);
 //	void			loop(void);

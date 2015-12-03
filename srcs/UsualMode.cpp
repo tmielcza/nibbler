@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 19:46:20 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:39:36 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -76,23 +76,27 @@ bool			UsualMode::check_end(void)
 
 void			UsualMode::run(void)
 {
-
 	GraphicsManager::setLib(sfml, this->_width, this->_height);
-//	double	time = 0;
-	
+	double				delta = 0;
+	e_Input				input = I_Nope;
+	std::list<e_Input>	inputs;
+	double				refresh = 0;
+
 	while (this->check_end())
 	{
-//		double				delta = this->deltaTime();
-//		e_Input				input = I_Nope;
-//		std::list<e_Input>	inputs;
-//		double				refresh = 0;
-		
-//		inputs = GraphicsManager::Instance().getInput();
-//		for (auto it = inputs.begin(); it != inputs.end(); it++)
-//		{
-//			if (*it & I_Dir != 0)
-//				input = *it;
-//		}
-		
+		delta = this->_game->deltaTime();
+		inputs = GraphicsManager::Instance().getInput();
+		for (auto it = inputs.begin(); it != inputs.end(); it++)
+		{
+			if ((*it & I_Dir) != 0)
+				input = *it;
+		}
+//		if (refresh < this->_game->_me->getSpeed())
+		if (refresh < 1.)
+		{
+			this->_game->_me->move((e_Cardinal)input);
+			refresh = 0.;
+		}
+		refresh += delta;
 	}
 }

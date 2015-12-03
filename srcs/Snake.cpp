@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 19:29:28 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:17:12 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -221,6 +221,21 @@ void							Snake::move(void)
 		tmp = tmp2;
 		seg++;
 	}
+}
+
+void							Snake::turn(e_Cardinal direction)
+{
+	Segment*	head = *(this->_snake.begin());
+	
+	if (head->get_Direc() | Latitude)
+		if (direction | Longitude)
+			head->set_Direc(direction);
+	if (head->get_Direc() | Longitude)
+		if (direction | Latitude)
+			head->set_Direc(direction);
+	if (this->_nbmove == -1)
+		this->_nbmove = 0;
+	this->_nbmove++;
 }
 
 void							Snake::turn_left(void)
