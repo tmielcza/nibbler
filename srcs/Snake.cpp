@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:25:21 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:07:14 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -21,7 +21,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
-	this->init(East, 7, 7);
+	this->init();
 	this->_alive = true;
 }
 
@@ -48,6 +48,33 @@ Snake::~Snake(void)
 	}
 }
 
+bool							Snake::check_place_snake(int x, int y)
+{
+	bool		good = true;
+
+	if (MapManager::Instance()._Map[x][y] != NULL)
+		good = false;
+	if (MapManager::Instance()._Map[x - 1][y] != NULL)
+		good = false;
+	if (MapManager::Instance()._Map[x - 2][y] != NULL)
+		good = false;
+	if (MapManager::Instance()._Map[x - 3][y] != NULL)
+		good = false;
+	return (good);
+}
+
+void							Snake::init(void)
+{
+	int		width = MapManager::Instance().getWidth();
+	int		height = MapManager::Instance().getHeight();
+	int		x = (width - (width - (width / 4)));
+	int		y = (rand() % height);
+
+	while (check_place_snake(x, y) == false)
+		y = rand() % height;
+	this->init(East, x, y);
+}
+
 void							Snake::init(int direction, int x, int y)
 {
 	Segment		*seg;
@@ -57,13 +84,13 @@ void							Snake::init(int direction, int x, int y)
 		seg = new Segment(x, y, (e_Cardinal)direction);
 		this->_snake.push_back(*seg);		
 		if (seg->get_Direc() == North)
-			x++;
-		else if (seg->get_Direc() == South)
-			x--;
-		else if (seg->get_Direc() == East)
-			y++;
-		else if (seg->get_Direc() == West)
 			y--;
+		else if (seg->get_Direc() == South)
+			y++;
+		else if (seg->get_Direc() == East)
+			x--;
+		else if (seg->get_Direc() == West)
+			x++;
 	}
 	this->_tail = seg;
 }

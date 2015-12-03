@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:10:38 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:03:45 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -35,6 +35,7 @@ class Snake
 	Snake(Snake const & copy);
 
 	Snake					&	operator=(Snake const & ass);
+	bool						check_place_snake(int x, int y);
 
 	public:
 
@@ -42,6 +43,7 @@ class Snake
 	Snake(e_Cardinal direction, int x, int y);
 	~Snake(void);
 
+	void						init(void);
 	void						init(int direction, int x, int y);
 	std::list<Segment>		&	get_snake(void);
 	void						add_to_tail(void);
