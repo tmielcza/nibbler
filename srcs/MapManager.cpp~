@@ -45,18 +45,18 @@ void	MapManager::init(int nbplayer, int width, int height)
 	int		y;
 	int		direction;
 
-	this->_Map = new AEntity**[width];
-	for (int i = 0; i < (width); i++)
+	this->_Map = new AEntity**[width + 2];
+	for (int i = 0; i < (width + 2); i++)
 	{
-		this->_Map[i] = new AEntity*[height];
-		for (int j = 0; j < (height); j++)
+		this->_Map[i] = new AEntity*[height + 2];
+		for (int j = 0; j < (height + 2); j++)
 			this->_Map[i][j] = NULL;
 	}
 	this->_width = width;
 	this->_height = height;
 	this->_nbPlayer = nbplayer;
-	x = width / 2;
-	y = height / 2;
+	x = (width + 2) / 2;
+	y = (height + 2) / 2;
 	direction = 1;
 	Snake *snake = new Snake((e_Cardinal)direction, x, y);
 	this->_snakes.push_back(snake);
@@ -193,12 +193,12 @@ void	MapManager::bonustaken(Snake & taker, ABonus *taken)
 	taken->bonus_taken(taker);
 }
 
-int		MapManager::getWidth(void)
+void	MapManager::getWidth(void)
 {
 	return (this->_width);
 }
 
-int		MapManager::getHeight(void)
+void	MapManager::getHeight(void)
 {
 	return (this->_height);
 }
