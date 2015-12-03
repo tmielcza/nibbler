@@ -17,3 +17,26 @@ UsualMode::UsualMode(int nbplayers, int width, int height)
 	this->_width = width;
 	this->_height = height;
 }
+
+UsualMode::~UsualMode(void)
+{
+
+}
+
+UsualMode	&	UsualMode::operator=(const UsualMode & src)
+{
+	this->_nbPlayers = src._nbPlayers;
+	this->_width = src._width;
+	this->_height = src._height;
+	return (*this);
+}
+
+void			UsualMode::init(void)
+{
+
+}
+
+void			UsualMode::run(void)
+{
+
+}

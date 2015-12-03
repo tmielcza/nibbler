@@ -6,8 +6,6 @@
 
 class UsualMode : public AGameMode
 {
-	private:
-
 	public:
 
 	UsualMode(void);

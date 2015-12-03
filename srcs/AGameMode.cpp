@@ -13,12 +13,38 @@
 #include "AGameMode.hpp"
 #include "GraphicsManager.hpp"
 
-AGameMode::AGameMode(int nplayers, int x, int y)
-	: _x(x), _y(y), _nplayers(nplayers)
+AGameMode::AGameMode(void)
 {
+
 }
 
+AGameMode::AGameMode(const AGameMode & src)
+{
+	*this = src;
+}
+
+AGameMode::AGameMode(int nplayers, int width, int height)
+  : _width(width), _height(height), _nbPlayers(nplayers)
+{
+
+}
+
+AGameMode::~AGameMode(void)
+{
+
+}
+
+AGameMode	&	AGameMode::operator=(const AGameMode & src)
+{
+	this->_width = src._width;
+	this->_height = src._height;
+	this->_nbPlayers = src._nbPlayers;
+	return (*this);
+}
+
+/*
 void	NormalMode::run(void)
 {
 	GraphicsManager::setLib(sfml, this->_x, this->_y);
 }
+*/
