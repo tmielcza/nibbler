@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:04:14 by rduclos           #+#    #+#             //
-//   Updated: 2015/11/17 18:03:50 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:40:48 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -17,8 +17,6 @@
 
 # include "MapManager.hpp"
 # include "GraphicsManager.hpp"
-# include "AGameMode.hpp"
-# include "UsualMode.hpp"
 # include "Player.hpp"
 
 typedef std::chrono::high_resolution_clock Clock;
@@ -38,7 +36,6 @@ class GameManager
 	int						_width;
 	int						_height;
 	e_preMode				_premode;
-	AGameMode				*_mode;
 	bool					_master;
 	Player					*_me;
 	std::list<Player*>		_players;

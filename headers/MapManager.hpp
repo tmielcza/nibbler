@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:00:36 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:57:30 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:18:04 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -70,6 +70,7 @@ class MapManager
 	int					getHeight(void);
 	void				setWall(int x, int y);
 	void				setWall(Point pos);
+	void				setSnake(Snake *snake);
 
 };
 

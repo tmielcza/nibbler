@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:07:14 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:49:50 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -17,7 +17,7 @@ int		Snake::_curIndex = 0;
 
 Snake::Snake(void) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating snake !!" << std::endl;
+	std::cout << "Creating Snake !!" << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
@@ -27,7 +27,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 
 Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating snake !!" << std::endl;
+	std::cout << "Creating Snake !!" << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
@@ -40,7 +40,7 @@ Snake::~Snake(void)
 	std::list<Segment>::iterator		tmp = this->_snake.begin();
 	std::list<Segment>::iterator		end = this->_snake.end();
 
-	std::cout << "Destroying snake !!" << std::endl;
+	std::cout << "Destroying Snake !!" << std::endl;
 	while (tmp != end)
 	{
 		this->_snake.pop_front();

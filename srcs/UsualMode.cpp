@@ -1,12 +1,26 @@
+// ************************************************************************** //
+//                                                                            //
+//                                                        :::      ::::::::   //
+//   UsualMode.cpp                                      :+:      :+:    :+:   //
+//                                                    +:+ +:+         +:+     //
+//   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
+//                                                +#+#+#+#+#+   +#+           //
+//   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
+//   Updated: 2015/12/03 17:49:19 by rduclos          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
 
 # include "UsualMode.hpp"
 
 UsualMode::UsualMode(void)
 {
+	std::cout << "Creating UsualMode !" << std::endl;
 	this->_nbPlayers = 1;
 	this->_width = 100;
 	this->_height = 100;
 	this->_speed = 1;
+	this->_game = new GameManager(1, 100, 100, Solo);
+	this->init();
 }
 
 UsualMode::UsualMode(const UsualMode & src)
@@ -14,17 +28,21 @@ UsualMode::UsualMode(const UsualMode & src)
 	*this = src;
 }
 
-UsualMode::UsualMode(int nbplayers, int width, int height)
+UsualMode::UsualMode(int nbplayers, int width, int height, e_preMode premode)
 {
+	std::cout << "Creating UsualMode !" << std::endl;
 	this->_nbPlayers = nbplayers;
 	this->_width = width;
 	this->_height = height;
 	this->_speed = 1;
+	this->_game = new GameManager(nbplayers, width, height, premode);
+	this->init();
 }
 
 UsualMode::~UsualMode(void)
 {
-
+	delete this->_game;
+	std::cout << "Destroying UsualMode !" << std::endl;
 }
 
 UsualMode	&	UsualMode::operator=(const UsualMode & src)
@@ -33,6 +51,7 @@ UsualMode	&	UsualMode::operator=(const UsualMode & src)
 	this->_width = src._width;
 	this->_height = src._height;
 	this->_speed = src._speed;
+	this->_game = src._game;
 	return (*this);
 }
 
@@ -53,5 +72,5 @@ void			UsualMode::init(void)
 
 void			UsualMode::run(void)
 {
-
+	this->_game->loop();
 }

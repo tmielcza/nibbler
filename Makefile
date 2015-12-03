@@ -6,7 +6,7 @@
 #    By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/17 17:23:01 by rduclos           #+#    #+#              #
-#    Updated: 2015/12/02 15:25:27 by rduclos          ###   ########.fr        #
+#    Updated: 2015/12/03 17:14:05 by rduclos          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -22,7 +22,7 @@ HEADERS = headers/
 
 SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp Player.cpp \
 		GraphicsManager.cpp MapManager.cpp Point.cpp Segment.cpp Snake.cpp \
-		Wall.cpp AGameMode.cpp UsualMode.cpp
+		Wall.cpp AGameMode.cpp UsualMode.cpp main.cpp
 
 OBJ = $(SRC:%.cpp=$(DIROBJ)%.o)
 

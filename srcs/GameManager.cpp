@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:19:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:57:25 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:48:43 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,11 +14,13 @@
 
 GameManager::GameManager(void)
 {
+	std::cout << "Creating GameManager !" << std::endl;
 	this->init(1, 100, 100, Solo);
 }
 
 GameManager::GameManager(int nbplayer, int width, int height, e_preMode premode)
 {
+	std::cout << "Creating GameManager !" << std::endl;
 	this->init(nbplayer, width, height, premode);
 }
 
@@ -30,6 +32,8 @@ GameManager::GameManager(const GameManager & copy)
 GameManager::~GameManager(void)
 {
 //	delete this->_mode;
+	delete this->_me;
+	std::cout << "Destroying GameManager !" << std::endl;
 }
 
 GameManager	&	GameManager::operator=(const GameManager & ass)
@@ -38,7 +42,6 @@ GameManager	&	GameManager::operator=(const GameManager & ass)
 	this->_premode = ass._premode;
 	this->_width = ass._width;
 	this->_height = ass._height;
-	this->_mode = ass._mode;
 	this->_players = ass._players;
 	return (*this);
 }
@@ -61,15 +64,13 @@ void		GameManager::init(int nbplayer, int width, int height, e_preMode premode)
 	this->_width = width;
 	this->_height = height;
 	this->_premode = premode;
-	this->_mode = new UsualMode(nbplayer, width, height);
-	this->_mode->init();
 	MapManager::Instance().init(nbplayer, width, height);
 	this->_me = new Player();
 }
 
 void		GameManager::loop(void)
 {
-	this->_mode->run();
+
 }
 
 /*

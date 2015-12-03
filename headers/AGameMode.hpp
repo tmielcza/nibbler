@@ -6,21 +6,24 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/10 23:19:17 by tmielcza          #+#    #+#             //
-//   Updated: 2015/11/22 17:04:04 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:40:35 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #ifndef AGAMEMODE_HPP
 # define AGAMEMODE_HPP
 
+#include "GameManager.hpp"
+
 class AGameMode
 {
 	protected:
 
-	int		_width;
-	int		_height;
-	int		_nbPlayers;
-	double	_speed;
+	int				_width;
+	int				_height;
+	int				_nbPlayers;
+	double			_speed;
+	GameManager		*_game;
 
 	public:
 
