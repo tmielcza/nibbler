@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:19:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:48:43 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 19:43:58 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,13 +15,13 @@
 GameManager::GameManager(void)
 {
 	std::cout << "Creating GameManager !" << std::endl;
-	this->init(1, 100, 100, Solo);
+	this->init(1, 25, 25);
 }
 
-GameManager::GameManager(int nbplayer, int width, int height, e_preMode premode)
+GameManager::GameManager(int nbplayer, int width, int height)
 {
 	std::cout << "Creating GameManager !" << std::endl;
-	this->init(nbplayer, width, height, premode);
+	this->init(nbplayer, width, height);
 }
 
 GameManager::GameManager(const GameManager & copy)
@@ -31,7 +31,6 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-//	delete this->_mode;
 	delete this->_me;
 	std::cout << "Destroying GameManager !" << std::endl;
 }
@@ -39,9 +38,11 @@ GameManager::~GameManager(void)
 GameManager	&	GameManager::operator=(const GameManager & ass)
 {
 	this->_nbPlayer = ass._nbPlayer;
-	this->_premode = ass._premode;
 	this->_width = ass._width;
 	this->_height = ass._height;
+	this->_players = ass._players;
+	this->_master = ass._master;
+	this->_me = ass._me;
 	this->_players = ass._players;
 	return (*this);
 }
@@ -57,24 +58,23 @@ double			GameManager::deltaTime(void)
 	return (tmp);
 }
 
-void		GameManager::init(int nbplayer, int width, int height, e_preMode premode)
+void		GameManager::init(int nbplayer, int width, int height)
 {
 	this->_master = true;
 	this->_nbPlayer = nbplayer;
 	this->_width = width;
 	this->_height = height;
-	this->_premode = premode;
 	MapManager::Instance().init(nbplayer, width, height);
 	this->_me = new Player();
 }
 
-void		GameManager::loop(void)
+bool		GameManager::IsAlive(void)
 {
-
+	return (this->_me->IsAlive());
 }
 
 /*
-void		GameManager::loop(e_preMode mode)
+void		GameManager::loop(void)
 {
 	GraphicsManager::setLib(sfml, this->_width, this->_height);
 	bool	run = true;

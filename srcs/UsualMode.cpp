@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:49:19 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 19:46:20 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -16,10 +16,10 @@ UsualMode::UsualMode(void)
 {
 	std::cout << "Creating UsualMode !" << std::endl;
 	this->_nbPlayers = 1;
-	this->_width = 100;
-	this->_height = 100;
+	this->_width = 25;
+	this->_height = 25;
 	this->_speed = 1;
-	this->_game = new GameManager(1, 100, 100, Solo);
+	this->_game = new GameManager();
 	this->init();
 }
 
@@ -28,14 +28,14 @@ UsualMode::UsualMode(const UsualMode & src)
 	*this = src;
 }
 
-UsualMode::UsualMode(int nbplayers, int width, int height, e_preMode premode)
+UsualMode::UsualMode(int nbplayers, int width, int height)
 {
 	std::cout << "Creating UsualMode !" << std::endl;
 	this->_nbPlayers = nbplayers;
 	this->_width = width;
 	this->_height = height;
 	this->_speed = 1;
-	this->_game = new GameManager(nbplayers, width, height, premode);
+	this->_game = new GameManager(nbplayers, width, height);
 	this->init();
 }
 
@@ -51,7 +51,6 @@ UsualMode	&	UsualMode::operator=(const UsualMode & src)
 	this->_width = src._width;
 	this->_height = src._height;
 	this->_speed = src._speed;
-	this->_game = src._game;
 	return (*this);
 }
 
@@ -70,7 +69,30 @@ void			UsualMode::init(void)
 		MapManager::Instance().setWall(i, 0);
 }
 
+bool			UsualMode::check_end(void)
+{
+	return (this->_game->IsAlive());
+}
+
 void			UsualMode::run(void)
 {
-	this->_game->loop();
+
+	GraphicsManager::setLib(sfml, this->_width, this->_height);
+//	double	time = 0;
+	
+	while (this->check_end())
+	{
+//		double				delta = this->deltaTime();
+//		e_Input				input = I_Nope;
+//		std::list<e_Input>	inputs;
+//		double				refresh = 0;
+		
+//		inputs = GraphicsManager::Instance().getInput();
+//		for (auto it = inputs.begin(); it != inputs.end(); it++)
+//		{
+//			if (*it & I_Dir != 0)
+//				input = *it;
+//		}
+		
+	}
 }

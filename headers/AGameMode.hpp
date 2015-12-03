@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/10 23:19:17 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 17:40:35 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 19:23:54 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -17,6 +17,10 @@
 
 class AGameMode
 {
+	private:
+
+	virtual bool	check_end(void) = 0;
+
 	protected:
 
 	int				_width;
