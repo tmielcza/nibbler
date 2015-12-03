@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 17:40:03 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 18:44:59 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -138,7 +138,7 @@ sf::Vector2f	Displayer::offsetFromDir(e_Dir dir)
 
 sf::Vector2f	Displayer::posOnScreen(int x, int y)
 {
-	return (sf::Vector2f(x * 40, y * 40));
+	return (sf::Vector2f(x * 40 + 20, y * 40 + 20));
 }
 
 void	Displayer::drawTail(float time, int x, int y, e_Dir last)
@@ -167,31 +167,37 @@ void	Displayer::drawHead(float time, int x, int y, e_Dir last)
 
 void	Displayer::putWall(int x, int y)
 {
-	vec2	position = vec2(x * 40 + 20, y * 40 + 20);
+	vec2	position = this->posOnScreen(x, y);
 
 	this->_walls.push_back(new Wall(position));
 }
 
 void	Displayer::popFood(int x, int y)
 {
-	vec2	position = vec2(x * 40 + 20, y * 40 + 20);
+	vec2	position = this->posOnScreen(x, y);
 
 	this->_foods.push_back(new Food(position, this->getTime()));
 }
 
 void	Displayer::popMultiFood(int x, int y)
 {
-	this->_bonuses.push_back(new MultiFood(vec2(x, y), this->getTime()));
+	vec2	position = this->posOnScreen(x, y);
+
+	this->_bonuses.push_back(new MultiFood(position, this->getTime()));
 }
 
 void	Displayer::popSuperFood(int x, int y, int size)
 {
-	this->_bonuses.push_back(new SuperFood(vec2(x, y), this->getTime(), size));
+	vec2	position = this->posOnScreen(x, y);
+
+	this->_bonuses.push_back(new SuperFood(position, this->getTime(), size));
 }
 
 void	Displayer::popChasedFood(int x, int y, int size)
 {
-	this->_bonuses.push_back(new ChasedFood(vec2(x, y), this->getTime(), size));
+	vec2	position = this->posOnScreen(x, y);
+
+	this->_bonuses.push_back(new ChasedFood(position, this->getTime(), size));
 }
 
 void	Displayer::depopFood(int x, int y)
