@@ -20,6 +20,7 @@ class AGameMode
 	int		_width;
 	int		_height;
 	int		_nbPlayers;
+	double	_speed;
 
 	public:
 

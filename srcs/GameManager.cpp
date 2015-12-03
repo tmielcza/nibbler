@@ -14,12 +14,12 @@
 
 GameManager::GameManager(void)
 {
-
+	this->init(1, 100, 100, Solo);
 }
 
-GameManager::GameManager(int nbplayer, int width, int height, double speed) :_nbPlayer(nbplayer), _width(width), _height(height), _speed(speed)
+GameManager::GameManager(int nbplayer, int width, int height, e_preMode premode)
 {
-		MapManager::Instance().init(nbplayer, width, height);
+	this->init(nbplayer, width, height, premode);
 }
 
 GameManager::GameManager(const GameManager & copy)
@@ -29,15 +29,17 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-	
+//	delete this->_mode;
 }
 
 GameManager	&	GameManager::operator=(const GameManager & ass)
 {
 	this->_nbPlayer = ass._nbPlayer;
-	this->_speed = ass._speed;
+	this->_premode = ass._premode;
 	this->_width = ass._width;
 	this->_height = ass._height;
+	this->_mode = ass._mode;
+	this->_players = ass._players;
 	return (*this);
 }
 
@@ -52,19 +54,22 @@ double			GameManager::deltaTime(void)
 	return (tmp);
 }
 
-void		GameManager::init(int nbplayer, int width, int height, double speed)
+void		GameManager::init(int nbplayer, int width, int height, e_preMode premode)
 {
+	this->_master = true;
 	this->_nbPlayer = nbplayer;
 	this->_width = width;
 	this->_height = height;
-	this->_speed = speed;
+	this->_premode = premode;
+	this->_mode = new UsualMode(nbplayer, width, height);
+	this->_mode->init();
 	MapManager::Instance().init(nbplayer, width, height);
+	this->_me = new Player();
 }
 
-void		GameManager::loop(e_preMode mode)
+void		GameManager::loop(void)
 {
-	(void)mode;
-	(void)this->_mode;
+	this->_mode->run();
 }
 
 /*

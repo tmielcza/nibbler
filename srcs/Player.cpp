@@ -12,6 +12,11 @@
 
 #include "Player.hpp"
 
+Player::Player(void)
+{
+	this->_Snake = new Snake();
+}
+
 Player::Player(Snake *snake)
 {
 	this->_Snake = snake;

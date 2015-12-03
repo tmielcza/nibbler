@@ -18,6 +18,7 @@
 # include "MapManager.hpp"
 # include "GraphicsManager.hpp"
 # include "AGameMode.hpp"
+# include "UsualMode.hpp"
 # include "Player.hpp"
 
 typedef std::chrono::high_resolution_clock Clock;
@@ -36,8 +37,10 @@ class GameManager
 	int						_nbPlayer;
 	int						_width;
 	int						_height;
-	double					_speed;
+	e_preMode				_premode;
 	AGameMode				*_mode;
+	bool					_master;
+	Player					*_me;
 	std::list<Player*>		_players;
 
 	double			deltaTime(void);
@@ -45,14 +48,14 @@ class GameManager
 	public:
 
 	GameManager(void);
-	GameManager(int nbplayer, int width, int height, double speed);
+	GameManager(int nbplayer, int width, int height, e_preMode premode);
 	GameManager(const GameManager & copy);
 	~GameManager(void);
 
 	GameManager	&	operator=(const GameManager & ass);
 
-	void			init(int nbplayer, int width, int height, double speed);
-	void			loop(e_preMode mode);
+	void			init(int nbplayer, int width, int height, e_preMode premode);
+	void			loop(void);
 
 };
 

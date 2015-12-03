@@ -32,13 +32,13 @@ class Snake
 	double						_speed;
 	bool						_alive;
 
-	Snake(void);
 	Snake(Snake const & copy);
 
 	Snake					&	operator=(Snake const & ass);
 
 	public:
 
+	Snake(void);
 	Snake(e_Cardinal direction, int x, int y);
 	~Snake(void);
 

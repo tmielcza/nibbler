@@ -24,10 +24,9 @@ class Player
 	e_Input		_lastInput;
 	double		_nextMove;
 
-	Player(void);
-
 	public:
 
+	Player(void);
 	Player(Snake *snake);
 	Player(const Player & copy);
 	~Player(void);

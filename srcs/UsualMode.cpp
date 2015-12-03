@@ -3,7 +3,10 @@
 
 UsualMode::UsualMode(void)
 {
-	
+	this->_nbPlayers = 1;
+	this->_width = 100;
+	this->_height = 100;
+	this->_speed = 1;
 }
 
 UsualMode::UsualMode(const UsualMode & src)
@@ -16,6 +19,7 @@ UsualMode::UsualMode(int nbplayers, int width, int height)
 	this->_nbPlayers = nbplayers;
 	this->_width = width;
 	this->_height = height;
+	this->_speed = 1;
 }
 
 UsualMode::~UsualMode(void)
@@ -28,6 +32,7 @@ UsualMode	&	UsualMode::operator=(const UsualMode & src)
 	this->_nbPlayers = src._nbPlayers;
 	this->_width = src._width;
 	this->_height = src._height;
+	this->_speed = src._speed;
 	return (*this);
 }
 
