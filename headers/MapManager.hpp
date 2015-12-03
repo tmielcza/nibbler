@@ -39,7 +39,7 @@ class MapManager
 	std::list<Snake*>	_snakes;
 	std::list<Food*>	_foods;
 	std::list<ABonus*>	_bonus;
-	std::list<Wall*>	_wall;
+	std::list<Wall*>	_walls;
 	int					_nbPlayer;
 	int					_width;
 	int					_height;
@@ -68,6 +68,8 @@ class MapManager
 	int					getBonusnb(void);
 	int					getWidth(void);
 	int					getHeight(void);
+	void				setWall(int x, int y);
+	void				setWall(Point pos);
 
 };
 

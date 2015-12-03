@@ -3,6 +3,7 @@
 # define USUALMODE_HPP
 
 # include "AGameMode.hpp"
+# include "MapManager.hpp"
 
 class UsualMode : public AGameMode
 {

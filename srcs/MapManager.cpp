@@ -202,3 +202,26 @@ int		MapManager::getHeight(void)
 {
 	return (this->_height);
 }
+
+void	MapManager::setWall(int x, int y)
+{
+	if (MapManager::Instance()._Map[x][y] != NULL)
+	{
+		Wall *w = new Wall(x, y);
+		MapManager::Instance()._Map[x][y] = w;
+		this->_walls.push_front(w);
+	}
+}
+
+void	MapManager::setWall(Point pos)
+{
+	int x = pos.getX();
+	int y = pos.getY();
+
+	if (MapManager::Instance()._Map[x][y] != NULL)
+	{
+		Wall *w = new Wall(pos);
+		MapManager::Instance()._Map[x][y] = w;
+		this->_walls.push_front(w);
+	}
+}
