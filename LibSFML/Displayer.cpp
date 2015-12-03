@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/01 17:13:48 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 17:40:03 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -76,6 +76,10 @@ void	Displayer::display(void)
 	{
 		(*it)->draw(*this);
 	}
+	for (auto wall : _walls)
+	{
+		wall->draw(*this);
+	}
 
 	this->_texture.display();
 	this->_win.draw(this->_sprite);
@@ -113,6 +117,11 @@ void	Displayer::postProcess(sf::Shader& shad)
 	this->_tmptexture.display();
 	this->_texture.draw(this->_tmpsprite);
 	this->_texture.display();
+}
+
+bool	Displayer::getFoodMode(void)
+{
+	return(this->_isFoodOn);
 }
 
 sf::Vector2f	Displayer::offsetFromDir(e_Dir dir)
@@ -156,9 +165,18 @@ void	Displayer::drawHead(float time, int x, int y, e_Dir last)
 	this->drawSprite(shad, pos, {40, 40}, this->getTime());
 }
 
+void	Displayer::putWall(int x, int y)
+{
+	vec2	position = vec2(x * 40 + 20, y * 40 + 20);
+
+	this->_walls.push_back(new Wall(position));
+}
+
 void	Displayer::popFood(int x, int y)
 {
-	this->_foods.push_back(new Food(vec2(x, y), this->getTime()));
+	vec2	position = vec2(x * 40 + 20, y * 40 + 20);
+
+	this->_foods.push_back(new Food(position, this->getTime()));
 }
 
 void	Displayer::popMultiFood(int x, int y)

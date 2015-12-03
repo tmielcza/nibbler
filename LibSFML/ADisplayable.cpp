@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/04/13 20:57:59 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 17:24:52 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -54,14 +54,14 @@ Food::Food(vec2 pos, float time)
 
 void	Food::draw(Displayer& dis)
 {
-	this->_shad.setParameter("on", true);
+	this->_shad.setParameter("on", dis.getFoodMode());
 	dis.drawSprite(this->_shad, this->pos, {40, 40},
 				   fmod(dis.getTime() + this->_time, 1));
 }
 
 void	Food::drawOff(Displayer& dis)
 {
-	this->_shad.setParameter("on", false);
+	this->_shad.setParameter("on", dis.getFoodMode());
 	dis.drawSprite(this->_shad, this->pos, {40, 40},
 				   fmod(dis.getTime() + this->_time, 1));
 }
@@ -192,4 +192,57 @@ Background::Background(vec2 pos)
 void	Background::draw(Displayer& dis)
 {
 	dis.drawSprite(this->_shad, this->pos, dis.getSize(), fmod(dis.getTime(), 1));
+}
+
+// Tail
+
+Tail::~Tail(void)
+{
+}
+
+Tail::Tail(vec2 pos, vec2 last)
+	: ADisplayable(pos, "tail.gl", 0.f), _last(last)
+{
+}
+
+void	Tail::draw(Displayer& dis)
+{
+	vec2 pos;
+	float time = fmod(dis.getTime(), 1.f);
+
+	pos = this->_last * (1.f - time) + this->pos * time;
+	dis.drawSprite(this->_shad, pos, {40, 40},
+				   fmod(dis.getTime(), 1.));
+}
+
+// Head
+
+Head::~Head(void)
+{
+}
+
+Head::Head(vec2 pos, vec2 last)
+	: ADisplayable(pos, "head.gl", 0.f), _last(last)
+{
+}
+
+void	Head::draw(Displayer& dis)
+{
+	vec2 pos;
+	float time = fmod(dis.getTime(), 1.f);
+
+	pos = this->_last * (1.f - time) + this->pos * time;
+	dis.drawSprite(this->_shad, pos, {40, 40}, dis.getTime());
+}
+
+// Wall
+
+Wall::Wall(vec2 pos)
+	: ADisplayable(pos, "wall.gl", 0.f)
+{
+}
+
+void	Wall::draw(Displayer& dis)
+{
+	dis.drawSprite(this->_shad, this->pos, {40, 40}, 0.f);
 }

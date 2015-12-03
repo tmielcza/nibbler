@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/06/29 18:47:41 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 17:31:25 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -49,6 +49,7 @@ public:
 	virtual void				switchFoodMode(void) = 0;
 	virtual void				drawTail(float time, int x, int y, e_Dir last) = 0;
 	virtual void				drawHead(float time, int x, int y, e_Dir last) = 0;
+	virtual void				putWall(int x, int y) = 0;
 	virtual std::list<e_Input>	getInput(void) = 0;
 };
 

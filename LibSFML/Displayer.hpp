@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/01 18:40:58 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 17:33:49 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -39,6 +39,7 @@ public:
 	void				drawSprite(sf::Shader& shad, vec2 pos, vec2 size, float time);
 	void				postProcess(sf::Shader& shad);
 	double				getDeltaTime(void) const;
+	bool				getFoodMode(void);
 
 	void				display(void);
 	void				clear(void);
@@ -53,6 +54,7 @@ public:
 	std::list<e_Input>	getInput(void);
 	void				drawTail(float time, int x, int y, e_Dir last);
 	void				drawHead(float time, int x, int y, e_Dir last);
+	void				putWall(int x, int y);
 
 private:
 						Displayer(void);
@@ -77,6 +79,7 @@ private:
 	bool						_isFoodOn;
 	std::list<Food*>			_foods;
 	std::list<ADisplayable*>	_bonuses;
+	std::list<Wall*>			_walls;
 };
 
 extern "C"
