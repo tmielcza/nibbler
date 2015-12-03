@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:48:29 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 18:35:46 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -47,4 +47,9 @@ Player	&	Player::operator=(const Player & ass)
 	this->_lastInput = ass._lastInput;
 	this->_nextMove = ass._nextMove;
 	return (*this);
+}
+
+bool		Player::IsAlive(void)
+{
+	return (this->_Snake->IsAlive());
 }

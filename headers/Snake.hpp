@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:51:15 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 18:46:23 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,7 +25,7 @@ class Snake
 
 	const int					_index;
 	static int					_curIndex;
-	std::list<Segment>			_snake;
+	std::list<Segment*>			_snake;
 	Segment						*_tail;
 	int							_nbmove;
 	int						 	_score;
@@ -45,7 +45,7 @@ class Snake
 
 	void						init(void);
 	void						init(int direction, int x, int y);
-	std::list<Segment>		&	get_snake(void);
+	std::list<Segment*>		&	get_snake(void);
 	void						add_to_tail(void);
 	void						befor_move(void);
 	void						move(void);
@@ -56,6 +56,7 @@ class Snake
 	int							getHeadSnakeX(void);
 	int							getHeadSnakeY(void);
 	int							getIndex(void);
+	bool						IsAlive(void);
 
 };
 

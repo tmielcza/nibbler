@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:49:50 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 18:49:41 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -37,8 +37,8 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 
 Snake::~Snake(void)
 {
-	std::list<Segment>::iterator		tmp = this->_snake.begin();
-	std::list<Segment>::iterator		end = this->_snake.end();
+	std::list<Segment*>::iterator		tmp = this->_snake.begin();
+	std::list<Segment*>::iterator		end = this->_snake.end();
 
 	std::cout << "Destroying Snake !!" << std::endl;
 	while (tmp != end)
@@ -82,7 +82,7 @@ void							Snake::init(int direction, int x, int y)
 	for (int i = 0; i < 4; i++)
 	{
 		seg = new Segment(x, y, (e_Cardinal)direction);
-		this->_snake.push_back(*seg);		
+		this->_snake.push_back(seg);		
 		if (seg->get_Direc() == North)
 			y--;
 		else if (seg->get_Direc() == South)
@@ -95,7 +95,7 @@ void							Snake::init(int direction, int x, int y)
 	this->_tail = seg;
 }
 
-std::list<Segment>	&			Snake::get_snake(void)
+std::list<Segment*>	&			Snake::get_snake(void)
 {
 	return (this->_snake);
 }
@@ -127,18 +127,18 @@ void							Snake::add_to_tail(void)
 		seg->setY(this->_tail->getY());
 	}
 	seg->set_Direc(this->_tail->get_Direc());
-	this->_snake.push_back(*seg);
+	this->_snake.push_back(seg);
 	this->_tail = seg;
 
 }
 
 void							Snake::befor_move(void)
 {
-	std::list<Segment>::iterator		head = this->_snake.begin();
+	std::list<Segment*>::iterator		head = this->_snake.begin();
 
-	int x = head->getX();
-	int y = head->getY();
-	e_Cardinal direc = head->get_Direc();
+	int x = (*head)->getX();
+	int y = (*head)->getY();
+	e_Cardinal direc = (*head)->get_Direc();
 	if (direc == North)
 	{
 		y++;
@@ -174,46 +174,50 @@ void							Snake::befor_move(void)
 
 void							Snake::move(void)
 {
-	std::list<Segment>::iterator		seg = this->_snake.begin();
-	std::list<Segment>::iterator		end = this->_snake.end();
-	int									x;
-	int									y;
-	Point								tmp = seg->getPos();
-	e_Cardinal							direc = seg->get_Direc();
+	std::list<Segment*>::iterator		seg = this->_snake.begin();
+	std::list<Segment*>::iterator		end = this->_snake.end();
+	int									x = (*seg)->getX();
+	int									y = (*seg)->getY();
+	Point								tmp = (*seg)->getPos();
+	e_Cardinal							direc = (*seg)->get_Direc();
 
+	MapManager::Instance()._Map[x][y] = NULL;
 	if (direc == North)
 	{
-		if ((y = seg->getY() + 1) < MapManager::Instance().getHeight())
-			seg->setY(y);
+		if ((y = (*seg)->getY() + 1) < MapManager::Instance().getHeight())
+			(*seg)->setY(y);
 		else
-			seg->setY(0);
+			(*seg)->setY(0);
 	}
 	else if (direc == South)
 	{
-		if ((y = seg->getY() -1) >= 0)
-			seg->setY(y);
+		if ((y = (*seg)->getY() -1) >= 0)
+			(*seg)->setY(y);
 		else
-			seg->setY(MapManager::Instance().getHeight() - 1);
+			(*seg)->setY(MapManager::Instance().getHeight() - 1);
 	}
 	else if (direc == East)
 	{
-		if ((x = seg->getX() + 1) < MapManager::Instance().getWidth())
-			seg->setX(x);
+		if ((x = (*seg)->getX() + 1) < MapManager::Instance().getWidth())
+			(*seg)->setX(x);
 		else
-			seg->setX(0);
+			(*seg)->setX(0);
 	}
 	else if (direc == West)
 	{
-		if ((x = seg->getX() - 1) >= 0)
-			seg->setX(x);
+		if ((x = (*seg)->getX() - 1) >= 0)
+			(*seg)->setX(x);
 		else
-			seg->setX(MapManager::Instance().getWidth() - 1);
+			(*seg)->setX(MapManager::Instance().getWidth() - 1);
 	}
+	MapManager::Instance()._Map[x][y] = (*seg);
 	seg++;
 	while (seg != end)
 	{
-		Point tmp2 = seg->getPos();
-		seg->setPos(tmp);
+		Point tmp2 = (*seg)->getPos();
+		(*seg)->setPos(tmp);
+		MapManager::Instance()._Map[tmp2.getX()][tmp2.getY()] = NULL;
+		MapManager::Instance()._Map[tmp.getX()][tmp.getY()] = (*seg);
 		tmp = tmp2;
 		seg++;
 	}
@@ -221,35 +225,35 @@ void							Snake::move(void)
 
 void							Snake::turn_left(void)
 {
-	std::list<Segment>::iterator	head = this->_snake.begin();
+	std::list<Segment*>::iterator	head = this->_snake.begin();
 
 	if (this->_nbmove == -1)
 		this->_nbmove = 0;
-	if (head->get_Direc() == North)
-		head->set_Direc(West);
-	else if (head->get_Direc() == South)
-		head->set_Direc(East);
-	else if (head->get_Direc() == East)
-		head->set_Direc(North);
-	else if (head->get_Direc() == West)
-		head->set_Direc(South);
+	if ((*head)->get_Direc() == North)
+		(*head)->set_Direc(West);
+	else if ((*head)->get_Direc() == South)
+		(*head)->set_Direc(East);
+	else if ((*head)->get_Direc() == East)
+		(*head)->set_Direc(North);
+	else if ((*head)->get_Direc() == West)
+		(*head)->set_Direc(South);
 	this->_nbmove++;
 }
 
 void							Snake::turn_right(void)
 {
-	std::list<Segment>::iterator	head = this->_snake.begin();
+	std::list<Segment*>::iterator	head = this->_snake.begin();
 
 	if (this->_nbmove == -1)
 		this->_nbmove = 0;
-	if (head->get_Direc() == North)
-		head->set_Direc(East);
-	else if (head->get_Direc() == South)
-		head->set_Direc(West);
-	else if (head->get_Direc() == East)
-		head->set_Direc(South);
-	else if (head->get_Direc() == West)
-		head->set_Direc(North);
+	if ((*head)->get_Direc() == North)
+		(*head)->set_Direc(East);
+	else if ((*head)->get_Direc() == South)
+		(*head)->set_Direc(West);
+	else if ((*head)->get_Direc() == East)
+		(*head)->set_Direc(South);
+	else if ((*head)->get_Direc() == West)
+		(*head)->set_Direc(North);
 	this->_nbmove++;
 }
 
@@ -272,19 +276,24 @@ void							Snake::take_bonus(ABonus const & taken)
 
 int								Snake::getHeadSnakeX(void)
 {
-	std::list<Segment>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			head = this->_snake.begin();
 
-	return (head->getX());
+	return ((*head)->getX());
 }
 
 int								Snake::getHeadSnakeY(void)
 {
-	std::list<Segment>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			head = this->_snake.begin();
 
-	return (head->getY());
+	return ((*head)->getY());
 }
 
 int								Snake::getIndex(void)
 {
 	return (this->_index);
+}
+
+bool							Snake::IsAlive(void)
+{
+	return (this->_alive);
 }

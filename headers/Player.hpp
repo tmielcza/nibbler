@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/29 19:17:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/29 19:28:43 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 18:44:03 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -32,7 +32,7 @@ class Player
 	~Player(void);
 
 	Player	&	operator=(const Player & ass);
-	
+	bool		IsAlive(void);
 
 };
 
