@@ -21,8 +21,8 @@ class Player
 	private:
 
 	Snake		*_Snake;
-	e_Input		_lastInput;
-	double		_nextMove;
+	e_Cardinal	_lastInput;
+	double		_time;
 
 	public:
 
@@ -33,7 +33,7 @@ class Player
 
 	Player	&	operator=(const Player & ass);
 	bool		IsAlive(void);
-	void		move(e_Cardinal direc);
+	void		update(double time);
 
 };
 

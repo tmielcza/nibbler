@@ -34,6 +34,7 @@ class Food : public AEntity
 	bool		check_position(int x, int y);
 	int			get_value(void) const;
 	void		set_value(int value);
+	void		draw(double time);
 };
 
 #endif

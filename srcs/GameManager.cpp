@@ -73,6 +73,17 @@ bool		GameManager::IsAlive(void)
 	return (this->_me->IsAlive());
 }
 
+void		GameManager::update_one(double time)
+{
+	this->_me->update(time);
+}
+
+void		GameManager::update(double time)
+{
+	this->_me->update(time);
+	//update all list of snakes
+}
+
 /*
 void		GameManager::loop(void)
 {

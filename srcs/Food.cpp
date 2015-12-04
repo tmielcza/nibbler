@@ -61,3 +61,9 @@ void		Food::set_value(int value)
 {
 	this->_value = value;
 }
+
+void		Food::draw(double time)
+{
+	(void)time;
+}
+
