@@ -6,7 +6,7 @@
 #    By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/17 17:23:01 by rduclos           #+#    #+#              #
-#    Updated: 2015/12/03 21:53:38 by rduclos          ###   ########.fr        #
+#    Updated: 2015/12/04 16:32:56 by rduclos          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -31,6 +31,7 @@ all: init $(NAME)
 
 init:
 	@mkdir -p $(DIROBJ)
+	@make -C LibSFML/
 
 $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) -o $@ $(OBJ) -I $(HEADERS)
@@ -43,9 +44,11 @@ $(DIROBJ)%.o: $(DIRSRC)%.cpp
 clean:
 	@rm -rf $(DIROBJ)
 	@echo "[$(NAME)]--> Objects removed"
+	@make clean -C LibSFML/
 
 fclean: clean
 	@rm -f $(NAME)
 	@echo "[$(NAME)]--> Program removed"
+	@make fclean -C LibSFML/
 
 re: fclean all
