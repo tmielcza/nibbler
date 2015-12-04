@@ -107,6 +107,21 @@ bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode m
 	return (false);
 }
 
+void	MapManager::foodpop(void)
+{
+	int x = 1 + (rand() % (this->_width - 1));
+	int y = 1 + (rand() % (this->_height - 1));
+
+	while (this->_Map[x][y] != NULL)
+	{
+		x = 1 + (rand() % (this->_width - 1));
+		y = 1 + (rand() % (this->_height - 1));
+	}
+	Food *f = new Food(1, x, y);
+	this->_Map[x][y] = f;
+	this->_foods.push_front(f);
+}
+
 void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideMode)
 {
 	if (mode == InsideMode)

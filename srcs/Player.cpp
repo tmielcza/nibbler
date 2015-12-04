@@ -68,11 +68,16 @@ void		Player::update(double time)
 			input = *it;
 	}
 	if ((input & I_Dir) != 0)
-		this->_Snake->turn((e_Cardinal)input);
+		this->_lastInput = (e_Cardinal)input;
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
 //	if (this->_time >= SN_TIME)
 	{
+		if (this->_lastInput != None)
+		{
+			this->_Snake->turn(this->_lastInput);
+			this->_lastInput = None;
+		}
 		std::cout << this->_Snake->getHeadSnakeX() << " "
 				  << this->_Snake->getHeadSnakeY() << std::endl;
 		this->_Snake->befor_move();

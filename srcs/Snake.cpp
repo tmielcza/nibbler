@@ -140,10 +140,11 @@ void							Snake::add_score(int score)
 void							Snake::befor_move(void)
 {
 	std::list<Segment*>::iterator		head = this->_snake.begin();
-
 	int x = (*head)->getX();
 	int y = (*head)->getY();
+
 	e_Cardinal direc = (*head)->get_Direc();
+
 	if (direc == North)
 	{
 		y++;
@@ -292,6 +293,7 @@ void							Snake::eat(Food const & eaten)
 		this->_score = eaten.get_value();
 	this->_speed += 0.1;
 	this->_nbmove = 0;
+	MapManager::Instance().foodpop();
 }
 
 void							Snake::take_bonus(ABonus const & taken)

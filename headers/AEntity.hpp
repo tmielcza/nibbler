@@ -19,6 +19,7 @@
 
 enum e_Cardinal
 {
+	None = 0,
 	North = 1,
 	South = 2,
 	East = 4,

@@ -58,7 +58,7 @@ class MapManager
 	void				move(int index);
 	void				setSnakeDir(int index, bool left);
 	bool				InZone(Point point, Point upleft, Point downright, e_PopMode mode);
-	void				foodpop(e_PopMode mode);
+	void				foodpop(void);
 	void				foodpop(Point upleft, Point downright, e_PopMode mode);
 	void				foodpop(Point center, int radius, e_PopMode mode);
 	void				foodeaten(Snake & eater, Food & eaten);

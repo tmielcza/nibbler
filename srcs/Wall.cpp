@@ -15,7 +15,7 @@
 
 Wall::Wall(void)
 {
-	std::cout << "Wall Builed !!!" << std::endl;
+
 }
 
 Wall::Wall(Point pos) : Wall(pos.getX(), pos.getY())
@@ -24,7 +24,6 @@ Wall::Wall(Point pos) : Wall(pos.getX(), pos.getY())
 
 Wall::Wall(int x, int y)
 {
-	std::cout << "Wall Builed !!!" << std::endl;
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = false;
@@ -38,7 +37,7 @@ Wall::Wall(Wall const & copy)
 
 Wall::~Wall(void)
 {
-	std::cout << "Destruction of the Wall !!!" << std::endl;
+
 }
 
 void		Wall::initWall(int x, int y)

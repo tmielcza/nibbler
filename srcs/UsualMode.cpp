@@ -80,6 +80,7 @@ void			UsualMode::run(void)
 	double				delta = 0;
 
 	std::cout << "Enter in while" << std::endl;
+	MapManager::Instance().foodpop();
 	while (this->check_end())
 	{
 //		GraphicsManager::Instance().clear();

@@ -76,6 +76,7 @@ bool		GameManager::IsAlive(void)
 void		GameManager::update_one(double time)
 {
 	this->_me->update(time);
+	
 }
 
 void		GameManager::update(double time)
