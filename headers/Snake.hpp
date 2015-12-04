@@ -61,6 +61,7 @@ class Snake
 	void						turn_right(void);
 	void						eat(Food const & eaten);
 	void						take_bonus(ABonus const & taken);
+	e_Cardinal					getHeadSnakeDirec(void);
 	int							getHeadSnakeX(void);
 	int							getHeadSnakeY(void);
 	int							getIndex(void);

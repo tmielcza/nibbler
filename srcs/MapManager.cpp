@@ -120,6 +120,7 @@ void	MapManager::foodpop(void)
 	Food *f = new Food(1, x, y);
 	this->_Map[x][y] = f;
 	this->_foods.push_front(f);
+	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
 }
 
 void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideMode)

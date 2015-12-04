@@ -302,6 +302,12 @@ void							Snake::take_bonus(ABonus const & taken)
 //	taken.bonus(this);
 }
 
+e_Cardinal						Snake::getHeadSnakeDirec(void)
+{
+	std::list<Segment*>::iterator			head = this->_snake.begin();
+
+	return ((*head)->get_Direc());
+}
 int								Snake::getHeadSnakeX(void)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();

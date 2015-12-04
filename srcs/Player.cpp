@@ -68,7 +68,14 @@ void		Player::update(double time)
 			input = *it;
 	}
 	if ((input & I_Dir) != 0)
-		this->_lastInput = (e_Cardinal)input;
+	{
+		if ((this->_Snake->getHeadSnakeDirec() & Longitude) &&
+			((e_Cardinal)input & Latitude))
+			this->_lastInput = (e_Cardinal)input;
+		else if ((this->_Snake->getHeadSnakeDirec() & Latitude) &&
+				 ((e_Cardinal)input & Longitude))
+			this->_lastInput = (e_Cardinal)input;
+	}
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
 //	if (this->_time >= SN_TIME)
