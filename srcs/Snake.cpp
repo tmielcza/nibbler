@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 17:46:43 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 19:11:27 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -64,21 +64,6 @@ bool							Snake::check_place_snake(int x, int y)
 	return (good);
 }
 
-/*
-
-double							Snake::deltaTime(void)
-{
-	static auto             last = Clock::now();
-	auto                    time = Clock::now();
-	float                   tmp;
-
-	tmp = std::chrono::duration_cast<std::chrono::microseconds>(time - last).count() / 1000000.f;
-	last = time;
-	return (tmp);
-}
-
-*/
-
 void							Snake::init(void)
 {
 	int		width = MapManager::Instance().getWidth();
@@ -88,7 +73,7 @@ void							Snake::init(void)
 
 	while (check_place_snake(x, y) == false)
 		y = rand() % height;
-	this->init(East, x, y);
+	this->init(4, x, y);
 }
 
 void							Snake::init(int direction, int x, int y)
@@ -159,26 +144,32 @@ void							Snake::befor_move(void)
 	int x = (*head)->getX();
 	int y = (*head)->getY();
 	e_Cardinal direc = (*head)->get_Direc();
+	std::cout << "Here ?" << std::endl;
+	std::cout << direc << std::endl;
 	if (direc == North)
 	{
+		std::cout << "North" << std::endl;
 		y++;
-		if (y > MapManager::Instance().getHeight())
+		if (y >= MapManager::Instance().getHeight())
 			y = 0;
 	}
 	else if (direc == South)
 	{
+		std::cout << "South" << std::endl;
 		y--;
 		if (y < 0)
 			y = MapManager::Instance().getHeight() - 1;
 	}
 	else if (direc == East)
 	{
+		std::cout << "East" << std::endl;
 		x++;
-		if (x > MapManager::Instance().getWidth())
+		if (x >= MapManager::Instance().getWidth())
 			x = 0;
 	}
 	else if (direc == West)
 	{
+		std::cout << "West" << std::endl;
 		x--;
 		if (x < 0)
 			x = MapManager::Instance().getWidth() - 1;
