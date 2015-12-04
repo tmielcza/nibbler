@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:19:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:57:25 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 19:43:58 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,12 +14,14 @@
 
 GameManager::GameManager(void)
 {
-
+	std::cout << "Creating GameManager !" << std::endl;
+	this->init(1, 25, 25);
 }
 
-GameManager::GameManager(int nbplayer, int width, int height, double speed) :_nbPlayer(nbplayer), _width(width), _height(height), _speed(speed)
+GameManager::GameManager(int nbplayer, int width, int height)
 {
-		MapManager::Instance().init(nbplayer, width, height);
+	std::cout << "Creating GameManager !" << std::endl;
+	this->init(nbplayer, width, height);
 }
 
 GameManager::GameManager(const GameManager & copy)
@@ -29,15 +31,19 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-	
+	delete this->_me;
+	std::cout << "Destroying GameManager !" << std::endl;
 }
 
 GameManager	&	GameManager::operator=(const GameManager & ass)
 {
 	this->_nbPlayer = ass._nbPlayer;
-	this->_speed = ass._speed;
 	this->_width = ass._width;
 	this->_height = ass._height;
+	this->_players = ass._players;
+	this->_master = ass._master;
+	this->_me = ass._me;
+	this->_players = ass._players;
 	return (*this);
 }
 
@@ -52,23 +58,23 @@ double			GameManager::deltaTime(void)
 	return (tmp);
 }
 
-void		GameManager::init(int nbplayer, int width, int height, double speed)
+void		GameManager::init(int nbplayer, int width, int height)
 {
+	this->_master = true;
 	this->_nbPlayer = nbplayer;
 	this->_width = width;
 	this->_height = height;
-	this->_speed = speed;
 	MapManager::Instance().init(nbplayer, width, height);
+	this->_me = new Player();
 }
 
-void		GameManager::loop(e_preMode mode)
+bool		GameManager::IsAlive(void)
 {
-	(void)mode;
-	(void)this->_mode;
+	return (this->_me->IsAlive());
 }
 
 /*
-void		GameManager::loop(e_preMode mode)
+void		GameManager::loop(void)
 {
 	GraphicsManager::setLib(sfml, this->_width, this->_height);
 	bool	run = true;

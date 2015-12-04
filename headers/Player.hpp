@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/29 19:17:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/29 19:28:43 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:20:45 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -24,16 +24,16 @@ class Player
 	e_Input		_lastInput;
 	double		_nextMove;
 
-	Player(void);
-
 	public:
 
+	Player(void);
 	Player(Snake *snake);
 	Player(const Player & copy);
 	~Player(void);
 
 	Player	&	operator=(const Player & ass);
-	
+	bool		IsAlive(void);
+	void		move(e_Cardinal direc);
 
 };
 

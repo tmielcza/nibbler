@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/04/25 16:24:27 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 15:43:15 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,8 +26,8 @@ enum	e_Input
 	I_Nope = 0,
 	I_Up = 1,
 	I_Down = 2,
-	I_Left = 4,
-	I_Right = 8,
+	I_Right = 4,
+	I_Left = 8,
 	I_Ok = 16,
 	I_Cancel = 32,
 	I_Lib1 = 64,
@@ -51,6 +51,7 @@ public:
 	virtual void				switchFoodMode(void) = 0;
 	virtual void				drawTail(float time, int x, int y, e_Dir last) = 0;
 	virtual void				drawHead(float time, int x, int y, e_Dir last) = 0;
+	virtual void				putWall(int x, int y) = 0;
 	virtual std::list<e_Input>	getInput(void) = 0;
 };
 

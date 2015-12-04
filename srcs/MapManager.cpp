@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:43:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:13:30 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 17:19:30 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -41,10 +41,6 @@ int		MapManager::getBonusnb(void)
 
 void	MapManager::init(int nbplayer, int width, int height)
 {
-	int		x;
-	int		y;
-	int		direction;
-
 	this->_Map = new AEntity**[width];
 	for (int i = 0; i < (width); i++)
 	{
@@ -55,11 +51,6 @@ void	MapManager::init(int nbplayer, int width, int height)
 	this->_width = width;
 	this->_height = height;
 	this->_nbPlayer = nbplayer;
-	x = width / 2;
-	y = height / 2;
-	direction = 1;
-	Snake *snake = new Snake((e_Cardinal)direction, x, y);
-	this->_snakes.push_back(snake);
 }
 
 void		MapManager::move(int index)
@@ -201,4 +192,32 @@ int		MapManager::getWidth(void)
 int		MapManager::getHeight(void)
 {
 	return (this->_height);
+}
+
+void	MapManager::setWall(int x, int y)
+{
+	if (MapManager::Instance()._Map[x][y] != NULL)
+	{
+		Wall *w = new Wall(x, y);
+		MapManager::Instance()._Map[x][y] = w;
+		this->_walls.push_front(w);
+	}
+}
+
+void	MapManager::setWall(Point pos)
+{
+	int x = pos.getX();
+	int y = pos.getY();
+
+	if (MapManager::Instance()._Map[x][y] != NULL)
+	{
+		Wall *w = new Wall(pos);
+		MapManager::Instance()._Map[x][y] = w;
+		this->_walls.push_front(w);
+	}
+}
+
+void	MapManager::setSnake(Snake *snake)
+{
+	this->_snakes.push_back(snake);
 }

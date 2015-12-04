@@ -6,18 +6,19 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 16:24:19 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/14 17:38:59 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/03 17:43:55 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include <iostream>
 #include <string>
 
-#include "AGameMode.hpp"
+#include "UsualMode.hpp"
 
 int		main(void)
 {
-	AGameMode	mode = NormalMode(20, 20, 1);
-	mode.run();
+	UsualMode		game;
+
+	game.run();
 	return (0);
 }

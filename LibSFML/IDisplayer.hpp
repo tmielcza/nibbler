@@ -6,14 +6,14 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 17:31:25 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 15:43:15 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #ifndef IDISPLAYER_HPP
 # define IDISPLAYER_HPP
 
-enum e_Dir
+enum	e_Dir
 {
 	Up,
 	Down,
@@ -23,16 +23,18 @@ enum e_Dir
 
 enum	e_Input
 {
-	I_Up,
-	I_Down,
-	I_Left,
-	I_Right,
-	I_Ok,
-	I_Cancel,
-	I_Lib1,
-	I_Lib2,
-	I_Lib3,
-	I_Close
+	I_Nope = 0,
+	I_Up = 1,
+	I_Down = 2,
+	I_Right = 4,
+	I_Left = 8,
+	I_Ok = 16,
+	I_Cancel = 32,
+	I_Lib1 = 64,
+	I_Lib2 = 128,
+	I_Lib3 = 256,
+	I_Close = 512,
+	I_Dir = 1 | 2 | 4 | 8
 };
 
 class IDisplayer

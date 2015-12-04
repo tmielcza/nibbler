@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 17:24:52 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 16:01:08 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,7 +18,7 @@
 ADisplayable::ADisplayable(vec2 pos, std::string shaderName, float time)
 {
 	this->pos = pos;
-	this->_shad.loadFromFile(shaderName, sf::Shader::Fragment);
+	this->_shad.loadFromFile("resources/" + shaderName, sf::Shader::Fragment);
 	this->_time = time;
 }
 

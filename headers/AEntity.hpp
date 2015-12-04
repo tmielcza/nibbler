@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/04 12:58:05 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/02 16:32:16 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 21:12:54 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,10 +19,12 @@
 
 enum e_Cardinal
 {
-	North,
-	South,
-	East,
-	West
+	North = 1,
+	South = 2,
+	East = 4,
+	West = 8,
+	Longitude = North | South,
+	Latitude = East | West
 };
 
 class AEntity
