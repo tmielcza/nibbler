@@ -12,6 +12,8 @@
 
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+#include <time.h>
 
 #include "UsualMode.hpp"
 
@@ -19,6 +21,7 @@ int		main(void)
 {
 	UsualMode		game;
 
+	srand(time(NULL));
 	game.run();
 	return (0);
 }

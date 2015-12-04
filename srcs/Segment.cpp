@@ -41,6 +41,7 @@ Segment	&	Segment::operator=(const Segment & ass)
 {
 	this->_pos = ass._pos;
 	this->_direction = ass._direction;
+	this->_eatable = ass._eatable;
 	return (*this);
 }
 

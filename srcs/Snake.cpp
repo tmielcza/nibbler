@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 21:32:43 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:37:32 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,22 +18,22 @@ int		Snake::_curIndex = 0;
 
 Snake::Snake(void) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !!" << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
-	this->init();
 	this->_alive = true;
+	this->init();
+	std::cout << "Creating Snake !!" << std::endl;
 }
 
 Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !!" << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
 	this->init(direction, x, y);
 	this->_alive = true;
+	std::cout << "Creating Snake !!" << std::endl;
 }
 
 Snake::~Snake(void)
@@ -64,21 +64,6 @@ bool							Snake::check_place_snake(int x, int y)
 	return (good);
 }
 
-/*
-
-double							Snake::deltaTime(void)
-{
-	static auto             last = Clock::now();
-	auto                    time = Clock::now();
-	float                   tmp;
-
-	tmp = std::chrono::duration_cast<std::chrono::microseconds>(time - last).count() / 1000000.f;
-	last = time;
-	return (tmp);
-}
-
-*/
-
 void							Snake::init(void)
 {
 	int		width = MapManager::Instance().getWidth();
@@ -91,13 +76,13 @@ void							Snake::init(void)
 	this->init(East, x, y);
 }
 
-void							Snake::init(int direction, int x, int y)
+void							Snake::init(e_Cardinal direction, int x, int y)
 {
 	Segment		*seg;
 
 	for (int i = 0; i < 4; i++)
 	{
-		seg = new Segment(x, y, (e_Cardinal)direction);
+		seg = new Segment(x, y, direction);
 		this->_snake.push_back(seg);		
 		if (seg->get_Direc() == North)
 			y--;
@@ -162,7 +147,7 @@ void							Snake::befor_move(void)
 	if (direc == North)
 	{
 		y++;
-		if (y > MapManager::Instance().getHeight())
+		if (y >= MapManager::Instance().getHeight())
 			y = 0;
 	}
 	else if (direc == South)
@@ -174,7 +159,7 @@ void							Snake::befor_move(void)
 	else if (direc == East)
 	{
 		x++;
-		if (x > MapManager::Instance().getWidth())
+		if (x >= MapManager::Instance().getWidth())
 			x = 0;
 	}
 	else if (direc == West)

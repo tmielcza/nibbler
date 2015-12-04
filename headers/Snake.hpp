@@ -50,7 +50,7 @@ class Snake
 	~Snake(void);
 
 	void						init(void);
-	void						init(int direction, int x, int y);
+	void						init(e_Cardinal direction, int x, int y);
 	std::list<Segment*>		&	get_snake(void);
 	void						add_to_tail(void);
 	void						add_score(int score);

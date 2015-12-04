@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 21:32:02 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:37:12 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -79,10 +79,11 @@ void			UsualMode::run(void)
 {
 	double				delta = 0;
 
+	std::cout << "Enter in while" << std::endl;
 	while (this->check_end())
 	{
-		delta = this->_game->deltaTime();
 //		GraphicsManager::Instance().clear();
+		delta = this->_game->deltaTime();
 		this->_game->update_one(delta);
 		MapManager::Instance().update(delta);
 		GraphicsManager::Instance().display();
