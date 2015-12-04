@@ -232,11 +232,17 @@ void							Snake::turn(e_Cardinal direction)
 {
 	Segment*	head = *(this->_snake.begin());
 	
-	if (head->get_Direc() | Latitude)
-		if (direction | Longitude)
+	if (head->get_Direc() & Latitude)
+		if (direction & Longitude)
+		{
+			if (direction == North)
+				direction = South;
+			else
+				direction = North;
 			head->set_Direc(direction);
-	if (head->get_Direc() | Longitude)
-		if (direction | Latitude)
+		}
+	if (head->get_Direc() & Longitude)
+		if (direction & Latitude)
 			head->set_Direc(direction);
 	if (this->_nbmove == -1)
 		this->_nbmove = 0;
