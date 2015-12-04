@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 21:37:32 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:58:32 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -331,4 +331,9 @@ void							Snake::draw(double time)
 	x = this->getHeadSnakeX();
 	y = this->getHeadSnakeY();
 	GraphicsManager::Instance().drawHead(1., x, y, Left);
+	auto it = ++(this->_snake.begin());
+	for (auto end = this->_snake.end(); it != end; it++)
+	{
+		(*it)->draw(time);
+	}
 }

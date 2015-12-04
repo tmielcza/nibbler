@@ -6,12 +6,13 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/06 19:00:25 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/07 14:51:41 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 22:04:59 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include "Segment.hpp"
 #include "MapManager.hpp"
+#include "GraphicsManager.hpp"
 
 Segment::Segment(void)
 {
@@ -58,4 +59,5 @@ void		Segment::set_Direc(e_Cardinal direc)
 void		Segment::draw(double time)
 {
 	(void)time;
+	GraphicsManager::Instance().drawTail(1., this->_pos.getX(), this->_pos.getY(), Left);
 }
