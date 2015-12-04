@@ -63,6 +63,21 @@ bool							Snake::check_place_snake(int x, int y)
 	return (good);
 }
 
+/*
+
+double							Snake::deltaTime(void)
+{
+	static auto             last = Clock::now();
+	auto                    time = Clock::now();
+	float                   tmp;
+
+	tmp = std::chrono::duration_cast<std::chrono::microseconds>(time - last).count() / 1000000.f;
+	last = time;
+	return (tmp);
+}
+
+*/
+
 void							Snake::init(void)
 {
 	int		width = MapManager::Instance().getWidth();
@@ -129,7 +144,11 @@ void							Snake::add_to_tail(void)
 	seg->set_Direc(this->_tail->get_Direc());
 	this->_snake.push_back(seg);
 	this->_tail = seg;
+}
 
+void							Snake::add_score(int score)
+{
+	this->_score += score;
 }
 
 void							Snake::befor_move(void)
@@ -308,7 +327,17 @@ int								Snake::getIndex(void)
 	return (this->_index);
 }
 
+double							Snake::getSpeed(void)
+{
+	return (this->_speed);
+}
+
 bool							Snake::IsAlive(void)
 {
 	return (this->_alive);
+}
+
+void							Snake::draw(double time)
+{
+	(void)time;
 }

@@ -44,8 +44,3 @@ bool		ABonus::isalive(void)
 {
 	return (this->_isalive);
 }
-
-void		ABonus::bonus_taken(const Snake & snake)
-{
-	(void)snake;
-}

@@ -71,6 +71,7 @@ class MapManager
 	void				setWall(int x, int y);
 	void				setWall(Point pos);
 	void				setSnake(Snake *snake);
+	void				update(double time);
 
 };
 

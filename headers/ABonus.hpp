@@ -13,9 +13,15 @@
 #ifndef ABONUS_HPP
 # define ABONUS_HPP
 
+# include <chrono>
+
 # include "AEntity.hpp"
 # include <iostream>
 # include <string>
+
+# define B_TIME 5000000000
+
+typedef std::chrono::high_resolution_clock Clock;
 
 class Snake;
 
@@ -29,21 +35,21 @@ class ABonus : public AEntity
 
 	int		_value;
 	bool	_isalive;
+	double	_time;
 
 	public:
 
 	ABonus(ABonus const & copy);
 	ABonus(int value, int x, int y);
-	~ABonus(void);
+	virtual ~ABonus(void);
 
 	ABonus	&			operator=(ABonus const & ass);
 
 	bool				isalive(void);
-	void				bonus_taken(const Snake & snake);
 
 	virtual void		taken(Snake & snake) = 0;
-	virtual void		update(float time) = 0;
-	virtual void		draw(float time) = 0;
+	virtual void		update(double time) = 0;
+	virtual void		draw(double time) = 0;
 
 };
 

@@ -78,25 +78,11 @@ void			UsualMode::run(void)
 {
 	GraphicsManager::setLib(sfml, this->_width, this->_height);
 	double				delta = 0;
-	e_Input				input = I_Nope;
-	std::list<e_Input>	inputs;
-	double				refresh = 0;
 
 	while (this->check_end())
 	{
 		delta = this->_game->deltaTime();
-		inputs = GraphicsManager::Instance().getInput();
-		for (auto it = inputs.begin(); it != inputs.end(); it++)
-		{
-			if ((*it & I_Dir) != 0)
-				input = *it;
-		}
-//		if (refresh < this->_game->_me->getSpeed())
-		if (refresh < 1.)
-		{
-			this->_game->_me->move((e_Cardinal)input);
-			refresh = 0.;
-		}
-		refresh += delta;
+		this->_game->update_one(delta);
+		MapManager::Instance().update(delta);
 	}
 }

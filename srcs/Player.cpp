@@ -12,6 +12,7 @@
 
 #include "Player.hpp"
 #include "MapManager.hpp"
+#include "GraphicsManager.hpp"
 
 Player::Player(void)
 {
@@ -45,7 +46,7 @@ Player	&	Player::operator=(const Player & ass)
 {
 	this->_Snake = ass._Snake;
 	this->_lastInput = ass._lastInput;
-	this->_nextMove = ass._nextMove;
+	this->_time = ass._time;
 	return (*this);
 }
 
@@ -54,7 +55,23 @@ bool		Player::IsAlive(void)
 	return (this->_Snake->IsAlive());
 }
 
-void		Player::move(e_Cardinal direc)
+void		Player::update(double time)
 {
-	this->_Snake->turn(direc);
+	e_Input				input = I_Nope;
+	std::list<e_Input>	inputs;
+
+	inputs = GraphicsManager::Instance().getInput();
+	for (auto it = inputs.begin(); it != inputs.end(); it++)
+	{
+		if ((*it & I_Dir) != 0)
+			input = *it;
+	}
+	this->_Snake->turn((e_Cardinal)input);
+	this->_time += (time * this->_Snake->getSpeed());
+	if (this->_time >= SN_TIME)
+	{
+		this->_Snake->befor_move();
+		this->_Snake->move();
+		this->_time = 0.;
+	}
 }

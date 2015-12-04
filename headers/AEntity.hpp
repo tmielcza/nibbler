@@ -40,15 +40,17 @@ class AEntity
 	AEntity(AEntity const & copy);
 	virtual ~AEntity(void);
 
-	AEntity	&	operator=(AEntity const & ass);
+	AEntity	&		operator=(AEntity const & ass);
 
-	Point	&	getPos(void);
-	void		setPos(Point & set);
-	int			getX(void) const;
-	int			getY(void) const;
-	void		setX(int x);
-	void		setY(int y);
-	bool		getEatable(void) const;
+	Point	&		getPos(void);
+	void			setPos(Point & set);
+	int				getX(void) const;
+	int				getY(void) const;
+	void			setX(int x);
+	void			setY(int y);
+	bool			getEatable(void) const;
+
+	virtual void	draw(double time) = 0;
 
 };
 

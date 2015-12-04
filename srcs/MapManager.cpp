@@ -118,13 +118,7 @@ void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideM
 			x = upleft.getX() + (rand() % downright.getX());
 			y = upleft.getY() + (rand() % downright.getY());
 		}
-		int r = rand() % 10;
-		int value;
-		if (r == 6)
-			value = 10;
-		else
-			value = 1;
-		Food *f = new Food(value, x, y);
+		Food *f = new Food(1, x, y);
 		this->_Map[x][y] = f;
 		this->_foods.push_front(f);
 	}
@@ -147,13 +141,7 @@ void	MapManager::foodpop(Point center, int radius, e_PopMode mode = InsideMode)
 			x = tmpx + (rand() % (radius * 2));
 			y = tmpy + (rand() % (radius * 2));
 		}
-		int r = rand() % 10;
-		int value;
-		if (r == 6)
-			value = 10;
-		else
-			value = 1;
-		Food *f = new Food(value, x, y);
+		Food *f = new Food(1, x, y);
 		this->_Map[x][y] = f;
 		this->_foods.push_front(f);
 	}
@@ -181,7 +169,7 @@ void	MapManager::bonuspop(void)
 
 void	MapManager::bonustaken(Snake & taker, ABonus *taken)
 {
-	taken->bonus_taken(taker);
+	taken->taken(taker);
 }
 
 int		MapManager::getWidth(void)
@@ -220,4 +208,9 @@ void	MapManager::setWall(Point pos)
 void	MapManager::setSnake(Snake *snake)
 {
 	this->_snakes.push_back(snake);
+}
+
+void	MapManager::update(double time)
+{
+	(void)time;
 }

@@ -13,11 +13,17 @@
 #ifndef SNAKE_HPP
 # define SNAKE_HPP
 
+# include <chrono>
+# include <list>
+
 # include "Food.hpp"
 # include "Wall.hpp"
 # include "ABonus.hpp"
 # include "Segment.hpp"
-# include <list>
+
+# define SN_TIME 100
+
+typedef std::chrono::high_resolution_clock Clock;
 
 class Snake
 {
@@ -47,6 +53,7 @@ class Snake
 	void						init(int direction, int x, int y);
 	std::list<Segment*>		&	get_snake(void);
 	void						add_to_tail(void);
+	void						add_score(int score);
 	void						befor_move(void);
 	void						move(void);
 	void						turn(e_Cardinal direction);
@@ -57,7 +64,9 @@ class Snake
 	int							getHeadSnakeX(void);
 	int							getHeadSnakeY(void);
 	int							getIndex(void);
+	double						getSpeed(void);
 	bool						IsAlive(void);
+	void						draw(double time);
 
 };
 

@@ -30,10 +30,9 @@ class GameManager
 	int						_height;
 	bool					_master;
 	std::list<Player*>		_players;
+	Player					*_me;
 
 	public:
-
-	Player					*_me;
 
 	GameManager(void);
 	GameManager(int nbplayer, int width, int height);
@@ -45,8 +44,8 @@ class GameManager
 	double			deltaTime(void);
 	void			init(int nbplayer, int width, int height);
 	bool			IsAlive(void);
-//	void			loop(void);
-//	bool			check_end(void);
+	void			update_one(double time);
+	void			update(double time);
 
 };
 
