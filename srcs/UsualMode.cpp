@@ -78,9 +78,13 @@ bool			UsualMode::check_end(void)
 void			UsualMode::run(void)
 {
 	double				delta = 0;
+	int					i = 0;
 
+	std::cout << "Enter in while" << std::endl;
 	while (this->check_end())
 	{
+		i++;
+		std::cout << i << std::endl;
 		GraphicsManager::Instance().clear();
 		delta = this->_game->deltaTime();
 		this->_game->update_one(delta);

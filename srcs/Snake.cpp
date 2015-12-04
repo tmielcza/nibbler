@@ -18,22 +18,22 @@ int		Snake::_curIndex = 0;
 
 Snake::Snake(void) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !!" << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
-	this->init();
 	this->_alive = true;
+	this->init();
+	std::cout << "Creating Snake !!" << std::endl;
 }
 
 Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !!" << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 1;
 	this->init(direction, x, y);
 	this->_alive = true;
+	std::cout << "Creating Snake !!" << std::endl;
 }
 
 Snake::~Snake(void)
@@ -73,16 +73,16 @@ void							Snake::init(void)
 
 	while (check_place_snake(x, y) == false)
 		y = rand() % height;
-	this->init(4, x, y);
+	this->init(East, x, y);
 }
 
-void							Snake::init(int direction, int x, int y)
+void							Snake::init(e_Cardinal direction, int x, int y)
 {
 	Segment		*seg;
 
 	for (int i = 0; i < 4; i++)
 	{
-		seg = new Segment(x, y, (e_Cardinal)direction);
+		seg = new Segment(x, y, direction);
 		this->_snake.push_back(seg);		
 		if (seg->get_Direc() == North)
 			y--;
@@ -144,32 +144,26 @@ void							Snake::befor_move(void)
 	int x = (*head)->getX();
 	int y = (*head)->getY();
 	e_Cardinal direc = (*head)->get_Direc();
-	std::cout << "Here ?" << std::endl;
-	std::cout << direc << std::endl;
 	if (direc == North)
 	{
-		std::cout << "North" << std::endl;
 		y++;
 		if (y >= MapManager::Instance().getHeight())
 			y = 0;
 	}
 	else if (direc == South)
 	{
-		std::cout << "South" << std::endl;
 		y--;
 		if (y < 0)
 			y = MapManager::Instance().getHeight() - 1;
 	}
 	else if (direc == East)
 	{
-		std::cout << "East" << std::endl;
 		x++;
 		if (x >= MapManager::Instance().getWidth())
 			x = 0;
 	}
 	else if (direc == West)
 	{
-		std::cout << "West" << std::endl;
 		x--;
 		if (x < 0)
 			x = MapManager::Instance().getWidth() - 1;

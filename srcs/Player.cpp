@@ -66,7 +66,8 @@ void		Player::update(double time)
 		if ((*it & I_Dir) != 0)
 			input = *it;
 	}
-	this->_Snake->turn((e_Cardinal)input);
+	if (input & I_Dir)
+		this->_Snake->turn((e_Cardinal)input);
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
 //	if (this->_time >= SN_TIME)
