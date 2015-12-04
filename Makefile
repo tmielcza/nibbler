@@ -6,13 +6,14 @@
 #    By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/17 17:23:01 by rduclos           #+#    #+#              #
-#    Updated: 2015/12/03 17:14:05 by rduclos          ###   ########.fr        #
+#    Updated: 2015/12/03 21:53:38 by rduclos          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = Nibbler
 GFXLIBS = gfx-sfml.so
 FLAGS = -Wall -Wextra -Werror -std=c++11
+FLAGS += -g # Debug
 
 CC = g++
 

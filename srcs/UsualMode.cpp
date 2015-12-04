@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:39:36 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 17:46:52 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -59,10 +59,11 @@ void			UsualMode::init(void)
 	int		height = MapManager::Instance().getHeight();
 	int		width = MapManager::Instance().getWidth();
 
+	GraphicsManager::setLib(sfml, this->_width, this->_height);
 	for (int i = 0; i < height; i++)
-		MapManager::Instance().setWall(i, width - 1);
+		MapManager::Instance().setWall(width - 1, i);
 	for (int i = 0; i < height; i++)
-		MapManager::Instance().setWall(i, 0);
+		MapManager::Instance().setWall(0, i);
 	for (int i = 0; i < width; i++)
 		MapManager::Instance().setWall(i, height - 1);
 	for (int i = 0; i < width; i++)
@@ -76,13 +77,14 @@ bool			UsualMode::check_end(void)
 
 void			UsualMode::run(void)
 {
-	GraphicsManager::setLib(sfml, this->_width, this->_height);
 	double				delta = 0;
 
 	while (this->check_end())
 	{
+		GraphicsManager::Instance().clear();
 		delta = this->_game->deltaTime();
 		this->_game->update_one(delta);
 		MapManager::Instance().update(delta);
+		GraphicsManager::Instance().display();
 	}
 }

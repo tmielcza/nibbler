@@ -6,7 +6,7 @@
 #    By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/11 13:30:53 by tmielcza          #+#    #+#              #
-#    Updated: 2015/12/01 17:30:42 by tmielcza         ###   ########.fr        #
+#    Updated: 2015/12/04 18:38:15 by tmielcza         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -62,6 +62,6 @@ clean:
 	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(TEST) $(TEST).dSYM
 
 re: fclean all

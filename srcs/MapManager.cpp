@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:43:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 17:19:30 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 16:53:31 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -184,7 +184,7 @@ int		MapManager::getHeight(void)
 
 void	MapManager::setWall(int x, int y)
 {
-	if (MapManager::Instance()._Map[x][y] != NULL)
+	if (MapManager::Instance()._Map[x][y] == NULL)
 	{
 		Wall *w = new Wall(x, y);
 		MapManager::Instance()._Map[x][y] = w;
@@ -197,7 +197,7 @@ void	MapManager::setWall(Point pos)
 	int x = pos.getX();
 	int y = pos.getY();
 
-	if (MapManager::Instance()._Map[x][y] != NULL)
+	if (MapManager::Instance()._Map[x][y] == NULL)
 	{
 		Wall *w = new Wall(pos);
 		MapManager::Instance()._Map[x][y] = w;

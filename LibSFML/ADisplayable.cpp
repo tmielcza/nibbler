@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/04 16:01:08 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 17:30:00 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -222,7 +222,7 @@ Head::~Head(void)
 }
 
 Head::Head(vec2 pos, vec2 last)
-	: ADisplayable(pos, "head.gl", 0.f), _last(last)
+	: ADisplayable(pos, "resources/head.gl", 0.f), _last(last)
 {
 }
 

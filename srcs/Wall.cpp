@@ -6,22 +6,20 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 18:26:10 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/07 14:52:38 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 16:50:20 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include "Wall.hpp"
+#include "GraphicsManager.hpp"
 
 Wall::Wall(void)
 {
 	std::cout << "Wall Builed !!!" << std::endl;
 }
 
-Wall::Wall(Point pos)
+Wall::Wall(Point pos) : Wall(pos.getX(), pos.getY())
 {
-	std::cout << "Wall Builed !!!" << std::endl;
-	this->_pos.setX(pos.getX());
-	this->_pos.setY(pos.getY());
 }
 
 Wall::Wall(int x, int y)
@@ -30,6 +28,7 @@ Wall::Wall(int x, int y)
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = false;
+	GraphicsManager::Instance().putWall(x, y);
 }
 
 Wall::Wall(Wall const & copy)

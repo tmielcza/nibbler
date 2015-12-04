@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:32:34 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 17:35:20 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -68,10 +68,14 @@ void		Player::update(double time)
 	}
 	this->_Snake->turn((e_Cardinal)input);
 	this->_time += (time * this->_Snake->getSpeed());
-	if (this->_time >= SN_TIME)
+	if (this->_time >= 1)
+//	if (this->_time >= SN_TIME)
 	{
+		std::cout << this->_Snake->getHeadSnakeX() << " "
+				  << this->_Snake->getHeadSnakeY() << std::endl;
 		this->_Snake->befor_move();
 		this->_Snake->move();
 		this->_time = 0.;
 	}
+	this->_Snake->draw(this->_time);
 }

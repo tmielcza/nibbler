@@ -6,12 +6,13 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:17:12 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 17:46:43 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include "Snake.hpp"
 #include "MapManager.hpp"
+#include "GraphicsManager.hpp"
 
 int		Snake::_curIndex = 0;
 
@@ -339,5 +340,10 @@ bool							Snake::IsAlive(void)
 
 void							Snake::draw(double time)
 {
+	float x, y;
+
 	(void)time;
+	x = this->getHeadSnakeX();
+	y = this->getHeadSnakeY();
+	GraphicsManager::Instance().drawHead(1., x, y, Left);
 }
