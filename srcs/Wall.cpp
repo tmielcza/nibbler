@@ -42,7 +42,7 @@ Wall::~Wall(void)
 	std::cout << "Destruction of the Wall !!!" << std::endl;
 }
 
-void	Wall::initWall(int x, int y)
+void		Wall::initWall(int x, int y)
 {
 	this->_pos.setX(x);
 	this->_pos.setY(y);
@@ -53,4 +53,9 @@ Wall	&	Wall::operator=(Wall const & ass)
 {
 	this->_pos = ass._pos;
 	return (*this);
+}
+
+void		Wall::draw(double time)
+{
+	(void)time;
 }

@@ -31,6 +31,8 @@ class Segment : public AEntity
 	Segment&		operator=(const Segment& ass);
 	e_Cardinal		get_Direc(void);
 	void			set_Direc(e_Cardinal direc);
+	void			draw(double time);
+
 };
 
 #endif

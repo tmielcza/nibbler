@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:52:46 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/04 16:27:48 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -78,27 +78,12 @@ bool			UsualMode::check_end(void)
 void			UsualMode::run(void)
 {
 	double				delta = 0;
-	e_Input				input = I_Nope;
-	std::list<e_Input>	inputs;
-	double				refresh = 0;
 
 	while (this->check_end())
 	{
 		GraphicsManager::Instance().clear();
 		delta = this->_game->deltaTime();
-		inputs = GraphicsManager::Instance().getInput();
-		for (auto it = inputs.begin(); it != inputs.end(); it++)
-		{
-			if ((*it & I_Dir) != 0)
-				input = *it;
-		}
-//		if (refresh < this->_game->_me->getSpeed())
-		if (refresh < 1.)
-		{
-			this->_game->_me->move((e_Cardinal)input);
-			refresh = 0.;
-		}
-		GraphicsManager::Instance().display();
-		refresh += delta;
+		this->_game->update_one(delta);
+		MapManager::Instance().update(delta);
 	}
 }

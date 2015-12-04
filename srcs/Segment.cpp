@@ -53,3 +53,8 @@ void		Segment::set_Direc(e_Cardinal direc)
 {
 	this->_direction = direc;
 }
+
+void		Segment::draw(double time)
+{
+	(void)time;
+}

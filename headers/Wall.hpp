@@ -27,8 +27,11 @@ class Wall : public AEntity
 	Wall(Point pos);
 	Wall(int x, int y);
 	Wall(Wall const & copy);
+
 	Wall	&	operator=(Wall const & ass);
 	void		initWall(int x, int y);
+	void		draw(double time);
+
 };
 
 #endif

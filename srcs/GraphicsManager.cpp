@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 13:58:27 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 21:55:09 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/03 22:01:23 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -31,7 +31,7 @@ IDisplayer&	GraphicsManager::Instance(void)
 
 void		GraphicsManager::setLib(e_Lib lib, int x, int y)
 {
-	static std::string	libs[size] = {"LibSFML/gfx-sfml"};
+	static std::string	libs[size] = {"LibSFML/gfx-sfml.so"};
 
 	if (_handle == nullptr)
 	{
