@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/04 17:42:02 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:33:57 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,6 +15,8 @@
 Displayer::Displayer(int x, int y)
 	: _win(sf::VideoMode(x * 40, y * 40), "Nibbler"), _time(0), _bg(sf::Vector2f(x * 20, y * 20))
 {
+	this->_tail.loadFromFile("resources/tail.gl", sf::Shader::Fragment);
+	this->_head.loadFromFile("resources/head.gl", sf::Shader::Fragment);
 	this->_texture.create(x * 40, y * 40);
 	this->_sprite.setTexture(this->_texture.getTexture());
 	this->_tmptexture.create(x * 40, y * 40);
@@ -68,6 +70,7 @@ void	Displayer::display(void)
 	this->postProcess(sha);
 	this->postProcess(sha2);
 //*/
+
 	for (auto it = _foods.begin(); it != _foods.end(); it++)
 	{
 		(*it)->draw(*this);
@@ -143,26 +146,21 @@ sf::Vector2f	Displayer::posOnScreen(int x, int y)
 
 void	Displayer::drawTail(float time, int x, int y, e_Dir last)
 {
-	sf::Shader			shad;
 	sf::Vector2f		pos;
-
-	shad.loadFromFile("tail.gl", sf::Shader::Fragment);
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
-	this->drawSprite(shad, pos, {40, 40}, this->getTime());
+	this->drawSprite(this->_tail, pos, {40, 40}, this->getTime());
 }
 
 void	Displayer::drawHead(float time, int x, int y, e_Dir last)
 {
-	sf::Shader			shad;
 	sf::Vector2f		pos;
-
-	shad.loadFromFile("resources/head.gl", sf::Shader::Fragment);
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
-	this->drawSprite(shad, pos, {40, 40}, this->getTime());
+	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
+//	this->_texture.display();
 }
 
 void	Displayer::putWall(int x, int y)

@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/04 17:30:00 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 20:50:01 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -191,6 +191,7 @@ Background::Background(vec2 pos)
 
 void	Background::draw(Displayer& dis)
 {
+	std::cout << dis.getTime() << std::endl;
 	dis.drawSprite(this->_shad, this->pos, dis.getSize(), fmod(dis.getTime(), 1));
 }
 

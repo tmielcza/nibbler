@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/12/03 17:28:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 17:46:52 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:32:02 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -81,8 +81,8 @@ void			UsualMode::run(void)
 
 	while (this->check_end())
 	{
-		GraphicsManager::Instance().clear();
 		delta = this->_game->deltaTime();
+//		GraphicsManager::Instance().clear();
 		this->_game->update_one(delta);
 		MapManager::Instance().update(delta);
 		GraphicsManager::Instance().display();

@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 17:33:49 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:17:46 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -71,6 +71,9 @@ private:
 	sf::Sprite					_sprite;
 	sf::RenderTexture			_tmptexture;
 	sf::Sprite					_tmpsprite;
+
+	sf::Shader					_tail;
+	sf::Shader					_head;
 
 	Background					_bg;
 

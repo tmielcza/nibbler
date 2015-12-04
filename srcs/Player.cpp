@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 17:35:20 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/04 21:32:19 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -61,12 +61,14 @@ void		Player::update(double time)
 	std::list<e_Input>	inputs;
 
 	inputs = GraphicsManager::Instance().getInput();
+	GraphicsManager::Instance().clear();
 	for (auto it = inputs.begin(); it != inputs.end(); it++)
 	{
 		if ((*it & I_Dir) != 0)
 			input = *it;
 	}
-	this->_Snake->turn((e_Cardinal)input);
+	if ((input & I_Dir) != 0)
+		this->_Snake->turn((e_Cardinal)input);
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
 //	if (this->_time >= SN_TIME)
