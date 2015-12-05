@@ -12,6 +12,11 @@
 
 #include "ABonus.hpp"
 
+ABonus::ABonus(void)
+{
+
+}
+
 ABonus::ABonus(const ABonus & copy)
 {
 	*this = copy;

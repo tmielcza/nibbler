@@ -16,6 +16,7 @@
 # include "Snake.hpp"
 # include "Food.hpp"
 # include "ABonus.hpp"
+# include "SuperFood.hpp"
 # include "Wall.hpp"
 # include "Point.hpp"
 # include "IDisplayer.hpp"
@@ -38,6 +39,7 @@ class MapManager
 
 	std::list<Snake*>	_snakes;
 //	ABonus				lst_bonus[1] = {};
+	std::list<Food*>	_foods;
 	std::list<ABonus*>	_bonus;
 	std::list<Wall*>	_walls;
 	int					_nbPlayer;

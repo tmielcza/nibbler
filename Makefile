@@ -23,7 +23,7 @@ HEADERS = headers/
 
 SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp Player.cpp \
 		GraphicsManager.cpp MapManager.cpp Point.cpp Segment.cpp Snake.cpp \
-		Wall.cpp AGameMode.cpp UsualMode.cpp main.cpp
+		Wall.cpp AGameMode.cpp UsualMode.cpp main.cpp SuperFood.cpp
 
 OBJ = $(SRC:%.cpp=$(DIROBJ)%.o)
 

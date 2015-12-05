@@ -1,10 +1,19 @@
 
 #include "SuperFood.hpp"
+#include "Snake.hpp"
 
-SuperFood::SuperFood(int x, int y)
+SuperFood::SuperFood(void)
 {
-	this->_pos.setPos(Point(x, y));
-	this->_value = 100;
+
+}
+
+SuperFood::SuperFood(int value, int x, int y)
+{
+	this->_pos.setX(x);
+	this->_pos.setY(y);
+	this->_value = value;
+	this->_isalive = true;
+	this->_eatable = true;
 }
 
 SuperFood::SuperFood(const SuperFood & src)
@@ -17,19 +26,22 @@ SuperFood::~SuperFood(void)
 
 }
 
-SuperFood	&		operator=(const SuperFood & src)
+SuperFood	&		SuperFood::operator=(const SuperFood & src)
 {
+	this->_value = src._value;
+	this->_isalive = src._isalive;
+	this->_time = src._time;
 	return (*this);
 }
 
-void				taken(Snake & snake)
+void				SuperFood::taken(Snake & snake)
 {
-	snake.add_score(this->value / (this->time / 100));
+	snake.add_score(this->_value / (this->_time / 100));
 	snake.add_to_tail();
 	delete this;
 }
 
-void				update(double time)
+void				SuperFood::update(double time)
 {
 	if ((this->_time += time) >= B_TIME)
 	{
@@ -37,7 +49,7 @@ void				update(double time)
 	}
 }
 
-void				draw(double time)
+void				SuperFood::draw(double time)
 {
-	(Void)time;
+	(void)time;
 }

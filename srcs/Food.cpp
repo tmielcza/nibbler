@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include "Food.hpp"
+#include "GraphicsManager.hpp"
 
 Food::Food(void)
 {
@@ -29,10 +30,12 @@ Food::Food(int value, int x, int y)
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = true;
+	GraphicsManager::Instance().popFood(x, y);
 }
 
 Food::~Food(void)
 {
+	GraphicsManager::Instance().depopFood(this->_pos.getX(), this->_pos.getY());
 	std::cout << "Food has been eaten !" << std::endl;
 }
 

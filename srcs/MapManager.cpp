@@ -124,6 +124,12 @@ void	MapManager::foodpop(void)
 	}
 	Food *f = new Food(1, x, y);
 	this->_Map[x][y] = f;
+	this->_foods.push_back(f);
+/*
+	int r = rand() % 5;
+	if (r == 3)
+		this->bonuspop();
+*/
 	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
 }
 
@@ -174,11 +180,10 @@ void	MapManager::bonuspop(void)
 		x = rand() % this->_width;
 		y = rand() % this->_height;
 	}
-
-/*	
-	ABonus 
-	this->_Map[x][y] =
-*/
+	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
+	SuperFood *sf = new SuperFood(100, x, y);
+	this->_Map[x][y] = sf;
+	this->_bonus.push_back(sf);
 }
 
 int		MapManager::getWidth(void)

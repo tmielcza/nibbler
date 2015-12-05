@@ -6,13 +6,10 @@
 
 class SuperFood : public ABonus
 {
-	private:
-
-	SuperFood(void);
-
 	public:
 
-	SuperFood(int x, int y);
+	SuperFood(void);
+	SuperFood(int value, int x, int y);
 	SuperFood(const SuperFood & src);
 	~SuperFood(void);
 

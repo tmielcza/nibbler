@@ -27,10 +27,6 @@ typedef std::chrono::high_resolution_clock Clock;
 
 class ABonus : public AEntity
 {
-	private:
-
-	ABonus(void);
-
 	protected:
 
 	int		_value;
@@ -39,6 +35,7 @@ class ABonus : public AEntity
 
 	public:
 
+	ABonus(void);
 	ABonus(ABonus const & copy);
 	ABonus(int value, int x, int y);
 	virtual ~ABonus(void);
