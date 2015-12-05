@@ -35,8 +35,10 @@ Food::Food(int value, int x, int y)
 
 Food::~Food(void)
 {
-	GraphicsManager::Instance().depopFood(this->_pos.getX(), this->_pos.getY());
-	std::cout << "Food has been eaten !" << std::endl;
+	int x = this->_pos.getX();
+	int y = this->_pos.getY();
+	GraphicsManager::Instance().depopFood(x, y);
+	std::cout << "Food in " << x << "-" << y << " has been eaten !" << std::endl;
 }
 
 Food	&	Food::operator=(Food const & ass)

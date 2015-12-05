@@ -20,7 +20,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
-	this->_speed = 1;
+	this->_speed = 1.5;
 	this->_alive = true;
 	this->init();
 	std::cout << "Creating Snake !!" << std::endl;
@@ -30,7 +30,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
-	this->_speed = 1;
+	this->_speed = 1.5;
 	this->init(direction, x, y);
 	this->_alive = true;
 	std::cout << "Creating Snake !!" << std::endl;
@@ -291,7 +291,7 @@ void							Snake::eat(Food const & eaten)
 		this->_score = eaten.get_value() * 2;
 	else
 		this->_score = eaten.get_value();
-	this->_speed += 0.2;
+	this->_speed += 0.15;
 	this->_nbmove = 0;
 	eaten.eaten(*this);
 	MapManager::Instance().foodpop();

@@ -47,9 +47,21 @@ void		ADisplayable::update(Displayer& dis)
 
 // Food
 
-Food::Food(vec2 pos, float time)
+Food::Food(vec2 pos, int x, int y, float time)
 	: ADisplayable(pos, "food.gl", fmod(time, 1))
 {
+	this->_x = x;
+	this->_y = y;
+}
+
+int		Food::getX(void)
+{
+	return this->_x;
+}
+
+int		Food::getY(void)
+{
+	return this->_y;
 }
 
 void	Food::draw(Displayer& dis)
