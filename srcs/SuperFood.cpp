@@ -4,6 +4,7 @@
 SuperFood::SuperFood(int x, int y)
 {
 	this->_pos.setPos(Point(x, y));
+	this->_value = 100;
 }
 
 SuperFood::SuperFood(const SuperFood & src)
@@ -23,8 +24,9 @@ SuperFood	&		operator=(const SuperFood & src)
 
 void				taken(Snake & snake)
 {
-	snake.add_score(100);
+	snake.add_score(this->value / (this->time / 100));
 	snake.add_to_tail();
+	delete this;
 }
 
 void				update(double time)

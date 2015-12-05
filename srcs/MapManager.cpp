@@ -21,17 +21,22 @@ MapManager::MapManager(void)
 
 MapManager::~MapManager(void)
 {
+	std::list<Wall*>::iterator		wall = this->_walls.begin();
+	std::list<Wall*>::iterator		del;
+	std::list<Wall*>::iterator		end = this->_walls.end();
+
+	while (wall != end)
+	{
+		del = wall;
+		wall++;
+		this->_walls.erase(del);
+	}
 	std::cout << "Ending MapManager !!!" << std::endl;
 }
 
 MapManager&	MapManager::Instance(void)
 {
 	return (MapManager::_instance);
-}
-
-int		MapManager::getFoodnb(void)
-{
-	return (this->_foods.size());
 }
 
 int		MapManager::getBonusnb(void)
@@ -119,7 +124,6 @@ void	MapManager::foodpop(void)
 	}
 	Food *f = new Food(1, x, y);
 	this->_Map[x][y] = f;
-	this->_foods.push_front(f);
 	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
 }
 
@@ -136,7 +140,6 @@ void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideM
 		}
 		Food *f = new Food(1, x, y);
 		this->_Map[x][y] = f;
-		this->_foods.push_front(f);
 	}
 }
 
@@ -159,13 +162,7 @@ void	MapManager::foodpop(Point center, int radius, e_PopMode mode = InsideMode)
 		}
 		Food *f = new Food(1, x, y);
 		this->_Map[x][y] = f;
-		this->_foods.push_front(f);
 	}
-}
-
-void	MapManager::foodeaten(Snake & eater, Food & eaten)
-{
-	eater.eat(eaten);
 }
 
 void	MapManager::bonuspop(void)
@@ -177,15 +174,11 @@ void	MapManager::bonuspop(void)
 		x = rand() % this->_width;
 		y = rand() % this->_height;
 	}
-/*	
 
+/*	
+	ABonus 
 	this->_Map[x][y] =
 */
-}
-
-void	MapManager::bonustaken(Snake & taker, ABonus *taken)
-{
-	taken->taken(taker);
 }
 
 int		MapManager::getWidth(void)

@@ -21,9 +21,9 @@
 
 # define B_TIME 5000000000
 
-typedef std::chrono::high_resolution_clock Clock;
-
 class Snake;
+
+typedef std::chrono::high_resolution_clock Clock;
 
 class ABonus : public AEntity
 {

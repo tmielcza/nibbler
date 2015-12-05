@@ -37,7 +37,7 @@ class MapManager
 	~MapManager(void);
 
 	std::list<Snake*>	_snakes;
-	std::list<Food*>	_foods;
+//	ABonus				lst_bonus[1] = {};
 	std::list<ABonus*>	_bonus;
 	std::list<Wall*>	_walls;
 	int					_nbPlayer;
@@ -61,10 +61,7 @@ class MapManager
 	void				foodpop(void);
 	void				foodpop(Point upleft, Point downright, e_PopMode mode);
 	void				foodpop(Point center, int radius, e_PopMode mode);
-	void				foodeaten(Snake & eater, Food & eaten);
 	void				bonuspop(void);
-	void				bonustaken(Snake & taker, ABonus *taken);
-	int					getFoodnb(void);
 	int					getBonusnb(void);
 	int					getWidth(void);
 	int					getHeight(void);

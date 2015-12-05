@@ -17,6 +17,8 @@
 # include <iostream>
 # include <string>
 
+class Snake;
+
 class Food : public AEntity
 {
 	private:
@@ -35,6 +37,8 @@ class Food : public AEntity
 	int			get_value(void) const;
 	void		set_value(int value);
 	void		draw(double time);
+	void		eaten(Snake & eater) const;
+
 };
 
 #endif

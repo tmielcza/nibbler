@@ -67,3 +67,8 @@ void		Food::draw(double time)
 	(void)time;
 }
 
+void		Food::eaten(Snake & eater) const
+{
+	(void)eater;
+	delete this;
+}
