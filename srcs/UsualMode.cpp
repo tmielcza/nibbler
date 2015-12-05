@@ -16,10 +16,10 @@ UsualMode::UsualMode(void)
 {
 	std::cout << "Creating UsualMode !" << std::endl;
 	this->_nbPlayers = 1;
-	this->_width = 25;
-	this->_height = 25;
+	this->_width = 22;
+	this->_height = 17;
 	this->_speed = 1;
-	this->_game = new GameManager();
+	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height);
 	this->init();
 }
 

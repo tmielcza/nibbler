@@ -291,7 +291,7 @@ void							Snake::eat(Food const & eaten)
 		this->_score = eaten.get_value() * 2;
 	else
 		this->_score = eaten.get_value();
-	this->_speed += 0.1;
+	this->_speed += 0.2;
 	this->_nbmove = 0;
 	eaten.eaten(*this);
 	MapManager::Instance().foodpop();
