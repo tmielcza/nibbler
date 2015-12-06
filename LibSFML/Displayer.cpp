@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/04 21:33:57 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/06 19:31:56 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,6 +15,7 @@
 Displayer::Displayer(int x, int y)
 	: _win(sf::VideoMode(x * 40, y * 40), "Nibbler"), _time(0), _bg(sf::Vector2f(x * 20, y * 20))
 {
+	this->_isFoodOn = true;
 	this->_tail.loadFromFile("resources/tail.gl", sf::Shader::Fragment);
 	this->_head.loadFromFile("resources/head.gl", sf::Shader::Fragment);
 	this->_texture.create(x * 40, y * 40);
@@ -58,18 +59,18 @@ void	Displayer::display(void)
 {
 /*
 	sf::Shader sha;
-	sha.loadFromFile("take.gl", sf::Shader::Fragment);
+	sha.loadFromFile("resources/take.gl", sf::Shader::Fragment);
 	sha.setParameter("pos", sf::Vector2f(0.3, 0.9));
 	sha.setParameter("size", fmod(this->_time, 2));
 
 	sf::Shader sha2;
-	sha2.loadFromFile("take.gl", sf::Shader::Fragment);
+	sha2.loadFromFile("resources/take.gl", sf::Shader::Fragment);
 	sha2.setParameter("pos", sf::Vector2f(0.0, 1.0));
 	sha2.setParameter("size", fmod(this->_time + 0.4, 2));
+//*/
 
 	this->postProcess(sha);
 	this->postProcess(sha2);
-//*/
 
 	for (auto it = _foods.begin(); it != _foods.end(); it++)
 	{
@@ -130,10 +131,10 @@ bool	Displayer::getFoodMode(void)
 sf::Vector2f	Displayer::offsetFromDir(e_Dir dir)
 {
 	static const std::map<e_Dir, sf::Vector2f> offsets = {
-		{Up, {-40, 0}},
-		{Down, {40, 0}},
-		{Left, {0, -40}},
-		{Right, {0, 40}},
+		{Right, {-40, 0}},
+		{Left, {40, 0}},
+		{Up, {0, -40}},
+		{Down, {0, 40}},
 	};
 
 	return (offsets.at(dir));
@@ -160,7 +161,6 @@ void	Displayer::drawHead(float time, int x, int y, e_Dir last)
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
 	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
-//	this->_texture.display();
 }
 
 void	Displayer::putWall(int x, int y)

@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 21:37:48 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/06 19:02:58 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -80,6 +80,7 @@ void		Player::update(double time)
 	if (this->_time >= 1)
 //	if (this->_time >= SN_TIME)
 	{
+		this->_Snake->update_directions();
 		if (this->_lastInput != None)
 		{
 			this->_Snake->turn(this->_lastInput);

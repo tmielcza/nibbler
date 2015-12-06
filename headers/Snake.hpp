@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:02:38 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/06 18:56:58 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -68,6 +68,7 @@ class Snake
 	double						getSpeed(void);
 	bool						IsAlive(void);
 	void						draw(double time);
+	void						update_directions(void);
 
 };
 

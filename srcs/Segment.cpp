@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/06 19:00:25 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 22:04:59 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/06 18:25:28 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -58,6 +58,6 @@ void		Segment::set_Direc(e_Cardinal direc)
 
 void		Segment::draw(double time)
 {
-	(void)time;
-	GraphicsManager::Instance().drawTail(1., this->_pos.getX(), this->_pos.getY(), Left);
+//	std::cout << " DIR = "<< this->_direction << std::endl;
+	GraphicsManager::Instance().drawTail(time, this->_pos.getX(), this->_pos.getY(), (e_Dir)(this->_direction));
 }

@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 21:58:32 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/06 19:15:48 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -345,10 +345,26 @@ void							Snake::draw(double time)
 	(void)time;
 	x = this->getHeadSnakeX();
 	y = this->getHeadSnakeY();
-	GraphicsManager::Instance().drawHead(1., x, y, Left);
-	auto it = ++(this->_snake.begin());
+	auto it = this->_snake.begin();
+	GraphicsManager::Instance().drawHead(time, x, y, (e_Dir)(*it)->get_Direc());
+	it++;
 	for (auto end = this->_snake.end(); it != end; it++)
 	{
 		(*it)->draw(time);
+	}
+}
+
+void							Snake::update_directions(void)
+{
+	auto it = this->_snake.begin();
+	e_Cardinal last_dir = (*it)->get_Direc();
+	e_Cardinal tmp_dir;
+
+	it++;
+	for (auto end = this->_snake.end(); it != end; it++)
+	{
+		tmp_dir = (*it)->get_Direc();
+		(*it)->set_Direc(last_dir);
+		last_dir = tmp_dir;
 	}
 }

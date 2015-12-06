@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/04 15:43:15 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/06 18:18:46 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,10 +15,10 @@
 
 enum	e_Dir
 {
-	Up,
-	Down,
-	Left,
-	Right
+	Up = 1,
+	Down = 2,
+	Left = 8,
+	Right = 4
 };
 
 enum	e_Input

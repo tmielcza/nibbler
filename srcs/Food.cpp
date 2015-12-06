@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 18:03:56 by rduclos           #+#    #+#             //
-//   Updated: 2015/04/07 14:49:08 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/06 19:30:32 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,6 +30,7 @@ Food::Food(int value, int x, int y)
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = true;
+//	GraphicsManager::Instance().popMultiFood(x,y);
 	GraphicsManager::Instance().popFood(x, y);
 }
 
