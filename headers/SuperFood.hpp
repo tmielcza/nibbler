@@ -6,6 +6,10 @@
 
 class SuperFood : public ABonus
 {
+	private:
+
+	int			_timing;
+
 	public:
 
 	SuperFood(void);

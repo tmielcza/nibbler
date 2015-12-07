@@ -20,7 +20,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
-	this->_speed = 2;
+	this->_speed = 3;
 	this->_alive = true;
 	this->init();
 	std::cout << "Creating Snake !!" << std::endl;
@@ -30,7 +30,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
-	this->_speed = 2;
+	this->_speed = 3;
 	this->init(direction, x, y);
 	this->_alive = true;
 	std::cout << "Creating Snake !!" << std::endl;

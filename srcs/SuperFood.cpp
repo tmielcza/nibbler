@@ -15,6 +15,8 @@ SuperFood::SuperFood(int value, int x, int y)
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_value = value;
+	this->_timing = 0;
+	this->_time = 0;
 	this->_isalive = true;
 	this->_eatable = true;
 }
@@ -33,6 +35,8 @@ SuperFood::~SuperFood(void)
 SuperFood	&		SuperFood::operator=(const SuperFood & src)
 {
 	this->_value = src._value;
+	this->_timing = src._timing;
+	this->_time = src._timing;
 	this->_isalive = src._isalive;
 	this->_time = src._time;
 	return (*this);
@@ -48,17 +52,18 @@ void				SuperFood::taken(Snake & snake)
 
 void				SuperFood::update(double time)
 {
-	static int		i;
-
 	this->_time += time;
-	if ((this->_time - i) >= 1)
+	if ((this->_time - this->_timing) >= 1)
 	{
-		i++;
+		this->_timing++;
 		this->_value++;
-	GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), 10 - this->_value);
+		GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), 10 - this->_value);
 	}
 	if (this->_time >= 10)
+	{
+		MapManager::Instance()._Map[this->_pos.getX()][this->_pos.getY()] = NULL;
 		delete this;
+	}
 }
 
 void				SuperFood::draw(double time)
