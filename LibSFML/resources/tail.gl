@@ -26,6 +26,7 @@ void main()
 	float	a = PI / 4;
 	pos *= mat2(cos(a), -sin(a), sin(a), cos(a));	// Rotation
 
+
 	for (float i = 1; i <= seg; i++)	// Computes distance from each segment
 	{
 		float	a = i / seg * (2 * PI);
