@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:01:32 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 10:16:54 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 19:55:42 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -63,13 +63,15 @@ public:
 					SuperFood(const SuperFood& src);
 	SuperFood&		operator=(const SuperFood& rhs);
 	SuperFood(vec2 pos, float time, float branches);
-	void			setBranches(float branches);
+	void			setBranches(float time, float branches);
 	virtual void	draw(Displayer& dis);
 	void			update(Displayer& dis);
 
 private:
 	float			_branches;
+	float			_fromBranches;
 	float			_toBranches;
+	float			_time;
 };
 
 class	ChasedFood : public ADisplayable

@@ -55,10 +55,13 @@ void				SuperFood::update(double time)
 	{
 		i++;
 		this->_value++;
-	GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), 10 - this->_value);
+		GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), 10 - this->_value);
 	}
 	if (this->_time >= 10)
+	{
+		MapManager::Instance()._Map[this->_pos.getX()][this->_pos.getY()] = NULL;
 		delete this;
+	}
 }
 
 void				SuperFood::draw(double time)

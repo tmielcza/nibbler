@@ -21,8 +21,11 @@ void main()
 	if (pos.y < 0)
 		truc += mod(branches, 2.0) * PI;			// Symmetry
 	float	dst = length(pos) * (cos(truc) + 4 ) / 3;	// Curved distance
-	float	col = 1 - pow(abs(dst - radius) * 10, 2)	// Glow factor
-		* (cos(time * 4 * PI) + 1.5);	// Time factor
+	float	col = 1 - pow(abs(dst - radius) * 10, 2);	// Glow factor
+//		* (cos(time * 4 * PI) + 1.5);	// Time factor
+	float	bright = sin(fract(branches) * PI);
 
-	gl_FragColor = color(0xff, 0xa8, 0xf7, 0xff) * col;
+	gl_FragColor = color(0xff, 0xa8, 0xf7, 0xff) +
+		color(0x5f, 0x5f, 0x5f, 0xff) * bright;
+	gl_FragColor = gl_FragColor * (col + pow(bright, 3) * 0.5);
 }

@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 18:28:32 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 19:55:24 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -252,7 +252,7 @@ void	Displayer::updateSuperFood(int x, int y, int size)
 		if (_x == x && _y == y)
 		{
 			SuperFood*	super = dynamic_cast<SuperFood*>(*it);
-			super->setBranches(size);
+			super->setBranches(this->getTime(), size);
 			return ;
 		}
 	}
