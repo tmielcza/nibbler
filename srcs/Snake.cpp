@@ -307,11 +307,10 @@ void							Snake::eat(Food const & eaten)
 	this->_nbmove = 0;
 }
 
-void							Snake::take_bonus(ABonus const & taken)
+void							Snake::take_bonus(ABonus & taken)
 {
-	(void)taken;
+	taken.taken(*this);
 	std::cout << "Bonus have been taken by the Snake" << std::endl;
-//	taken.bonus(this);
 }
 
 e_Cardinal						Snake::getHeadSnakeDirec(void)

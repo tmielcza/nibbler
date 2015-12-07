@@ -1,5 +1,6 @@
 
 #include "SuperFood.hpp"
+#include "GraphicsManager.hpp"
 #include "Snake.hpp"
 
 SuperFood::SuperFood(void)
@@ -9,6 +10,7 @@ SuperFood::SuperFood(void)
 
 SuperFood::SuperFood(int value, int x, int y)
 {
+	GraphicsManager::Instance().popSuperFood(x, y, 1);
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_value = value;
@@ -23,7 +25,7 @@ SuperFood::SuperFood(const SuperFood & src)
 
 SuperFood::~SuperFood(void)
 {
-
+	GraphicsManager::Instance().depopFood(this->_pos.getX(), this->_pos.getY());
 }
 
 SuperFood	&		SuperFood::operator=(const SuperFood & src)

@@ -214,33 +214,29 @@ void	Displayer::popChasedFood(int x, int y, int size)
 
 void	Displayer::depopFood(int x, int y)
 {
-	int i = 0;
-	std::cout << "Try to erase food from gfx ..." << std::endl;
 	for (auto it = this->_foods.begin(); it != this->_foods.end(); it++)
 	{
-		i++;
 		int _x = (int)((*it)->pos.x / 40);
 		int _y = (int)((*it)->pos.y / 40);
-		std::cout << "Trying number " << i << " : x:" << _x << "-" << x;
-		std::cout << " y:" << _y << "-" << y << std::endl;
 		if (_x == x && _y == y) 
 		{
-			std::cout << "Erase Food from GFX" << std::endl;
 			Food *f = *it;
 			this->_foods.erase(it);
 			delete f;
 			return ;
 		}
 	}
-/*
-	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++) {
-		if ( (*it)->pos.x == x && (*it)->pos.y == y) {
+	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++)
+	{
+		int _x = (int)((*it)->pos.x / 40);
+		int _y = (int)((*it)->pos.y / 40);
+		if (_x == x && _y == y)
+		{
 			delete *it;
 			this->_bonuses.erase(it);
 			return ;
 		}
 	}
-*/
 }
 
 void	Displayer::updateSuperFood(int x, int y, int size)
