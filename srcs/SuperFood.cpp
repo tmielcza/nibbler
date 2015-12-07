@@ -2,6 +2,7 @@
 #include "SuperFood.hpp"
 #include "GraphicsManager.hpp"
 #include "Snake.hpp"
+#include "MapManager.hpp"
 
 SuperFood::SuperFood(void)
 {
@@ -26,6 +27,7 @@ SuperFood::SuperFood(const SuperFood & src)
 SuperFood::~SuperFood(void)
 {
 	GraphicsManager::Instance().depopFood(this->_pos.getX(), this->_pos.getY());
+	MapManager::Instance().bonusdepop(this->_pos.getX(), this->_pos.getY());
 }
 
 SuperFood	&		SuperFood::operator=(const SuperFood & src)
@@ -38,18 +40,25 @@ SuperFood	&		SuperFood::operator=(const SuperFood & src)
 
 void				SuperFood::taken(Snake & snake)
 {
-	snake.add_score(this->_value / (this->_time / 100));
+	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
+	snake.add_score(this->_value * 10);
 	snake.add_to_tail();
 	delete this;
 }
 
 void				SuperFood::update(double time)
 {
-//	GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), );
-	if ((this->_time += time) >= B_TIME)
+	static int		i;
+
+	this->_time += time;
+	if ((this->_time - i) >= 1)
 	{
-		delete this;
+		i++;
+		this->_value++;
+//	GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), this->_value);
 	}
+	if (this->_time >= 10)
+		delete this;
 }
 
 void				SuperFood::draw(double time)

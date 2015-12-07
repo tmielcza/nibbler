@@ -178,9 +178,24 @@ void	MapManager::bonuspop(void)
 		y = rand() % this->_height;
 	}
 	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
-	SuperFood *sf = new SuperFood(100, x, y);
+	SuperFood *sf = new SuperFood(1, x, y);
 	this->_Map[x][y] = sf;
 	this->_bonus.push_back(sf);
+}
+
+void	MapManager::bonusdepop(int x, int y)
+{
+	std::list<ABonus *>::iterator		start = this->_bonus.begin();
+	std::list<ABonus *>::iterator		end = this->_bonus.end();
+
+	while (start != end)
+	{
+		int _x = (*start)->getX();
+		int _y = (*start)->getY();
+		if (_x == x && _y == y)
+			this->_bonus.erase(start);
+		start++;
+	}
 }
 
 int		MapManager::getWidth(void)
@@ -223,5 +238,22 @@ void	MapManager::setSnake(Snake *snake)
 
 void	MapManager::update(double time)
 {
+	std::list<ABonus *>::iterator		bstart = this->_bonus.begin();
+	std::list<ABonus *>::iterator		bend = this->_bonus.end();
+//	std::list<Food *>::iterator		fstart = this->_foods.begin();
+//	std::list<Food *>::iterator		fend = this->_foods.end();
+
 	(void)time;
+	while (bstart != bend)
+	{
+		(*bstart)->update(time);
+		bstart++;
+	}
+/*
+	while (fstart != fend)
+	{
+		(*fstart)->update(time);
+		fstart++;
+	}
+*/
 }
