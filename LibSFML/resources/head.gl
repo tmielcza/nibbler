@@ -4,15 +4,21 @@ uniform float	time;
 uniform vec2	coord;
 uniform vec2	resolution;
 
-vec4 color(int r, int g, int b, int a)
+vec3 pal( in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d )
 {
-	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+    return a + b*cos( 6.28318*(c*t+d) );
+}
+
+vec4 color(float c)
+{
+//	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+	return (vec4(pal(c, vec3(0.6,0.6,0.9),vec3(0.6,0.6,0.9),vec3(1.0,0.5,0.4),vec3(0.0,0.83,0.27)), 1.0));
 }
 
 void main()
 {
-	vec4	snakeCol = color(0x37, 0xc5, 0x5d, 0xff);
-	vec4	eyeCol = color(0xff, 0x43, 0x43, 0xff);
+//	vec4	snakeCol = color(0x37, 0xc5, 0x5d, 0xff);
+//	vec4	eyeCol = color(0xff, 0x43, 0x43, 0xff);
 
 	float	PI = 3.14159265358979323846264;
 	float	radius = 0.42;
@@ -58,5 +64,8 @@ void main()
 		* (cos(time * 4 * PI) * 0.5 + 0.9);	// Time factor
 	colEye = max(0, min(1, colEye));
 
+ 	vec4 eyeCol = color( mod(gl_FragCoord.x / 640 + 0.7, 1.0));
+	eyeCol *= 1.2;
+	vec4 snakeCol = color( mod(gl_FragCoord.x / 640 + 0.3, 1.0));
 	gl_FragColor = eyeCol * colEye + col * snakeCol;
 }

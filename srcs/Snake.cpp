@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/06 19:15:48 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 11:49:06 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -248,6 +248,8 @@ void							Snake::turn(e_Cardinal direction)
 	if (this->_nbmove == -1)
 		this->_nbmove = 0;
 	this->_nbmove++;
+	if (this->_nbmove == 3)
+		GraphicsManager::Instance().switchFoodMode();
 }
 
 void							Snake::turn_left(void)
@@ -292,9 +294,12 @@ void							Snake::eat(Food const & eaten)
 	else
 		this->_score = eaten.get_value();
 	this->_speed += 0.15;
-	this->_nbmove = 0;
 	eaten.eaten(*this);
 	MapManager::Instance().foodpop();
+	std::cout << "eat : " << this->_nbmove << std::endl;
+	if (this->_nbmove > 2)
+		GraphicsManager::Instance().switchFoodMode();
+	this->_nbmove = 0;
 }
 
 void							Snake::take_bonus(ABonus const & taken)

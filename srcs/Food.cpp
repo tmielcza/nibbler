@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 18:03:56 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/06 19:30:32 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 09:56:56 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -39,6 +39,7 @@ Food::~Food(void)
 	int x = this->_pos.getX();
 	int y = this->_pos.getY();
 	GraphicsManager::Instance().depopFood(x, y);
+	GraphicsManager::Instance().popWave(x, y);
 	std::cout << "Food in " << x << "-" << y << " has been eaten !" << std::endl;
 }
 

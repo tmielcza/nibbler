@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/06 19:31:56 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 11:20:50 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -57,21 +57,6 @@ vec2	Displayer::getSize(void) const
 
 void	Displayer::display(void)
 {
-/*
-	sf::Shader sha;
-	sha.loadFromFile("resources/take.gl", sf::Shader::Fragment);
-	sha.setParameter("pos", sf::Vector2f(0.3, 0.9));
-	sha.setParameter("size", fmod(this->_time, 2));
-
-	sf::Shader sha2;
-	sha2.loadFromFile("resources/take.gl", sf::Shader::Fragment);
-	sha2.setParameter("pos", sf::Vector2f(0.0, 1.0));
-	sha2.setParameter("size", fmod(this->_time + 0.4, 2));
-//*/
-
-	this->postProcess(sha);
-	this->postProcess(sha2);
-
 	for (auto it = _foods.begin(); it != _foods.end(); it++)
 	{
 		(*it)->draw(*this);
@@ -84,7 +69,15 @@ void	Displayer::display(void)
 	{
 		wall->draw(*this);
 	}
-
+	this->_texture.display();
+	for (auto wave : _waves)
+	{
+		wave->update(*this);
+	}
+	for (auto wave : _waves)
+	{
+		wave->draw(*this);
+	}
 	this->_texture.display();
 	this->_win.draw(this->_sprite);
 	this->_win.display();
@@ -161,6 +154,27 @@ void	Displayer::drawHead(float time, int x, int y, e_Dir last)
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
 	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
+}
+
+void	Displayer::popWave(int x, int y)
+{
+	vec2	position = this->posOnScreen(x, y);
+	position.x /= this->_win.getSize().x;
+	position.y /= this->_win.getSize().y;
+	position.y = 1. - position.y;
+
+	this->_waves.push_back(new Wave(position, this->getTime()));
+}
+
+void	Displayer::depopWave(ADisplayable* wave)
+{
+	std::cout << *this->_waves.begin() << std::endl;
+	std::cout << wave << std::endl;
+	auto it = find(this->_waves.begin(), this->_waves.end(), wave);
+	if (it == this->_waves.end())
+		std::cout << "Mais" << std::endl; 
+	delete *it;
+	this->_waves.erase(it);
 }
 
 void	Displayer::putWall(int x, int y)

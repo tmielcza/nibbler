@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/06 17:48:21 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 09:59:52 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -55,6 +55,8 @@ public:
 	void				drawTail(float time, int x, int y, e_Dir last);
 	void				drawHead(float time, int x, int y, e_Dir last);
 	void				putWall(int x, int y);
+	void				popWave(int x, int y);
+	void				depopWave(ADisplayable* wave);
 
 private:
 						Displayer(void);
@@ -83,6 +85,7 @@ private:
 	std::list<Food*>			_foods;
 	std::list<ADisplayable*>	_bonuses;
 	std::list<Wall*>			_walls;
+	std::list<ADisplayable*>	_waves;
 };
 
 extern "C"

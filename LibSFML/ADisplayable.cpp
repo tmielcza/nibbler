@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/04 20:50:01 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 10:20:10 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -258,4 +258,24 @@ Wall::Wall(vec2 pos)
 void	Wall::draw(Displayer& dis)
 {
 	dis.drawSprite(this->_shad, this->pos, {40, 40}, 0.f);
+}
+
+// Wave
+
+Wave::Wave(vec2 pos, float time)
+	: ADisplayable(pos, "take.gl", time)
+{
+	this->_shad.setParameter("pos", pos);
+}
+
+void	Wave::draw(Displayer& dis)
+{
+	dis.postProcess(this->_shad);
+}
+
+void	Wave::update(Displayer& dis)
+{
+	this->_shad.setParameter("size", dis.getTime() - this->_time);
+	if (dis.getTime() - this->_time > 2)
+		dis.depopWave(this);
 }

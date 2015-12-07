@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:01:32 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/03 16:42:38 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 10:16:54 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -31,7 +31,7 @@ public:
 					ADisplayable(const ADisplayable& src);
 	ADisplayable&	operator=(const ADisplayable& rhs);
 	virtual void	draw(Displayer& dis) = 0;
-	void			update(Displayer& dis);
+	virtual void	update(Displayer& dis);
 
 	vec2		pos;
 
@@ -136,6 +136,14 @@ class	Wall : public ADisplayable
 public:
 					Wall(vec2 pos);
 	virtual void	draw(Displayer& dis);
+};
+
+class	Wave : public ADisplayable
+{
+public:
+					Wave(vec2 pos, float time);
+	virtual void	draw(Displayer& dis);
+	void			update(Displayer& dis);
 };
 
 #endif // ADISPLAYABLE_HPP
