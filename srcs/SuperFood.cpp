@@ -45,6 +45,7 @@ void				SuperFood::taken(Snake & snake)
 
 void				SuperFood::update(double time)
 {
+//	GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), );
 	if ((this->_time += time) >= B_TIME)
 	{
 		delete this;

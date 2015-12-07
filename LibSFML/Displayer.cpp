@@ -241,8 +241,12 @@ void	Displayer::depopFood(int x, int y)
 
 void	Displayer::updateSuperFood(int x, int y, int size)
 {
-	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++) {
-		if ( (*it)->pos.x == x && (*it)->pos.y == y) {
+	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++)
+	{
+		int _x = (int)((*it)->pos.x / 40);
+		int _y = (int)((*it)->pos.y / 40);
+		if (_x == x && _y == y)
+		{
 			SuperFood*	super = dynamic_cast<SuperFood*>(*it);
 			super->setBranches(size);
 			return ;

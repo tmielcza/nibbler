@@ -45,7 +45,7 @@ Player::~Player(void)
 Player	&	Player::operator=(const Player & ass)
 {
 	this->_Snake = ass._Snake;
-	this->_lastInput = ass._lastInput;
+	this->_lastInputs = ass._lastInputs;
 	this->_time = ass._time;
 	return (*this);
 }
@@ -55,36 +55,51 @@ bool		Player::IsAlive(void)
 	return (this->_Snake->IsAlive());
 }
 
+int			Player::verify_lL(e_Cardinal d)
+{
+	if ((this->_Snake->getHeadSnakeDirec() & Longitude) &&
+		(d & Latitude))
+		return 1;
+	else if ((this->_Snake->getHeadSnakeDirec() & Latitude) &&
+			 (d & Longitude))
+		return 1;
+	return 0;
+}
+
 void		Player::update(double time)
 {
-	e_Input				input = I_Nope;
-	std::list<e_Input>	inputs;
+	e_Input								input = I_Nope;
+	std::list<e_Input>					inputs;
+	std::list<e_Cardinal>::iterator		tuchs = this->_lastInputs.begin();
+	std::list<e_Cardinal>::iterator		end = this->_lastInputs.end();
 
 	inputs = GraphicsManager::Instance().getInput();
 	GraphicsManager::Instance().clear();
 	for (auto it = inputs.begin(); it != inputs.end(); it++)
 	{
 		if ((*it & I_Dir) != 0)
+		{
 			input = *it;
-	}
-	if ((input & I_Dir) != 0)
-	{
-		if ((this->_Snake->getHeadSnakeDirec() & Longitude) &&
-			((e_Cardinal)input & Latitude))
-			this->_lastInput = (e_Cardinal)input;
-		else if ((this->_Snake->getHeadSnakeDirec() & Latitude) &&
-				 ((e_Cardinal)input & Longitude))
-			this->_lastInput = (e_Cardinal)input;
+			if (this->_lastInputs.size() < 3)
+				this->_lastInputs.push_back((e_Cardinal)input);
+		}
 	}
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
-//	if (this->_time >= SN_TIME)
 	{
 		this->_Snake->update_directions();
-		if (this->_lastInput != None)
+		if (this->_lastInputs.size() > 0)
 		{
-			this->_Snake->turn(this->_lastInput);
-			this->_lastInput = None;
+			while (tuchs != end && this->verify_lL(*tuchs) != 1)
+			{
+				this->_lastInputs.erase(tuchs);
+				tuchs++;
+			}
+			if (tuchs != end)
+			{
+				this->_Snake->turn(*tuchs);
+				this->_lastInputs.erase(tuchs);
+			}
 		}
 		std::cout << this->_Snake->getHeadSnakeX() << " "
 				  << this->_Snake->getHeadSnakeY() << std::endl;

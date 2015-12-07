@@ -20,9 +20,9 @@ class Player
 {
 	private:
 
-	Snake		*_Snake;
-	e_Cardinal	_lastInput;
-	double		_time;
+	Snake					*_Snake;
+	std::list<e_Cardinal>	_lastInputs;
+	double					_time;
 
 	public:
 
@@ -33,6 +33,7 @@ class Player
 
 	Player	&	operator=(const Player & ass);
 	bool		IsAlive(void);
+	int			verify_lL(e_Cardinal d);
 	void		update(double time);
 
 };
