@@ -20,7 +20,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
-	this->_speed = 1.5;
+	this->_speed = 2;
 	this->_alive = true;
 	this->init();
 	std::cout << "Creating Snake !!" << std::endl;
@@ -30,7 +30,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
-	this->_speed = 1.5;
+	this->_speed = 2;
 	this->init(direction, x, y);
 	this->_alive = true;
 	std::cout << "Creating Snake !!" << std::endl;
@@ -174,7 +174,12 @@ void							Snake::befor_move(void)
 		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
 			this->_alive = false;
 		else
-			this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
+		{
+			if (dynamic_cast<Food*>(MapManager::Instance()._Map[x][y]))
+				this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
+			else
+				this->take_bonus(*dynamic_cast<ABonus *>(MapManager::Instance()._Map[x][y]));
+		}
 	}
 }
 
@@ -302,10 +307,10 @@ void							Snake::eat(Food const & eaten)
 	this->_nbmove = 0;
 }
 
-void							Snake::take_bonus(ABonus const & taken)
+void							Snake::take_bonus(ABonus & taken)
 {
-	(void)taken;
-//	taken.bonus(this);
+	taken.taken(*this);
+	std::cout << "Bonus have been taken by the Snake" << std::endl;
 }
 
 e_Cardinal						Snake::getHeadSnakeDirec(void)

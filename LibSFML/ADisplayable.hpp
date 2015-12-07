@@ -42,13 +42,8 @@ protected:
 
 class	Food : public ADisplayable
 {
-private:
-	int				_x;
-	int				_y;
 public:
-					Food(vec2 pos, int x, int y, float time);
-	int				getX(void);
-	int				getY(void);
+					Food(vec2 pos, float time);
 	virtual void	draw(Displayer& dis);
 	virtual void	drawOff(Displayer& dis);
 };

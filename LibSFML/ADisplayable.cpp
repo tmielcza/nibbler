@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 16:24:26 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 18:37:52 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -47,21 +47,10 @@ void		ADisplayable::update(Displayer& dis)
 
 // Food
 
-Food::Food(vec2 pos, int x, int y, float time)
+Food::Food(vec2 pos, float time)
 	: ADisplayable(pos, "food.gl", fmod(time, 1))
 {
-	this->_x = x;
-	this->_y = y;
-}
 
-int		Food::getX(void)
-{
-	return this->_x;
-}
-
-int		Food::getY(void)
-{
-	return this->_y;
 }
 
 void	Food::draw(Displayer& dis)
@@ -96,6 +85,7 @@ void	MultiFood::draw(Displayer& dis)
 SuperFood::SuperFood(vec2 pos, float time, float branches)
 	: ADisplayable(pos, "super.gl", fmod(time, 1)), _branches(branches)
 {
+	this->setBranches(10.);
 }
 
 void	SuperFood::draw(Displayer& dis)

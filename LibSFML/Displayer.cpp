@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 11:20:50 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/07 18:28:32 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -60,6 +60,10 @@ void	Displayer::display(void)
 	for (auto it = _foods.begin(); it != _foods.end(); it++)
 	{
 		(*it)->draw(*this);
+	}
+	for (auto bonus : _bonuses)
+	{
+		bonus->update(*this);
 	}
 	for (auto it = _bonuses.begin(); it != _bonuses.end(); it++)
 	{
@@ -188,7 +192,7 @@ void	Displayer::popFood(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_foods.push_back(new Food(position, x, y, this->getTime()));
+	this->_foods.push_back(new Food(position, this->getTime()));
 }
 
 void	Displayer::popMultiFood(int x, int y)
@@ -214,39 +218,39 @@ void	Displayer::popChasedFood(int x, int y, int size)
 
 void	Displayer::depopFood(int x, int y)
 {
-	int i = 0;
-	std::cout << "Try to erase food from gfx ..." << std::endl;
 	for (auto it = this->_foods.begin(); it != this->_foods.end(); it++)
 	{
-		i++;
-		int _x = (int)((*it)->getX());
-		int _y = (int)((*it)->getY());
-		std::cout << "Trying number " << i << " : x:" << _x << "-" << x;
-		std::cout << " y:" << _y << "-" << y << std::endl;
-		if ((*it)->getX() == x && (*it)->getY() == y) 
+		int _x = (int)((*it)->pos.x / 40);
+		int _y = (int)((*it)->pos.y / 40);
+		if (_x == x && _y == y) 
 		{
-			std::cout << "Erase Food from GFX" << std::endl;
 			Food *f = *it;
 			this->_foods.erase(it);
 			delete f;
 			return ;
 		}
 	}
-/*
-	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++) {
-		if ( (*it)->pos.x == x && (*it)->pos.y == y) {
+	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++)
+	{
+		int _x = (int)((*it)->pos.x / 40);
+		int _y = (int)((*it)->pos.y / 40);
+		if (_x == x && _y == y)
+		{
 			delete *it;
 			this->_bonuses.erase(it);
 			return ;
 		}
 	}
-*/
 }
 
 void	Displayer::updateSuperFood(int x, int y, int size)
 {
-	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++) {
-		if ( (*it)->pos.x == x && (*it)->pos.y == y) {
+	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++)
+	{
+		int _x = (int)((*it)->pos.x / 40);
+		int _y = (int)((*it)->pos.y / 40);
+		if (_x == x && _y == y)
+		{
 			SuperFood*	super = dynamic_cast<SuperFood*>(*it);
 			super->setBranches(size);
 			return ;
