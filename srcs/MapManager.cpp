@@ -84,7 +84,6 @@ void		MapManager::setSnakeDir(int index, bool left)
 			return ;
 		}
 	}
-
 }
 
 bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode mode)
@@ -125,12 +124,10 @@ void	MapManager::foodpop(void)
 	Food *f = new Food(1, x, y);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
-/*
+	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
 	int r = rand() % 5;
 	if (r == 3)
 		this->bonuspop();
-*/
-	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
 }
 
 void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideMode)

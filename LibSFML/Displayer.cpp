@@ -223,7 +223,7 @@ void	Displayer::depopFood(int x, int y)
 		int _y = (int)((*it)->pos.y / 40);
 		std::cout << "Trying number " << i << " : x:" << _x << "-" << x;
 		std::cout << " y:" << _y << "-" << y << std::endl;
-		if ((*it)->getX() == x && (*it)->getY() == y) 
+		if (_x == x && _y == y) 
 		{
 			std::cout << "Erase Food from GFX" << std::endl;
 			Food *f = *it;

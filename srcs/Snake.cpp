@@ -174,7 +174,12 @@ void							Snake::befor_move(void)
 		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
 			this->_alive = false;
 		else
-			this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
+		{
+			if (dynamic_cast<Food*>(MapManager::Instance()._Map[x][y]))
+				this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
+			else
+				this->take_bonus(*dynamic_cast<ABonus *>(MapManager::Instance()._Map[x][y]));
+		}
 	}
 }
 
@@ -305,6 +310,7 @@ void							Snake::eat(Food const & eaten)
 void							Snake::take_bonus(ABonus const & taken)
 {
 	(void)taken;
+	std::cout << "Bonus have been taken by the Snake" << std::endl;
 //	taken.bonus(this);
 }
 

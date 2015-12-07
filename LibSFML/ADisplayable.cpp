@@ -53,16 +53,6 @@ Food::Food(vec2 pos, float time)
 
 }
 
-int		Food::getX(void)
-{
-	return this->_x;
-}
-
-int		Food::getY(void)
-{
-	return this->_y;
-}
-
 void	Food::draw(Displayer& dis)
 {
 	this->_shad.setParameter("on", dis.getFoodMode());
