@@ -188,7 +188,7 @@ void	Displayer::popFood(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_foods.push_back(new Food(position, x, y, this->getTime()));
+	this->_foods.push_back(new Food(position, this->getTime()));
 }
 
 void	Displayer::popMultiFood(int x, int y)
@@ -219,8 +219,8 @@ void	Displayer::depopFood(int x, int y)
 	for (auto it = this->_foods.begin(); it != this->_foods.end(); it++)
 	{
 		i++;
-		int _x = (int)((*it)->getX());
-		int _y = (int)((*it)->getY());
+		int _x = (int)((*it)->pos.x / 40);
+		int _y = (int)((*it)->pos.y / 40);
 		std::cout << "Trying number " << i << " : x:" << _x << "-" << x;
 		std::cout << " y:" << _y << "-" << y << std::endl;
 		if ((*it)->getX() == x && (*it)->getY() == y) 
