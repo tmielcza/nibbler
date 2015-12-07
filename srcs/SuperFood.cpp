@@ -44,9 +44,9 @@ SuperFood	&		SuperFood::operator=(const SuperFood & src)
 
 void				SuperFood::taken(Snake & snake)
 {
+	snake.add_to_tail();
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
 	snake.add_score(this->_value * 10);
-	snake.add_to_tail();
 	delete this;
 }
 
@@ -59,7 +59,7 @@ void				SuperFood::update(double time)
 		this->_value++;
 		GraphicsManager::Instance().updateSuperFood(this->_pos.getX(), this->_pos.getY(), 10 - this->_value);
 	}
-	if (this->_time >= 10)
+	if (this->_time >= 9)
 	{
 		MapManager::Instance()._Map[this->_pos.getX()][this->_pos.getY()] = NULL;
 		delete this;
