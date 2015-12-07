@@ -41,6 +41,7 @@ class MapManager
 	std::list<Food*>	_foods;
 	std::list<ABonus*>	_bonus;
 	std::list<Wall*>	_walls;
+	bool				_berase;
 	int					_nbPlayer;
 	int					_width;
 	int					_height;

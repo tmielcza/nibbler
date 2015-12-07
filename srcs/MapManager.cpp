@@ -56,6 +56,7 @@ void	MapManager::init(int nbplayer, int width, int height)
 	this->_width = width;
 	this->_height = height;
 	this->_nbPlayer = nbplayer;
+	this->_berase = false;
 }
 
 void		MapManager::move(int index)
@@ -113,20 +114,20 @@ bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode m
 
 void	MapManager::foodpop(void)
 {
-	int x = 1 + (rand() % (this->_width - 1));
-	int y = 1 + (rand() % (this->_height - 1));
+	int x = (rand() % this->_width - 1);
+	int y = (rand() % this->_height);
 
 	while (this->_Map[x][y] != NULL)
 	{
-		x = 1 + (rand() % (this->_width - 1));
-		y = 1 + (rand() % (this->_height - 1));
+		x = (rand() % this->_width);
+		y = (rand() % this->_height);
 	}
 	Food *f = new Food(1, x, y);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
 	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
-	int r = rand() % 5;
-	if (r == 3)
+//	int r = rand() % 5;
+//	if (r == 3)
 		this->bonuspop();
 }
 
@@ -193,7 +194,13 @@ void	MapManager::bonusdepop(int x, int y)
 		int _x = (*start)->getX();
 		int _y = (*start)->getY();
 		if (_x == x && _y == y)
+		{
+//			this->_Map[x][y] = NULL;
+			this->_berase = true;
 			this->_bonus.erase(start);
+			std::cout << "Bonus depop at : " << _x << "-" << _y << std::endl;
+			return;
+		}
 		start++;
 	}
 }
@@ -244,10 +251,27 @@ void	MapManager::update(double time)
 //	std::list<Food *>::iterator		fend = this->_foods.end();
 
 	(void)time;
+	int i = 0;
 	while (bstart != bend)
 	{
+		std::cout << "Bonus size : " << this->_bonus.size() << std::endl;
 		(*bstart)->update(time);
-		bstart++;
+		if (this->_berase == true)
+		{
+			bstart = this->_bonus.begin();
+			bend = this->_bonus.end();
+			int j = 0;
+			while (j < i)
+			{
+				bstart++;
+				j++;
+			}
+			std::cout << "Bonus has been Erase." << std::endl;
+			this->_berase = false;
+		}
+		else
+			bstart++;
+		i++;
 	}
 /*
 	while (fstart != fend)
