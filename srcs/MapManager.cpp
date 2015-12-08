@@ -209,7 +209,7 @@ void	MapManager::bonuspop(void)
 	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
 
 	int r = 5 + (rand() % 5);
-	ChasedFood *b = new ChasedFood(r, x, y, true);
+	ChasedFood *b = new ChasedFood(r, x, y, 1);
 /*
 //	MultiFood
 	int r = 2 + (rand() % 4);

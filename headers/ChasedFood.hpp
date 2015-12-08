@@ -8,13 +8,13 @@ class ChasedFood : public ABonus
 {
 	private:
 
-	bool	_first;
+	int		_place;
 	int		_maxTime;
 
 	public:
 
 	ChasedFood(void);
-	ChasedFood(int value, int x, int y, bool first);
+	ChasedFood(int value, int x, int y, int place);
 	ChasedFood(const ChasedFood & src);
 	~ChasedFood(void);
 

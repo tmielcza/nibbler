@@ -36,6 +36,7 @@ class Snake
 	int							_nbmove;
 	int						 	_score;
 	double						_speed;
+	double						_increm;
 	bool						_alive;
 
 	Snake(Snake const & copy);

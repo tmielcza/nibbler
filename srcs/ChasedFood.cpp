@@ -9,20 +9,20 @@ ChasedFood::ChasedFood(void)
 
 }
 
-ChasedFood::ChasedFood(int value, int x, int y, bool first)
+ChasedFood::ChasedFood(int value, int x, int y, int place)
 {
-	this->_first = first;
+	this->_place = place;
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_value = value;
 	this->_time = 0;
 	this->_isalive = true;
 	this->_eatable = true;
-	if (first == true)
+	if (place == 1)
 		this->_maxTime = 6;
 	else
 		this->_maxTime = 2;
-	GraphicsManager::Instance().popSuperFood(x, y, 2);
+	GraphicsManager::Instance().popSuperFood(x, y, 3);
 }
 
 ChasedFood::ChasedFood(const ChasedFood & src)
@@ -47,13 +47,13 @@ ChasedFood	&		ChasedFood::operator=(const ChasedFood & src)
 
 void				ChasedFood::taken(Snake & snake)
 {
-	if (this->_value > 0)
+	if (this->_place != this->_value)
 	{
 		int x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
 		int y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
 		int i = 0;
 		
-		while (MapManager::Instance()._Map[x][y] != NULL && i < 10)
+		while (MapManager::Instance()._Map[x][y] != NULL && i < 15)
 		{
 			x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
 			y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
@@ -61,26 +61,25 @@ void				ChasedFood::taken(Snake & snake)
 		}
 		if (MapManager::Instance()._Map[x][y] != NULL)
 		{
-			while (MapManager::Instance()._Map[x][y] != NULL)
+			i = 0;
+			while (MapManager::Instance()._Map[x][y] != NULL && i < 10)
 			{
+				i++;
 				x = (snake.getHeadSnakeX() - 2) + (rand() % 4);
 				y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
 			}
 		}
 		if (MapManager::Instance()._Map[x][y] == NULL)
 		{
-			ChasedFood *b = new ChasedFood(this->_value - 1, x, y, false);
+			ChasedFood *b = new ChasedFood(this->_value, x, y, this->_place + 1);
 			MapManager::Instance()._Map[x][y] = b;
 			MapManager::Instance().add_Bonus(b);
 		}
 	}
-/*
-	snake.add_to_tail();
-	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
-	snake.add_score(this->_value * 10);
-	for (int i = 0; i < this->_value; i++)
-		MapManager::Instance().foodpop(this->_pos, 3, 0, (e_PopMode)0);
-*/
+	if (this->_place != this->_value)
+		snake.add_score(this->_place);
+	else
+		snake.add_score(200);
 	delete this;
 }
 
