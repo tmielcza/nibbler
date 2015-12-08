@@ -43,8 +43,7 @@ CutBonus	&		CutBonus::operator=(const CutBonus & src)
 void				CutBonus::taken(Snake & snake)
 {
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());
-	//cut the tail of this snake
-	(void)snake;
+	snake.Cut(10);
 	delete this;
 }
 

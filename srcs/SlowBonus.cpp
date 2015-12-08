@@ -43,8 +43,7 @@ SlowBonus	&		SlowBonus::operator=(const SlowBonus & src)
 void				SlowBonus::taken(Snake & snake)
 {
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());
-	//Slow the speed of this snake
-	(void)snake;
+	snake.Slow(10.);
 	delete this;
 }
 

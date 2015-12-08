@@ -386,3 +386,32 @@ void							Snake::update_directions(void)
 		last_dir = tmp_dir;
 	}
 }
+
+void		Snake::Slow(double less)
+{
+	this->_speed -= (this->_speed / less);
+}
+
+void		Snake::Cut(size_t less)
+{
+	size_t c = (this->_snake.size() / less);
+	size_t p = this->_snake.size() - c;
+	while (p < this->_snake.size())
+	{
+		std::list<Segment *>::iterator		seg = this->_snake.begin();
+		size_t tmp = p;
+		while (tmp > 0)
+		{
+			seg++;
+			tmp--;
+		}
+		this->_snake.erase(seg);
+	}
+	std::list<Segment *>::iterator		seg = this->_snake.begin();
+	std::list<Segment *>::iterator		end = this->_snake.begin();
+	while (seg != end)
+	{
+		this->_tail = *seg;
+		seg++;
+	}
+}
