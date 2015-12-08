@@ -31,6 +31,7 @@ class GameManager
 	bool					_master;
 	std::list<Player*>		_players;
 	Player					*_me;
+	Player					*_me2;
 
 	public:
 
@@ -45,6 +46,7 @@ class GameManager
 	void			init(int nbplayer, int width, int height);
 	bool			IsAlive(void);
 	void			update_one(double time);
+	void			update_two(double time);
 	void			update(double time);
 
 };

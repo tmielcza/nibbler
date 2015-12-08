@@ -31,7 +31,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
-	this->_increm = 0.3;
+	this->_increm = 0.5;
 	this->init(direction, x, y);
 	this->_alive = true;
 	std::cout << "Creating Snake !!" << std::endl;
@@ -203,10 +203,10 @@ void							Snake::move(void)
 	}
 	else if (direc == South)
 	{
-		if ((y = (*seg)->getY() -1) >= 0)
-			(*seg)->setY(y);
-		else
-			(*seg)->setY(MapManager::Instance().getHeight() - 1);
+		if ((y = (*seg)->getY() -1) < 0)
+			y = MapManager::Instance().getHeight() - 1;
+		(*seg)->setY(y);
+
 	}
 	else if (direc == East)
 	{
@@ -217,10 +217,9 @@ void							Snake::move(void)
 	}
 	else if (direc == West)
 	{
-		if ((x = (*seg)->getX() - 1) >= 0)
-			(*seg)->setX(x);
-		else
-			(*seg)->setX(MapManager::Instance().getWidth() - 1);
+		if ((x = (*seg)->getX() - 1) < 0)
+			x = MapManager::Instance().getWidth() - 1;
+		(*seg)->setX(x);
 	}
 	MapManager::Instance()._Map[x][y] = (*seg);
 	seg++;
@@ -300,9 +299,12 @@ void							Snake::eat(Food const & eaten)
 		this->_score = eaten.get_value() * 2;
 	else
 		this->_score = eaten.get_value();
-	this->_speed += 0.15;
+	this->_speed += 0.2;
 //	this->_speed += this->_increm;
-//	this->_increm -= 0.03;
+//	if (this->_increm > 0.01)
+//		this->_increm -= 0.01;
+//	else
+//		this->_increm = 0.01;
 	if (eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
@@ -381,5 +383,34 @@ void							Snake::update_directions(void)
 		tmp_dir = (*it)->get_Direc();
 		(*it)->set_Direc(last_dir);
 		last_dir = tmp_dir;
+	}
+}
+
+void		Snake::Slow(double less)
+{
+	this->_speed -= (this->_speed / less);
+}
+
+void		Snake::Cut(size_t less)
+{
+	size_t c = (this->_snake.size() / less);
+	size_t p = this->_snake.size() - c;
+	while (p < this->_snake.size())
+	{
+		std::list<Segment *>::iterator		seg = this->_snake.begin();
+		size_t tmp = p;
+		while (tmp > 0)
+		{
+			seg++;
+			tmp--;
+		}
+		this->_snake.erase(seg);
+	}
+	std::list<Segment *>::iterator		seg = this->_snake.begin();
+	std::list<Segment *>::iterator		end = this->_snake.begin();
+	while (seg != end)
+	{
+		this->_tail = *seg;
+		seg++;
 	}
 }

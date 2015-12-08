@@ -48,7 +48,7 @@ ChasedFood	&		ChasedFood::operator=(const ChasedFood & src)
 
 void				ChasedFood::taken(Snake & snake)
 {
-	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
+	GraphicsManager::Instance().popWave(this->getX(), this->getY());
 	if (this->_place != this->_value)
 	{
 		int x = (snake.getHeadSnakeX() - 1) + (rand() % 3);

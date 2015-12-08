@@ -207,17 +207,40 @@ void	MapManager::bonuspop(void)
 		y = rand() % this->_height;
 	}
 	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
+	int r = rand() % 500;
+	if (r < 90)
+	{
+		SlowBonus *b = new SlowBonus(10, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (r >= 100 && r < 190)
+	{
+		CutBonus *b = new CutBonus(10, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (r >= 200 && r < 260)
+	{
+		SuperFood *b = new SuperFood(1, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (r >= 300 && r < 330)
+	{
+		int r2 = 5 + (rand() % 5);
+		ChasedFood *b = new ChasedFood(r2, x, y, 1);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (r >= 400 && r < 430)
+	{
+		int r2 = 2 + (rand() % 4);
+		MultiFood *b = new MultiFood(r2, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
 
-	int r = 5 + (rand() % 5);
-	ChasedFood *b = new ChasedFood(r, x, y, 1);
-/*
-//	MultiFood
-	int r = 2 + (rand() % 4);
-	MultiFood *b = new MultiFood(r, x, y);
-*/
-//	SuperFood *b = new SuperFood(1, x, y);
-	this->_Map[x][y] = b;
-	this->_bonus.push_back(b);
 }
 
 void	MapManager::bonusdepop(int x, int y)

@@ -70,6 +70,8 @@ class Snake
 	bool						IsAlive(void);
 	void						draw(double time);
 	void						update_directions(void);
+	void						Slow(double time);
+	void						Cut(size_t cut);
 
 };
 

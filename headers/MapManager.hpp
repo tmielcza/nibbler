@@ -19,6 +19,8 @@
 # include "SuperFood.hpp"
 # include "MultiFood.hpp"
 # include "ChasedFood.hpp"
+# include "SlowBonus.hpp"
+# include "CutBonus.hpp"
 # include "Wall.hpp"
 # include "Point.hpp"
 # include "IDisplayer.hpp"
