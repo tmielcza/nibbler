@@ -15,11 +15,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "UsualMode.hpp"
+#include "SoloMode.hpp"
 
 int		main(void)
 {
-	UsualMode		game;
+	SoloMode		game(false);
 
 	srand(time(NULL));
 	game.run();

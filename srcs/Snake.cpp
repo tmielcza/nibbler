@@ -203,10 +203,10 @@ void							Snake::move(void)
 	}
 	else if (direc == South)
 	{
-		if ((y = (*seg)->getY() -1) >= 0)
-			(*seg)->setY(y);
-		else
-			(*seg)->setY(MapManager::Instance().getHeight() - 1);
+		if ((y = (*seg)->getY() -1) < 0)
+			y = MapManager::Instance().getHeight() - 1;
+		(*seg)->setY(y);
+
 	}
 	else if (direc == East)
 	{
@@ -217,10 +217,9 @@ void							Snake::move(void)
 	}
 	else if (direc == West)
 	{
-		if ((x = (*seg)->getX() - 1) >= 0)
-			(*seg)->setX(x);
-		else
-			(*seg)->setX(MapManager::Instance().getWidth() - 1);
+		if ((x = (*seg)->getX() - 1) < 0)
+			x = MapManager::Instance().getWidth() - 1;
+		(*seg)->setX(x);
 	}
 	MapManager::Instance()._Map[x][y] = (*seg);
 	seg++;

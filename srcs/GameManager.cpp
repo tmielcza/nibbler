@@ -76,7 +76,12 @@ bool		GameManager::IsAlive(void)
 void		GameManager::update_one(double time)
 {
 	this->_me->update(time);
-	
+}
+
+void		GameManager::update_two(double time)
+{
+	this->_me->update(time);
+	this->_me2->update(time);
 }
 
 void		GameManager::update(double time)
@@ -84,39 +89,3 @@ void		GameManager::update(double time)
 	this->_me->update(time);
 	//update all list of snakes
 }
-
-/*
-void		GameManager::loop(void)
-{
-	GraphicsManager::setLib(sfml, this->_width, this->_height);
-	bool	run = true;
-	double	time = 0;
-
-	(void)mode;
-//	this->_mode = mode;
-	while (run)
-	{
-		double				delta = this->deltaTime();
-		e_Input				input = (e_Input)0;
-		std::list<e_Input>	inputs;
-		double				refresh = 0;
-
-//		auto it = inputs.begin();
-		for (auto it = inputs.begin(); it != inputs.end(); it++)
-		{
-			if (*it != I_Dir)
-				input = *it;
-		}
-
-		inputs = GraphicsManager::Instance().getInput();
-		time += delta;
-		refresh += delta;
-		if (refresh >= 0.5)
-		{
-//			MapManager::Instance().
-			refresh -= 0.5;
-		}
-	}
-}
-
-*/
