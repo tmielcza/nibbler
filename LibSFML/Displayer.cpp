@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 19:55:24 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/08 20:39:39 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -74,10 +74,20 @@ void	Displayer::display(void)
 		wall->draw(*this);
 	}
 	this->_texture.display();
+	for (auto it = this->_waves.begin(), end = this->_waves.end(); it != end;)
+	{
+		(*it)->update(*this);
+		if ((*it)->isAlive())
+			it++;
+		else
+			it = this->_waves.erase(it);
+	}
+/*
 	for (auto wave : _waves)
 	{
 		wave->update(*this);
 	}
+*/
 	for (auto wave : _waves)
 	{
 		wave->draw(*this);
@@ -175,10 +185,9 @@ void	Displayer::depopWave(ADisplayable* wave)
 	std::cout << *this->_waves.begin() << std::endl;
 	std::cout << wave << std::endl;
 	auto it = find(this->_waves.begin(), this->_waves.end(), wave);
-	if (it == this->_waves.end())
-		std::cout << "Mais" << std::endl; 
-	delete *it;
+	auto a_wave = *it;
 	this->_waves.erase(it);
+	delete a_wave;
 }
 
 void	Displayer::putWall(int x, int y)
@@ -209,11 +218,11 @@ void	Displayer::popSuperFood(int x, int y, int size)
 	this->_bonuses.push_back(new SuperFood(position, this->getTime(), size));
 }
 
-void	Displayer::popChasedFood(int x, int y, int size)
+void	Displayer::popChasedFood(int x, int y, int size, float time)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_bonuses.push_back(new ChasedFood(position, this->getTime(), size));
+	this->_bonuses.push_back(new ChasedFood(position, time, size));
 }
 
 void	Displayer::depopFood(int x, int y)

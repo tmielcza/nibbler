@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:01:32 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 19:55:42 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/08 20:24:01 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -32,8 +32,10 @@ public:
 	ADisplayable&	operator=(const ADisplayable& rhs);
 	virtual void	draw(Displayer& dis) = 0;
 	virtual void	update(Displayer& dis);
+	bool			isAlive(void);
 
 	vec2		pos;
+	bool		_alive;
 
 protected:
 	sf::Shader	_shad;

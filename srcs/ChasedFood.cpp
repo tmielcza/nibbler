@@ -22,7 +22,8 @@ ChasedFood::ChasedFood(int value, int x, int y, int place)
 		this->_maxTime = 6;
 	else
 		this->_maxTime = 2;
-	GraphicsManager::Instance().popSuperFood(x, y, 3);
+	GraphicsManager::Instance().popChasedFood(x, y, place, this->_maxTime);
+//	GraphicsManager::Instance().popSuperFood(x, y, 3);
 }
 
 ChasedFood::ChasedFood(const ChasedFood & src)

@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/07 20:13:51 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/08 20:25:55 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -17,6 +17,7 @@
 
 ADisplayable::ADisplayable(vec2 pos, std::string shaderName, float time)
 {
+	this->_alive = true;
 	this->pos = pos;
 	this->_shad.loadFromFile("resources/" + shaderName, sf::Shader::Fragment);
 	this->_time = time;
@@ -43,6 +44,11 @@ ADisplayable&	ADisplayable::operator=(const ADisplayable& rhs)
 void		ADisplayable::update(Displayer& dis)
 {
 	(void)dis;
+}
+
+bool		ADisplayable::isAlive(void)
+{
+	return (this->_alive);
 }
 
 // Food
@@ -153,7 +159,7 @@ void		SuperFood::update(Displayer& dis)
 
 ChasedFood::ChasedFood(vec2 pos, float total, float size)
 	: ADisplayable(pos, "chase.gl", 0), _left(total),
-	  _total(total), _size(size)
+	  _total(total), _size((size + 2) * 0.04)
 {
 }
 
@@ -276,5 +282,5 @@ void	Wave::update(Displayer& dis)
 {
 	this->_shad.setParameter("size", dis.getTime() - this->_time);
 	if (dis.getTime() - this->_time > 2)
-		dis.depopWave(this);
+		this->_alive = false;
 }
