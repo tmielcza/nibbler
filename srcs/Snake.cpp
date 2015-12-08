@@ -31,7 +31,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
-	this->_increm = 0.3;
+	this->_increm = 0.5;
 	this->init(direction, x, y);
 	this->_alive = true;
 	std::cout << "Creating Snake !!" << std::endl;
@@ -300,9 +300,12 @@ void							Snake::eat(Food const & eaten)
 		this->_score = eaten.get_value() * 2;
 	else
 		this->_score = eaten.get_value();
-	this->_speed += 0.15;
+	this->_speed += 0.2;
 //	this->_speed += this->_increm;
-//	this->_increm -= 0.03;
+//	if (this->_increm > 0.01)
+//		this->_increm -= 0.01;
+//	else
+//		this->_increm = 0.01;
 	if (eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);

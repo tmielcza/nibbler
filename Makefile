@@ -24,7 +24,7 @@ HEADERS = headers/
 SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp Player.cpp \
 		GraphicsManager.cpp MapManager.cpp Point.cpp Segment.cpp Snake.cpp \
 		Wall.cpp AGameMode.cpp UsualMode.cpp main.cpp SuperFood.cpp \
-		MultiFood.cpp ChasedFood.cpp
+		MultiFood.cpp ChasedFood.cpp CutBonus.cpp SlowBonus.cpp
 
 OBJ = $(SRC:%.cpp=$(DIROBJ)%.o)
 
