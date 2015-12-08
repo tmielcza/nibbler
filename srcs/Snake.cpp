@@ -293,6 +293,7 @@ void							Snake::turn_right(void)
 
 void							Snake::eat(Food const & eaten)
 {
+	GraphicsManager::Instance().popWave(this->getHeadSnakeX(), this->getHeadSnakeY());
 	this->add_to_tail();
 	if (this->_nbmove <= 2 && this->_nbmove >= 0)
 		this->_score = eaten.get_value() * 2;

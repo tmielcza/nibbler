@@ -25,6 +25,7 @@ class Food : public AEntity
 
 	int		_value;
 	bool	_spawner;
+	double	_time;
 
 	public:
 
@@ -39,6 +40,7 @@ class Food : public AEntity
 	void		set_value(int value);
 	bool		getSpawner(void) const;
 	void		draw(double time);
+	void		update(double time);
 	void		eaten(Snake & eater) const;
 
 };

@@ -64,6 +64,7 @@ class MapManager
 	void				foodpop(bool spawner);
 	void				foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode);
 	void				foodpop(Point center, int radius, bool spawner, e_PopMode mode);
+	void				foodepop(int x, int y);
 	void				bonuspop(void);
 	void				bonusdepop(int x, int y);
 	int					getBonusnb(void);

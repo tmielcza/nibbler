@@ -114,7 +114,7 @@ bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode m
 
 void	MapManager::foodpop(bool spawner)
 {
-	int x = (rand() % this->_width - 1);
+	int x = (rand() % this->_width);
 	int y = (rand() % this->_height);
 
 	while (this->_Map[x][y] != NULL)
@@ -146,6 +146,7 @@ void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode 
 		{
 			Food *f = new Food(1, x, y, spawner);
 			this->_Map[x][y] = f;
+			this->_foods.push_back(f);
 		}
 	}
 }
@@ -171,6 +172,7 @@ void	MapManager::foodpop(Point center, int radius, bool spawner, e_PopMode mode 
 		{
 			Food *f = new Food(1, x, y, spawner);
 			this->_Map[x][y] = f;
+			this->_foods.push_back(f);
 		}
 	}
 }
@@ -192,6 +194,26 @@ void	MapManager::bonuspop(void)
 	this->_bonus.push_back(b);
 }
 
+void	MapManager::foodepop(int x, int y)
+{
+	std::list<Food *>::iterator		start = this->_foods.begin();
+	std::list<Food *>::iterator		end = this->_foods.end();
+
+	while (start != end)
+	{
+		int _x = (*start)->getX();
+		int _y = (*start)->getY();
+		if (_x == x && _y == y)
+		{
+			this->_berase = true;
+			this->_foods.erase(start);
+			std::cout << "Bonus depop at : " << _x << "-" << _y << std::endl;
+			return;
+		}
+		start++;
+	}
+}
+
 void	MapManager::bonusdepop(int x, int y)
 {
 	std::list<ABonus *>::iterator		start = this->_bonus.begin();
@@ -203,7 +225,6 @@ void	MapManager::bonusdepop(int x, int y)
 		int _y = (*start)->getY();
 		if (_x == x && _y == y)
 		{
-//			this->_Map[x][y] = NULL;
 			this->_berase = true;
 			this->_bonus.erase(start);
 			std::cout << "Bonus depop at : " << _x << "-" << _y << std::endl;
@@ -255,14 +276,13 @@ void	MapManager::update(double time)
 {
 	std::list<ABonus *>::iterator		bstart = this->_bonus.begin();
 	std::list<ABonus *>::iterator		bend = this->_bonus.end();
-//	std::list<Food *>::iterator		fstart = this->_foods.begin();
-//	std::list<Food *>::iterator		fend = this->_foods.end();
+	std::list<Food *>::iterator		fstart = this->_foods.begin();
+	std::list<Food *>::iterator		fend = this->_foods.end();
 
 	(void)time;
 	int i = 0;
 	while (bstart != bend)
 	{
-		std::cout << "Bonus size : " << this->_bonus.size() << std::endl;
 		(*bstart)->update(time);
 		if (this->_berase == true)
 		{
@@ -281,11 +301,26 @@ void	MapManager::update(double time)
 			bstart++;
 		i++;
 	}
-/*
+	i = 0;
 	while (fstart != fend)
 	{
 		(*fstart)->update(time);
-		fstart++;
+		if (this->_berase == true)
+		{
+			fstart = this->_foods.begin();
+			fend = this->_foods.end();
+			int j = 0;
+			while (j < i)
+			{
+				fstart++;
+				j++;
+			}
+			this->_berase = false;
+			std::cout << "Foods has been Erase." << std::endl;
+		}
+		else
+		{
+			fstart++;
+		}
 	}
-*/
 }
