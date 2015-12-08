@@ -112,7 +112,7 @@ bool		MapManager::InZone(Point point, Point upleft, Point downright, e_PopMode m
 	return (false);
 }
 
-void	MapManager::foodpop(void)
+void	MapManager::foodpop(bool spawner)
 {
 	int x = (rand() % this->_width - 1);
 	int y = (rand() % this->_height);
@@ -122,7 +122,7 @@ void	MapManager::foodpop(void)
 		x = (rand() % this->_width);
 		y = (rand() % this->_height);
 	}
-	Food *f = new Food(1, x, y);
+	Food *f = new Food(1, x, y, spawner);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
 	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
@@ -131,23 +131,26 @@ void	MapManager::foodpop(void)
 		this->bonuspop();
 }
 
-void	MapManager::foodpop(Point upleft, Point downright, e_PopMode mode = InsideMode)
+void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode = InsideMode)
 {
 	if (mode == InsideMode)
 	{
 		int x = upleft.getX() + (rand() % downright.getX());
 		int y = upleft.getY() + (rand() % downright.getY());
-		while (this->_Map[x][y] != NULL || x > this->_width || y > this->_height)
+		while (this->_Map[x][y] != NULL && x < this->_width && y < this->_height)
 		{
 			x = upleft.getX() + (rand() % downright.getX());
 			y = upleft.getY() + (rand() % downright.getY());
 		}
-		Food *f = new Food(1, x, y);
-		this->_Map[x][y] = f;
+		if (this->_Map[x][y] == NULL)
+		{
+			Food *f = new Food(1, x, y, spawner);
+			this->_Map[x][y] = f;
+		}
 	}
 }
 
-void	MapManager::foodpop(Point center, int radius, e_PopMode mode = InsideMode)
+void	MapManager::foodpop(Point center, int radius, bool spawner, e_PopMode mode = InsideMode)
 {
 	if (mode == InsideMode)
 	{
@@ -159,13 +162,16 @@ void	MapManager::foodpop(Point center, int radius, e_PopMode mode = InsideMode)
 			tmpy = 0;
 		int x = tmpx + (rand() % (radius * 2));
 		int y = tmpy + (rand() % (radius * 2));
-		while (this->_Map[x][y] != NULL || x > this->_width || y > this->_height)
+		while (this->_Map[x][y] != NULL && x > this->_width && y > this->_height)
 		{
 			x = tmpx + (rand() % (radius * 2));
 			y = tmpy + (rand() % (radius * 2));
 		}
-		Food *f = new Food(1, x, y);
-		this->_Map[x][y] = f;
+		if (this->_Map[x][y] == NULL)
+		{
+			Food *f = new Food(1, x, y, spawner);
+			this->_Map[x][y] = f;
+		}
 	}
 }
 
@@ -179,9 +185,11 @@ void	MapManager::bonuspop(void)
 		y = rand() % this->_height;
 	}
 	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
-	SuperFood *sf = new SuperFood(1, x, y);
-	this->_Map[x][y] = sf;
-	this->_bonus.push_back(sf);
+	int r = 2 + (rand() % 6);
+	MultiFood *b = new MultiFood(r, x, y);
+//	SuperFood *b = new SuperFood(1, x, y);
+	this->_Map[x][y] = b;
+	this->_bonus.push_back(b);
 }
 
 void	MapManager::bonusdepop(int x, int y)

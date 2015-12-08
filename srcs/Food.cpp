@@ -23,12 +23,13 @@ Food::Food(Food const & copy)
 	*this = copy;
 }
 
-Food::Food(int value, int x, int y)
+Food::Food(int value, int x, int y, bool spawner)
 {
 	std::cout << "Food's poped from the big Tree !" << std::endl;
 	this->_value = value;
 	this->_pos.setX(x);
 	this->_pos.setY(y);
+	this->_spawner = spawner;
 	this->_eatable = true;
 //	GraphicsManager::Instance().popMultiFood(x,y);
 	GraphicsManager::Instance().popFood(x, y);
@@ -47,6 +48,7 @@ Food	&	Food::operator=(Food const & ass)
 {
 	this->_pos.setX(ass._pos.getX());
 	this->_pos.setY(ass._pos.getY());
+	this->_spawner = ass._spawner;
 	this->_eatable = true;
 	this->_value = ass._value;
 	return (*this);
@@ -67,6 +69,11 @@ int			Food::get_value(void) const
 void		Food::set_value(int value)
 {
 	this->_value = value;
+}
+
+bool		Food::getSpawner(void) const
+{
+	return (this->_spawner);
 }
 
 void		Food::draw(double time)

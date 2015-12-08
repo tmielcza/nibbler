@@ -17,6 +17,7 @@
 # include "Food.hpp"
 # include "ABonus.hpp"
 # include "SuperFood.hpp"
+# include "MultiFood.hpp"
 # include "Wall.hpp"
 # include "Point.hpp"
 # include "IDisplayer.hpp"
@@ -60,9 +61,9 @@ class MapManager
 	void				move(int index);
 	void				setSnakeDir(int index, bool left);
 	bool				InZone(Point point, Point upleft, Point downright, e_PopMode mode);
-	void				foodpop(void);
-	void				foodpop(Point upleft, Point downright, e_PopMode mode);
-	void				foodpop(Point center, int radius, e_PopMode mode);
+	void				foodpop(bool spawner);
+	void				foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode);
+	void				foodpop(Point center, int radius, bool spawner, e_PopMode mode);
 	void				bonuspop(void);
 	void				bonusdepop(int x, int y);
 	int					getBonusnb(void);

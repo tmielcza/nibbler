@@ -299,8 +299,9 @@ void							Snake::eat(Food const & eaten)
 	else
 		this->_score = eaten.get_value();
 	this->_speed += 0.15;
+	if (eaten.getSpawner() == true)
+		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
-	MapManager::Instance().foodpop();
 	std::cout << "eat : " << this->_nbmove << std::endl;
 	if (this->_nbmove > 2)
 		GraphicsManager::Instance().switchFoodMode();

@@ -24,18 +24,20 @@ class Food : public AEntity
 	private:
 
 	int		_value;
+	bool	_spawner;
 
 	public:
 
 	Food(void);
 	Food(Food const & copy);
-	Food(int value, int x, int y);
+	Food(int value, int x, int y, bool spawner);
 	~Food(void);
 
 	Food	&	operator=(Food const & ass);
 	bool		check_position(int x, int y);
 	int			get_value(void) const;
 	void		set_value(int value);
+	bool		getSpawner(void) const;
 	void		draw(double time);
 	void		eaten(Snake & eater) const;
 
