@@ -176,24 +176,7 @@ void	MapManager::foodpop(Point center, int radius, bool spawner, e_PopMode mode 
 		}
 	}
 }
-
-void	MapManager::bonuspop(void)
-{
-	int x = rand() % this->_width;
-	int y = rand() % this->_height;
-	while (this->_Map[x][y] != NULL)
-	{
-		x = rand() % this->_width;
-		y = rand() % this->_height;
-	}
-	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
-	int r = 2 + (rand() % 6);
-	MultiFood *b = new MultiFood(r, x, y);
-//	SuperFood *b = new SuperFood(1, x, y);
-	this->_Map[x][y] = b;
-	this->_bonus.push_back(b);
-}
-
+		
 void	MapManager::foodepop(int x, int y)
 {
 	std::list<Food *>::iterator		start = this->_foods.begin();
@@ -214,6 +197,29 @@ void	MapManager::foodepop(int x, int y)
 	}
 }
 
+void	MapManager::bonuspop(void)
+{
+	int x = rand() % this->_width;
+	int y = rand() % this->_height;
+	while (this->_Map[x][y] != NULL)
+	{
+		x = rand() % this->_width;
+		y = rand() % this->_height;
+	}
+	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
+
+	int r = 5 + (rand() % 5);
+	ChasedFood *b = new ChasedFood(r, x, y, true);
+/*
+//	MultiFood
+	int r = 2 + (rand() % 4);
+	MultiFood *b = new MultiFood(r, x, y);
+*/
+//	SuperFood *b = new SuperFood(1, x, y);
+	this->_Map[x][y] = b;
+	this->_bonus.push_back(b);
+}
+
 void	MapManager::bonusdepop(int x, int y)
 {
 	std::list<ABonus *>::iterator		start = this->_bonus.begin();
@@ -232,6 +238,11 @@ void	MapManager::bonusdepop(int x, int y)
 		}
 		start++;
 	}
+}
+
+void	MapManager::add_Bonus(ABonus *bonus)
+{
+	this->_bonus.push_back(bonus);
 }
 
 int		MapManager::getWidth(void)

@@ -18,6 +18,7 @@
 # include "ABonus.hpp"
 # include "SuperFood.hpp"
 # include "MultiFood.hpp"
+# include "ChasedFood.hpp"
 # include "Wall.hpp"
 # include "Point.hpp"
 # include "IDisplayer.hpp"
@@ -67,6 +68,7 @@ class MapManager
 	void				foodepop(int x, int y);
 	void				bonuspop(void);
 	void				bonusdepop(int x, int y);
+	void				add_Bonus(ABonus *bonus);
 	int					getBonusnb(void);
 	int					getWidth(void);
 	int					getHeight(void);
