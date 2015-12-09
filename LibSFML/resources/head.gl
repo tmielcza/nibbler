@@ -64,8 +64,8 @@ void main()
 		* (cos(time * 4 * PI) * 0.5 + 0.9);	// Time factor
 	colEye = max(0, min(1, colEye));
 
-	vec4 eyeCol = color( mod(gl_FragCoord.x / 640 + 0.7, 1.0));
+	vec4 eyeCol = color(0.7);
 	eyeCol *= 1.2;
-	vec4 snakeCol = color( mod(gl_FragCoord.x / 640 + 0.3, 1.0));
+	vec4 snakeCol = color(0.3);
 	gl_FragColor = eyeCol * colEye + col * snakeCol;
 }

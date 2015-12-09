@@ -6,13 +6,13 @@
 #    By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/11 13:30:53 by tmielcza          #+#    #+#              #
-#    Updated: 2015/12/04 18:39:54 by tmielcza         ###   ########.fr        #
+#    Updated: 2015/12/09 17:07:31 by tmielcza         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 SFMLDIR=SFML2.2
 
-include_dir=/usr/X11R6/include $(SFMLDIR)/SFML-2.2-osx-clang-universal/include
+include_dir=/usr/X11R6/include $(SFMLDIR)/SFML-2.2-osx-clang-universal/include ../common
 library_dir=/usr/X11R6/lib
 cairo=cairo
 x11=X11

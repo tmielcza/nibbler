@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/08 20:39:39 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 17:06:05 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -281,6 +281,10 @@ std::list<e_Input>	Displayer::getInput(void)
 			{sf::Keyboard::Key::Down, I_Down},
 			{sf::Keyboard::Key::Left, I_Left},
 			{sf::Keyboard::Key::Right, I_Right},
+			{sf::Keyboard::Key::W, I_2Up},
+			{sf::Keyboard::Key::S, I_2Down},
+			{sf::Keyboard::Key::A, I_2Left},
+			{sf::Keyboard::Key::D, I_2Right},
 			{sf::Keyboard::Key::Num1, I_Lib1},
 			{sf::Keyboard::Key::Num2, I_Lib2},
 			{sf::Keyboard::Key::Num3, I_Lib3},
