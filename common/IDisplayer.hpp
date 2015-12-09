@@ -23,23 +23,30 @@ enum	e_Dir
 
 enum	e_Input
 {
+	I_Player1 = 1 << 10,
 	I_Nope = 0,
 	I_Up = 1 << 0,
 	I_Down = 1 << 1,
 	I_Right = 1 << 2,
 	I_Left = 1 << 3,
+
+	I_Up1 = I_Up | I_Player1,
+	I_Down1 = I_Down | I_Player1,
+	I_Right1 = I_Right | I_Player1,
+	I_Left1 = I_Left | I_Player1,
+
+	I_Up2 = I_Up,
+	I_Down2 = I_Down,
+	I_Right2 = I_Right,
+	I_Left2 = I_Left,
+
 	I_Ok = 1 << 4,
 	I_Cancel = 1 << 5,
 	I_Lib1 = 1 << 6,
 	I_Lib2 = 1 << 7,
 	I_Lib3 = 1 << 8,
 	I_Close = 1 << 9,
-	I_2Up = 1 << 10,
-	I_2Down = 1 << 11,
-	I_2Right = 1 << 12,
-	I_2Left = 1 << 13,
-	I_Dir = 1 | 2 | 4 | 8,
-	I_2Dir = I_2Up | I_2Down | I_2Right | I_2Left
+	I_Dir = I_Up | I_Down | I_Right | I_Left
 };
 
 class IDisplayer

@@ -110,22 +110,26 @@ void		GameManager::update(double time)
 {
 	e_Input								input = I_Nope;
 	std::list<e_Input>					inputs;
+	bool								player1;
 
 	inputs = GraphicsManager::Instance().getInput();
 	GraphicsManager::Instance().clear();
 	for (auto it = inputs.begin(); it != inputs.end(); it++)
 	{
-		if (this->_me != NULL && (*it & I_Dir) != 0)
+		if ((*it & I_Dir) != 0)
 		{
-			input = *it;
-			if (this->_me->getSizeTouch() < 3)
-				this->_me->add_touch((e_Cardinal)input);
-		}
-		if (this->_me2 != NULL && (*it & I_Dir2) != 0)
-		{
-			input = *it;
-			if (this->_me2->getSizeTouch() < 3)
-				this->_me2->add_touch((e_Cardinal)input);
+			input = (e_Input)(*it & I_Dir);
+			player1 = (*it & I_Player1);
+			if (this->_me != NULL && player1)
+			{
+				if (this->_me->getSizeTouch() < 3)
+					this->_me->add_touch((e_Cardinal)input);
+			}
+			else if (this->_me2 != NULL)
+			{
+				if (this->_me2->getSizeTouch() < 3)
+					this->_me2->add_touch((e_Cardinal)input);
+			}
 		}
 	}
 	if (this->_me != NULL)
