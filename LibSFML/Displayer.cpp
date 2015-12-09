@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/09 17:06:05 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:18:16 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -152,21 +152,23 @@ sf::Vector2f	Displayer::posOnScreen(int x, int y)
 	return (sf::Vector2f(x * 40 + 20, y * 40 + 20));
 }
 
-void	Displayer::drawTail(float time, int x, int y, e_Dir last)
+void	Displayer::drawTail(float time, int x, int y, e_Dir last, int id)
 {
 	sf::Vector2f		pos;
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
+	this->_tail.setParameter("id", id);
 	this->drawSprite(this->_tail, pos, {40, 40}, this->getTime());
 }
 
-void	Displayer::drawHead(float time, int x, int y, e_Dir last)
+void	Displayer::drawHead(float time, int x, int y, e_Dir last, int id)
 {
 	sf::Vector2f		pos;
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
+	this->_head.setParameter("id", id);
 	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
 }
 

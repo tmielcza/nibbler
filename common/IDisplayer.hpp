@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/09 17:05:12 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:17:35 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -54,8 +54,8 @@ public:
 	virtual void				depopFood(int x, int y) = 0;
 	virtual void				updateSuperFood(int x, int y, int size) = 0;
 	virtual void				switchFoodMode(void) = 0;
-	virtual void				drawTail(float time, int x, int y, e_Dir last) = 0;
-	virtual void				drawHead(float time, int x, int y, e_Dir last) = 0;
+	virtual void				drawTail(float time, int x, int y, e_Dir last, int id) = 0;
+	virtual void				drawHead(float time, int x, int y, e_Dir last, int id) = 0;
 	virtual void				putWall(int x, int y) = 0;
 	virtual void				popWave(int x, int y) = 0;
 	virtual std::list<e_Input>	getInput(void) = 0;

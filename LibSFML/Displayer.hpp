@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/08 18:29:50 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:02:17 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -52,8 +52,8 @@ public:
 	void				switchFoodMode(void);
 	vec2				getSize(void) const;
 	std::list<e_Input>	getInput(void);
-	void				drawTail(float time, int x, int y, e_Dir last);
-	void				drawHead(float time, int x, int y, e_Dir last);
+	void				drawTail(float time, int x, int y, e_Dir last, int id);
+	void				drawHead(float time, int x, int y, e_Dir last, int id);
 	void				putWall(int x, int y);
 	void				popWave(int x, int y);
 	void				depopWave(ADisplayable* wave);

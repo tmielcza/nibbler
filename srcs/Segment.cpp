@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/06 19:00:25 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/06 18:25:28 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:29:05 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -24,8 +24,9 @@ Segment::Segment(const Segment & copy)
 	*this = copy;
 }
 
-Segment::Segment(int x, int y, e_Cardinal direction)
+Segment::Segment(int x, int y, e_Cardinal direction, int id)
 {
+	this->_id = id;
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_eatable = false;
@@ -59,5 +60,5 @@ void		Segment::set_Direc(e_Cardinal direc)
 void		Segment::draw(double time)
 {
 //	std::cout << " DIR = "<< this->_direction << std::endl;
-	GraphicsManager::Instance().drawTail(time, this->_pos.getX(), this->_pos.getY(), (e_Dir)(this->_direction));
+	GraphicsManager::Instance().drawTail(time, this->_pos.getX(), this->_pos.getY(), (e_Dir)(this->_direction), this->_id);
 }

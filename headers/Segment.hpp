@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/06 17:53:12 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:06:49 by rduclos          ###   ########.fr       //
+//   Updated: 2015/12/09 18:31:50 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -20,12 +20,13 @@ class Segment : public AEntity
 	protected :
 
 	e_Cardinal		_direction;
+	int				_id;
 
 	public:
 
 	Segment(void);
 	Segment(const Segment & copy);
-	Segment(int x, int y, e_Cardinal direction);
+	Segment(int x, int y, e_Cardinal direction, int id);
 	~Segment(void);
 
 	Segment&		operator=(const Segment& ass);

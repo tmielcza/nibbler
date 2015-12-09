@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/08 18:01:23 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:31:30 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -84,7 +84,7 @@ void							Snake::init(e_Cardinal direction, int x, int y)
 
 	for (int i = 0; i < 4; i++)
 	{
-		seg = new Segment(x, y, direction);
+		seg = new Segment(x, y, direction, this->_index);
 		this->_snake.push_back(seg);		
 		if (seg->get_Direc() == North)
 			y--;
@@ -106,7 +106,7 @@ std::list<Segment*>	&			Snake::get_snake(void)
 
 void							Snake::add_to_tail(void)
 {
-	Segment								*seg = new Segment();
+	Segment								*seg = new Segment(0, 0, East, this->_index);
 
 	seg->set_Direc(this->_tail->get_Direc());
 	if (seg->get_Direc() == North)
@@ -364,11 +364,11 @@ void							Snake::draw(double time)
 	x = this->getHeadSnakeX();
 	y = this->getHeadSnakeY();
 	auto it = this->_snake.begin();
-	GraphicsManager::Instance().drawHead(time, x, y, (e_Dir)(*it)->get_Direc());
+	GraphicsManager::Instance().drawHead(time, x, y, (e_Dir)(*it)->get_Direc(), id);
 	it++;
 	for (auto end = this->_snake.end(); it != end; it++)
 	{
-		(*it)->draw(time);
+		(*it)->draw(time, this->_index);
 	}
 }
 
