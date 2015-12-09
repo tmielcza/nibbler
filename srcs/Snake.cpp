@@ -45,8 +45,13 @@ Snake::~Snake(void)
 	std::cout << "Destroying Snake !!" << std::endl;
 	while (tmp != end)
 	{
-		this->_snake.pop_front();
+		Segment *s = *tmp;
+		int x = s->getX();
+		int y = s->getY();
+		MapManager::Instance()._Map[x][y] = NULL;
+		this->_snake.erase(tmp);
 		tmp = this->_snake.begin();
+		delete s;
 	}
 }
 
