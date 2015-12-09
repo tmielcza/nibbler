@@ -107,4 +107,5 @@ void			DuoMode::run(void)
 		MapManager::Instance().update(delta);
 		GraphicsManager::Instance().display();
 	}
+	while (42);
 }
