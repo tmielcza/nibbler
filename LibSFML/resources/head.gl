@@ -3,7 +3,7 @@
 uniform float	time;
 uniform vec2	coord;
 uniform vec2	resolution;
-uniform int		id;
+uniform float	index;
 
 vec3 pal( in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d )
 {
@@ -65,8 +65,8 @@ void main()
 		* (cos(time * 4 * PI) * 0.5 + 0.9);	// Time factor
 	colEye = max(0, min(1, colEye));
 
-	vec4 eyeCol = color( mod(0.7 + id * 0.2, 1.0) );
+	vec4 eyeCol = color( mod(0.7 + index * 0.3, 1.0) );
 	eyeCol *= 1.2;
-	vec4 snakeCol = color( mod(0.3 + id * 0.2, 1.0) );
+	vec4 snakeCol = color( mod(0.3 + index * 0.3, 1.0) );
 	gl_FragColor = eyeCol * colEye + col * snakeCol;
 }

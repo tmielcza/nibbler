@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/09 18:31:30 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:37:51 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -45,8 +45,13 @@ Snake::~Snake(void)
 	std::cout << "Destroying Snake !!" << std::endl;
 	while (tmp != end)
 	{
-		this->_snake.pop_front();
+		Segment *s = *tmp;
+		int x = s->getX();
+		int y = s->getY();
+		MapManager::Instance()._Map[x][y] = NULL;
+		this->_snake.erase(tmp);
 		tmp = this->_snake.begin();
+		delete s;
 	}
 }
 
@@ -364,11 +369,11 @@ void							Snake::draw(double time)
 	x = this->getHeadSnakeX();
 	y = this->getHeadSnakeY();
 	auto it = this->_snake.begin();
-	GraphicsManager::Instance().drawHead(time, x, y, (e_Dir)(*it)->get_Direc(), id);
+	GraphicsManager::Instance().drawHead(time, x, y, (e_Dir)(*it)->get_Direc(), this->_index);
 	it++;
 	for (auto end = this->_snake.end(); it != end; it++)
 	{
-		(*it)->draw(time, this->_index);
+		(*it)->draw(time);
 	}
 }
 

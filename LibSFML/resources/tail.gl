@@ -3,7 +3,7 @@
 uniform float	time;
 uniform vec2	coord;
 uniform vec2	resolution;
-uniform int		id;
+uniform float	index;
 
 vec3 pal( in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d )
 {
@@ -58,7 +58,7 @@ void main()
 			d = min(d, dst);
 	}
 
-	vec4 snakeCol = color( mod(0.3 + id * 0.2, 1.0) );
+	vec4 snakeCol = color( mod(0.3 + index * 0.3, 1.0) );
 
 	float	col = 1 - pow(abs(d) * 15, 2);	// Glow factor
 //		* (cos(time * 4 * PI) * 0.4 + 0.7);	// Time factor

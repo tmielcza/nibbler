@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/09 18:18:16 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/09 18:52:52 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -158,7 +158,7 @@ void	Displayer::drawTail(float time, int x, int y, e_Dir last, int id)
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
-	this->_tail.setParameter("id", id);
+	this->_tail.setParameter("index", (float)id);
 	this->drawSprite(this->_tail, pos, {40, 40}, this->getTime());
 }
 
@@ -168,7 +168,7 @@ void	Displayer::drawHead(float time, int x, int y, e_Dir last, int id)
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
-	this->_head.setParameter("id", id);
+	this->_head.setParameter("index", (float)id);
 	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
 }
 
@@ -279,21 +279,17 @@ std::list<e_Input>	Displayer::getInput(void)
 	std::list<e_Input>	inputs;
 	std::map<sf::Keyboard::Key, e_Input> keys=
 		{
-			{sf::Keyboard::Key::Up, I_Up},
-			{sf::Keyboard::Key::Down, I_Down},
-			{sf::Keyboard::Key::Left, I_Left},
-			{sf::Keyboard::Key::Right, I_Right},
-			{sf::Keyboard::Key::W, I_2Up},
-			{sf::Keyboard::Key::S, I_2Down},
-			{sf::Keyboard::Key::A, I_2Left},
-			{sf::Keyboard::Key::D, I_2Right},
+			{sf::Keyboard::Key::Up, I_Up1},
+			{sf::Keyboard::Key::Down, I_Down1},
+			{sf::Keyboard::Key::Left, I_Left1},
+			{sf::Keyboard::Key::Right, I_Right1},
+			{sf::Keyboard::Key::W, I_Up2},
+			{sf::Keyboard::Key::S, I_Down2},
+			{sf::Keyboard::Key::A, I_Left2},
+			{sf::Keyboard::Key::D, I_Right2},
 			{sf::Keyboard::Key::Num1, I_Lib1},
 			{sf::Keyboard::Key::Num2, I_Lib2},
 			{sf::Keyboard::Key::Num3, I_Lib3},
-//			{sf::Keyboard::Key::w, I_Up2},
-//			{sf::Keyboard::Key::s, I_Down2},
-//			{sf::Keyboard::Key::a, I_Left2},
-//			{sf::Keyboard::Key::d, I_Right2},
 		};
 
 	sf::Event event;
