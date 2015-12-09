@@ -135,6 +135,7 @@ void							Snake::add_to_tail(void)
 		seg->setY(this->_tail->getY());
 	}
 	seg->set_Direc(this->_tail->get_Direc());
+	MapManager::Instance()._Map[seg->getX()][seg->getY()] = seg;
 	this->_snake.push_back(seg);
 	this->_tail = seg;
 }
