@@ -16,12 +16,12 @@
 #include <time.h>
 
 #include "SoloMode.hpp"
+#include "DuoMode.hpp"
 
 int		main(void)
 {
-	SoloMode		game(false);
+	DuoMode		game(false);
 
-	srand(time(NULL));
 	game.run();
 	return (0);
 }

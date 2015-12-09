@@ -125,7 +125,6 @@ void	MapManager::foodpop(bool spawner)
 	Food *f = new Food(1, x, y, spawner);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
-	std::cout << "Food poped at x: " << x << " y: " << y << std::endl;
 //	int r = rand() % 5;
 //	if (r == 3)
 		this->bonuspop();
@@ -190,7 +189,6 @@ void	MapManager::foodepop(int x, int y)
 		{
 			this->_berase = true;
 			this->_foods.erase(start);
-			std::cout << "Bonus depop at : " << _x << "-" << _y << std::endl;
 			return;
 		}
 		start++;
@@ -328,7 +326,6 @@ void	MapManager::update(double time)
 				bstart++;
 				j++;
 			}
-			std::cout << "Bonus has been Erase." << std::endl;
 			this->_berase = false;
 		}
 		else
@@ -350,11 +347,9 @@ void	MapManager::update(double time)
 				j++;
 			}
 			this->_berase = false;
-			std::cout << "Foods has been Erase." << std::endl;
 		}
 		else
-		{
 			fstart++;
-		}
+		i++;
 	}
 }

@@ -284,6 +284,10 @@ std::list<e_Input>	Displayer::getInput(void)
 			{sf::Keyboard::Key::Num1, I_Lib1},
 			{sf::Keyboard::Key::Num2, I_Lib2},
 			{sf::Keyboard::Key::Num3, I_Lib3},
+//			{sf::Keyboard::Key::w, I_Up2},
+//			{sf::Keyboard::Key::s, I_Down2},
+//			{sf::Keyboard::Key::a, I_Left2},
+//			{sf::Keyboard::Key::d, I_Right2},
 		};
 
 	sf::Event event;

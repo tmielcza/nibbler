@@ -18,23 +18,23 @@ int		Snake::_curIndex = 0;
 
 Snake::Snake(void) : _index(Snake::_curIndex++)
 {
+	std::cout << "Creating Snake !! ";
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_alive = true;
 	this->init();
-	std::cout << "Creating Snake !!" << std::endl;
 }
 
 Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 {
+	std::cout << "Creating Snake !! ";
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_increm = 0.5;
 	this->init(direction, x, y);
 	this->_alive = true;
-	std::cout << "Creating Snake !!" << std::endl;
 }
 
 Snake::~Snake(void)
@@ -74,6 +74,7 @@ void							Snake::init(void)
 
 	while (check_place_snake(x, y) == false)
 		y = rand() % height;
+	std::cout << "at : " << x << "-" << y << std::endl;
 	this->init(East, x, y);
 }
 
@@ -196,31 +197,33 @@ void							Snake::move(void)
 	MapManager::Instance()._Map[x][y] = NULL;
 	if (direc == North)
 	{
-		if ((y = (*seg)->getY() + 1) < MapManager::Instance().getHeight())
-			(*seg)->setY(y);
-		else
-			(*seg)->setY(0);
+		y = (*seg)->getY() + 1;
+		if (y >= MapManager::Instance().getHeight())
+			y = 0;
+		(*seg)->setY(y);
 	}
 	else if (direc == South)
 	{
-		if ((y = (*seg)->getY() -1) < 0)
+		y = (*seg)->getY() - 1;
+		if (y < 0)
 			y = MapManager::Instance().getHeight() - 1;
 		(*seg)->setY(y);
-
 	}
 	else if (direc == East)
 	{
-		if ((x = (*seg)->getX() + 1) < MapManager::Instance().getWidth())
-			(*seg)->setX(x);
-		else
-			(*seg)->setX(0);
+		x = (*seg)->getX() + 1;
+		if (x >= MapManager::Instance().getWidth())
+			x = 0;
+		(*seg)->setX(x);
 	}
 	else if (direc == West)
 	{
-		if ((x = (*seg)->getX() - 1) < 0)
+		x = (*seg)->getX() - 1;
+		if (x < 0)
 			x = MapManager::Instance().getWidth() - 1;
 		(*seg)->setX(x);
 	}
+	std::cout << this->_index << ": " << x << "-" << y << std::endl;
 	MapManager::Instance()._Map[x][y] = (*seg);
 	seg++;
 	while (seg != end)
@@ -308,7 +311,6 @@ void							Snake::eat(Food const & eaten)
 	if (eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
-	std::cout << "eat : " << this->_nbmove << std::endl;
 	if (this->_nbmove > 2)
 		GraphicsManager::Instance().switchFoodMode();
 	this->_nbmove = 0;
@@ -317,7 +319,6 @@ void							Snake::eat(Food const & eaten)
 void							Snake::take_bonus(ABonus & taken)
 {
 	taken.taken(*this);
-	std::cout << "Bonus have been taken by the Snake" << std::endl;
 }
 
 e_Cardinal						Snake::getHeadSnakeDirec(void)

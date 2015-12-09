@@ -11,6 +11,7 @@
 // ************************************************************************** //
 
 #include "GameManager.hpp"
+#include "AEntity.hpp"
 
 GameManager::GameManager(void)
 {
@@ -31,7 +32,10 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-	delete this->_me;
+	if (this->_me != NULL)
+		delete this->_me;
+	if (this->_me2 != NULL)
+		delete this->_me2;
 	std::cout << "Destroying GameManager !" << std::endl;
 }
 
@@ -43,6 +47,7 @@ GameManager	&	GameManager::operator=(const GameManager & ass)
 	this->_players = ass._players;
 	this->_master = ass._master;
 	this->_me = ass._me;
+	this->_me2 = ass._me2;
 	this->_players = ass._players;
 	return (*this);
 }
@@ -66,26 +71,65 @@ void		GameManager::init(int nbplayer, int width, int height)
 	this->_height = height;
 	MapManager::Instance().init(nbplayer, width, height);
 	this->_me = new Player();
+	this->_me2 = NULL;
+}
+
+void		GameManager::init_second(void)
+{
+	this->_me2 = new Player();
 }
 
 bool		GameManager::IsAlive(void)
 {
-	return (this->_me->IsAlive());
-}
+	bool	test = false;
 
-void		GameManager::update_one(double time)
-{
-	this->_me->update(time);
-}
-
-void		GameManager::update_two(double time)
-{
-	this->_me->update(time);
-	this->_me2->update(time);
+	if (this->_me != NULL)
+	{
+		if (this->_me->IsAlive() == true)
+			test = true;
+		else
+		{
+			delete this->_me;
+			this->_me = NULL;
+		}
+	}
+	if (this->_me2 != NULL)
+	{
+		if (this->_me2->IsAlive() == true)
+			test = true;
+		else
+		{
+			delete this->_me2;
+			this->_me2 = NULL;
+		}
+	}
+	return (test);
 }
 
 void		GameManager::update(double time)
 {
-	this->_me->update(time);
-	//update all list of snakes
+	e_Input								input = I_Nope;
+	std::list<e_Input>					inputs;
+
+	inputs = GraphicsManager::Instance().getInput();
+	GraphicsManager::Instance().clear();
+	for (auto it = inputs.begin(); it != inputs.end(); it++)
+	{
+		if (this->_me != NULL && (*it & I_Dir) != 0)
+		{
+			input = *it;
+			if (this->_me->getSizeTouch() < 3)
+				this->_me->add_touch((e_Cardinal)input);
+		}
+		if (this->_me2 != NULL && (*it & I_Dir2) != 0)
+		{
+			input = *it;
+			if (this->_me2->getSizeTouch() < 3)
+				this->_me2->add_touch((e_Cardinal)input);
+		}
+	}
+	if (this->_me != NULL)
+		this->_me->update(time);
+	if (this->_me2 != NULL)
+		this->_me2->update(time);
 }

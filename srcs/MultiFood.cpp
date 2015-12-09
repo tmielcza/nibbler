@@ -42,7 +42,6 @@ MultiFood	&		MultiFood::operator=(const MultiFood & src)
 
 void				MultiFood::taken(Snake & snake)
 {
-//	snake.add_to_tail();
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
 	snake.add_score(this->_value * 10);
 	for (int i = 0; i < this->_value; i++)

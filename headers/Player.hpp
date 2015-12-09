@@ -35,6 +35,8 @@ class Player
 	bool		IsAlive(void);
 	int			verify_lL(e_Cardinal d);
 	void		update(double time);
+	void		add_touch(e_Cardinal touch);
+	int			getSizeTouch(void);
 
 };
 

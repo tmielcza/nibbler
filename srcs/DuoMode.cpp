@@ -15,22 +15,26 @@
 DuoMode::DuoMode(void)
 {
 	std::cout << "Creating DuoMode !" << std::endl;
+	srand(time(NULL));
 	this->_nbPlayers = 1;
 	this->_width = 22;
 	this->_height = 17;
 	this->_speed = 1;
 	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height);
-	this->init();
+	this->_game->init_second();
+	this->init(true);
 }
 
 DuoMode::DuoMode(bool wall)
 {
 	std::cout << "Creating DuoMode !" << std::endl;
+	srand(time(NULL));
 	this->_nbPlayers = 1;
 	this->_width = 22;
 	this->_height = 17;
 	this->_speed = 1;
 	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height);
+	this->_game->init_second();
 	this->init(wall);
 }
 
@@ -99,7 +103,7 @@ void			DuoMode::run(void)
 	{
 //		GraphicsManager::Instance().clear();
 		delta = this->_game->deltaTime();
-		this->_game->update_two(delta);
+		this->_game->update(delta);
 		MapManager::Instance().update(delta);
 		GraphicsManager::Instance().display();
 	}

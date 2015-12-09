@@ -34,6 +34,11 @@ enum	e_Input
 	I_Lib2 = 128,
 	I_Lib3 = 256,
 	I_Close = 512,
+	I_Up2 = 1024,
+	I_Down2 = 2048,
+	I_Right2 = 4096,
+	I_Left2 = 8192,
+	I_Dir2 = 1024 | 2048 | 4096 | 8192,
 	I_Dir = 1 | 2 | 4 | 8
 };
 
