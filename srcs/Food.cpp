@@ -26,7 +26,7 @@ Food::Food(Food const & copy)
 
 Food::Food(int value, int x, int y, bool spawner)
 {
-	std::cout << "Food's poped from the big Tree !" << std::endl;
+	std::cout << "Food's poped from the big Tree at " << x << "-" << y << " !" << std::endl;
 	this->_value = value;
 	this->_pos.setX(x);
 	this->_pos.setY(y);

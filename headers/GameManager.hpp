@@ -44,9 +44,8 @@ class GameManager
 
 	double			deltaTime(void);
 	void			init(int nbplayer, int width, int height);
+	void			init_second(void);
 	bool			IsAlive(void);
-	void			update_one(double time);
-	void			update_two(double time);
 	void			update(double time);
 
 };

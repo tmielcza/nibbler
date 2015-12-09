@@ -99,8 +99,9 @@ void			SoloMode::run(void)
 	{
 //		GraphicsManager::Instance().clear();
 		delta = this->_game->deltaTime();
-		this->_game->update_one(delta);
+		this->_game->update(delta);
 		MapManager::Instance().update(delta);
 		GraphicsManager::Instance().display();
 	}
+	while (42);
 }

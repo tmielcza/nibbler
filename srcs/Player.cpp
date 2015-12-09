@@ -68,22 +68,9 @@ int			Player::verify_lL(e_Cardinal d)
 
 void		Player::update(double time)
 {
-	e_Input								input = I_Nope;
-	std::list<e_Input>					inputs;
 	std::list<e_Cardinal>::iterator		tuchs = this->_lastInputs.begin();
 	std::list<e_Cardinal>::iterator		end = this->_lastInputs.end();
 
-	inputs = GraphicsManager::Instance().getInput();
-	GraphicsManager::Instance().clear();
-	for (auto it = inputs.begin(); it != inputs.end(); it++)
-	{
-		if ((*it & I_Dir) != 0)
-		{
-			input = *it;
-			if (this->_lastInputs.size() < 3)
-				this->_lastInputs.push_back((e_Cardinal)input);
-		}
-	}
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
 	{
@@ -108,4 +95,14 @@ void		Player::update(double time)
 		this->_time = 0.;
 	}
 	this->_Snake->draw(this->_time);
+}
+
+void		Player::add_touch(e_Cardinal touch)
+{
+	this->_lastInputs.push_back(touch);
+}
+
+int			Player::getSizeTouch(void)
+{
+	return (this->_lastInputs.size());
 }
