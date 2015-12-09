@@ -125,7 +125,7 @@ void		GameManager::update(double time)
 				if (this->_me->getSizeTouch() < 3)
 					this->_me->add_touch((e_Cardinal)input);
 			}
-			else if (this->_me2 != NULL)
+			else if (this->_me2 != NULL && !player1)
 			{
 				if (this->_me2->getSizeTouch() < 3)
 					this->_me2->add_touch((e_Cardinal)input);
