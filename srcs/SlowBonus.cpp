@@ -17,7 +17,7 @@ SlowBonus::SlowBonus(int value, int x, int y)
 	this->_time = 0;
 	this->_isalive = true;
 	this->_eatable = true;
-	GraphicsManager::Instance().popMultiFood(x, y);
+	GraphicsManager::Instance().popSlowFood(x, y);
 }
 
 SlowBonus::SlowBonus(const SlowBonus & src)
