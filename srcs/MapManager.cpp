@@ -125,9 +125,9 @@ void	MapManager::foodpop(bool spawner)
 	Food *f = new Food(1, x, y, spawner);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
-	int r = rand() % 4;
-	if (r == 2)
-		this->bonuspop();
+//	int r = rand() % 4;
+//	if (r == 2)
+		this->bonuspop(3);
 }
 
 void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode = InsideMode)
@@ -192,6 +192,49 @@ void	MapManager::foodepop(int x, int y)
 			return;
 		}
 		start++;
+	}
+}
+
+void	MapManager::bonuspop(int b)
+{
+	int x = rand() % this->_width;
+	int y = rand() % this->_height;
+	while (this->_Map[x][y] != NULL)
+	{
+		x = rand() % this->_width;
+		y = rand() % this->_height;
+	}
+	if (b == 0)
+	{
+		SlowBonus *b = new SlowBonus(10, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (b == 1)
+	{
+		CutBonus *b = new CutBonus(10, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (b == 2)
+	{
+		SuperFood *b = new SuperFood(1, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (b == 3)
+	{
+		int r2 = 5 + (rand() % 5);
+		ChasedFood *b = new ChasedFood(r2, x, y, 1);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
+	}
+	else if (b == 4)
+	{
+		int r2 = 2 + (rand() % 4);
+		MultiFood *b = new MultiFood(r2, x, y);
+		this->_Map[x][y] = b;
+		this->_bonus.push_back(b);
 	}
 }
 

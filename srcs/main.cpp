@@ -20,7 +20,7 @@
 
 int		main(void)
 {
-	SoloMode		game(false);
+	DuoMode		game(false);
 
 	game.run();
 	return (0);

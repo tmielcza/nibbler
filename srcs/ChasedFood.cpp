@@ -50,23 +50,35 @@ void				ChasedFood::taken(Snake & snake)
 {
 	int height = MapManager::Instance().getHeight();
 	int width = MapManager::Instance().getWidth();
+	bool pop = true;
+
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());
 	if (this->_place != this->_value)
 	{
 		int x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
 		int y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
 		int i = 0;
-		
+
+		if (x < 0)
+			x = width - 1;
+		else if (x >= width)
+			x = 0;
+		if (y < 0)
+			y = height - 1;
+		else if (y >= height)
+			y = 0;
 		while (MapManager::Instance()._Map[x][y] != NULL && i < 20)
 		{
 			x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
 			y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
-			while ((x < 0 || y < 0 || y >= height || x >= width) && i < 20)
-			{
-				x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
-				y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
-				i++;
-			}
+			if (x < 0)
+				x = width - 1;
+			else if (x >= width)
+				x = 0;
+			if (y < 0)
+				y = height - 1;
+			else if (y >= height)
+				y = 0;
 			i++;
 		}
 		if (MapManager::Instance()._Map[x][y] != NULL)
@@ -76,23 +88,28 @@ void				ChasedFood::taken(Snake & snake)
 			{
 				x = (snake.getHeadSnakeX() - 2) + (rand() % 4);
 				y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
-				while ((x < 0 || y < 0 || y >= height || x >= width) && i < 20)
-				{
-					x = (snake.getHeadSnakeX() - 2) + (rand() % 4);
-					y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
-					i++;
-				}
+				if (x < 0)
+					x = width - 1;
+				else if (x >= width)
+					x = 0;
+				if (y < 0)
+					y = height - 1;
+				else if (y >= height)
+					y = 0;
 				i++;
 			}
 		}
-		if (MapManager::Instance()._Map[x][y] == NULL)
+		if (x >= 0 && x < width && y >= 0 && y < height &&
+			MapManager::Instance()._Map[x][y] == NULL)
 		{
 			ChasedFood *b = new ChasedFood(this->_value, x, y, this->_place + 1);
 			MapManager::Instance()._Map[x][y] = b;
 			MapManager::Instance().add_Bonus(b);
 		}
+		else
+			pop = false;
 	}
-	if (this->_place != this->_value)
+	if (this->_place != this->_value && pop == true)
 		snake.add_score(this->_place);
 	else
 		snake.add_score(200);

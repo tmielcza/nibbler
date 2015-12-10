@@ -23,6 +23,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_alive = true;
+	this->_increm = 0.4;
 	this->init();
 }
 
@@ -308,12 +309,12 @@ void							Snake::eat(Food const & eaten)
 		this->_score = eaten.get_value() * 2;
 	else
 		this->_score = eaten.get_value();
-	this->_speed += 0.2;
-//	this->_speed += this->_increm;
-//	if (this->_increm > 0.01)
-//		this->_increm -= 0.01;
-//	else
-//		this->_increm = 0.01;
+//	this->_speed += 0.2;
+	this->_speed += this->_increm;
+	if (this->_increm > 0.05)
+		this->_increm -= 0.01;
+	if (this->_increm < 0.05)
+		this->_increm = 0.05;
 	if (eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
@@ -395,7 +396,7 @@ void							Snake::update_directions(void)
 
 void		Snake::Slow(double less)
 {
-	this->_speed -= (this->_speed / less);
+	this->_speed -= ((this->_speed / 100) * less);
 }
 
 void		Snake::Cut(size_t less)
