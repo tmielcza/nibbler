@@ -89,8 +89,17 @@ void							Snake::init(e_Cardinal direction, int x, int y)
 
 	for (int i = 0; i < 4; i++)
 	{
+		if (x < 0)
+			x = MapManager::Instance().getWidth() - 1;
+		else if (x >= MapManager::Instance().getWidth())
+			x = 0;
+		if (y < 0)
+			y = MapManager::Instance().getHeight() - 1;
+		else if (y >= MapManager::Instance().getHeight())
+			y = 0;
 		seg = new Segment(x, y, direction, this->_index);
-		this->_snake.push_back(seg);		
+		this->_snake.push_back(seg);
+		MapManager::Instance()._Map[x][y] = seg;
 		if (seg->get_Direc() == North)
 			y--;
 		else if (seg->get_Direc() == South)
@@ -111,31 +120,44 @@ std::list<Segment*>	&			Snake::get_snake(void)
 
 void							Snake::add_to_tail(void)
 {
-	Segment								*seg = new Segment(0, 0, East, this->_index);
+	e_Cardinal			e = this->_tail->get_Direc();
+	int					x = this->_tail->getX();
+	int					y = this->_tail->getY();
+/*
+	int					x = 0;
+	int					y = 0;
 
-	seg->set_Direc(this->_tail->get_Direc());
-	if (seg->get_Direc() == North)
+	if (e == North)
 	{
-		seg->setX(this->_tail->getX());
-		seg->setY(this->_tail->getY() - 1);
+		x = this->_tail->getX();
+		y = this->_tail->getY() - 1;
+		if (y < 0)
+			y = MapManager::Instance().getHeight() - 1;
 	}
-	else if (seg->get_Direc() == South)
+	else if (e == South)
 	{
-		seg->setX(this->_tail->getX());
-		seg->setY(this->_tail->getY() + 1);
+		x = this->_tail->getX();
+		y = this->_tail->getY() + 1;
+		if (y >= MapManager::Instance().getHeight())
+			y = 0;
 	}
-	else if (seg->get_Direc() == East)
+	else if (e == East)
 	{
-		seg->setX(this->_tail->getX() - 1);
-		seg->setY(this->_tail->getY());
+		x = this->_tail->getX() - 1;
+		y = this->_tail->getY();
+		if (x < 0)
+			x = MapManager::Instance().getWidth() - 1;
 	}
-	else if (seg->get_Direc() == West)
+	else if (e == West)
 	{
-		seg->setX(this->_tail->getX() + 1);
-		seg->setY(this->_tail->getY());
+		x = this->_tail->getX() + 1;
+		y = this->_tail->getY();
+		if (x >= MapManager::Instance().getWidth())
+			x = 0;
 	}
-	seg->set_Direc(this->_tail->get_Direc());
-	MapManager::Instance()._Map[seg->getX()][seg->getY()] = seg;
+*/
+	Segment *seg = new Segment(x, y, e, this->_index);
+//	MapManager::Instance()._Map[x][y] = seg;
 	this->_snake.push_back(seg);
 	this->_tail = seg;
 }
@@ -180,7 +202,18 @@ void							Snake::befor_move(void)
 	if (MapManager::Instance()._Map[x][y] != NULL)
 	{
 		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
+		{
 			this->_alive = false;
+			if (dynamic_cast<Segment *>(MapManager::Instance()._Map[x][y]))
+			{
+				std::cout << "Dead by a Segment : ";
+				std::cout << dynamic_cast<Segment *>(MapManager::Instance()._Map[x][y])->getID() <<std::endl;
+			}
+			else if (dynamic_cast<Wall *>(MapManager::Instance()._Map[x][y]))
+				std::cout << "Dead by a Wall : ";
+			else
+				std::cout << "Dead by an unknown AEntity : ";
+		}
 		else
 		{
 			if (dynamic_cast<Food*>(MapManager::Instance()._Map[x][y]))
@@ -229,7 +262,6 @@ void							Snake::move(void)
 			x = MapManager::Instance().getWidth() - 1;
 		(*seg)->setX(x);
 	}
-	std::cout << this->_index << ": " << x << "-" << y << std::endl;
 	MapManager::Instance()._Map[x][y] = (*seg);
 	seg++;
 	while (seg != end)
@@ -411,7 +443,10 @@ void		Snake::Cut(size_t less)
 			seg++;
 			tmp--;
 		}
+		Segment *s = *seg;
+		MapManager::Instance()._Map[s->getX()][s->getY()] = NULL;
 		this->_snake.erase(seg);
+		delete s;
 	}
 	std::list<Segment *>::iterator		seg = this->_snake.begin();
 	std::list<Segment *>::iterator		end = this->_snake.begin();

@@ -311,7 +311,6 @@ void	MapManager::update(double time)
 	std::list<Food *>::iterator		fstart = this->_foods.begin();
 	std::list<Food *>::iterator		fend = this->_foods.end();
 
-	(void)time;
 	int i = 0;
 	while (bstart != bend)
 	{

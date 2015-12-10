@@ -16,7 +16,7 @@
 
 Segment::Segment(void)
 {
-
+	
 }
 
 Segment::Segment(const Segment & copy)
@@ -31,7 +31,6 @@ Segment::Segment(int x, int y, e_Cardinal direction, int id)
 	this->_pos.setY(y);
 	this->_eatable = false;
 	this->_direction = direction;
-	MapManager::Instance()._Map[x][y] = this;
 }
 
 Segment::~Segment(void)
@@ -59,6 +58,10 @@ void		Segment::set_Direc(e_Cardinal direc)
 
 void		Segment::draw(double time)
 {
-//	std::cout << " DIR = "<< this->_direction << std::endl;
 	GraphicsManager::Instance().drawTail(time, this->_pos.getX(), this->_pos.getY(), (e_Dir)(this->_direction), this->_id);
+}
+
+int			Segment::getID(void)
+{
+	return (this->_id);
 }

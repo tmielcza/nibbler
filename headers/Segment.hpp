@@ -33,6 +33,7 @@ class Segment : public AEntity
 	e_Cardinal		get_Direc(void);
 	void			set_Direc(e_Cardinal direc);
 	void			draw(double time);
+	int				getID(void);
 
 };
 

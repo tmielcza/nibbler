@@ -48,6 +48,8 @@ ChasedFood	&		ChasedFood::operator=(const ChasedFood & src)
 
 void				ChasedFood::taken(Snake & snake)
 {
+	int height = MapManager::Instance().getHeight();
+	int width = MapManager::Instance().getWidth();
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());
 	if (this->_place != this->_value)
 	{
@@ -55,20 +57,30 @@ void				ChasedFood::taken(Snake & snake)
 		int y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
 		int i = 0;
 		
-		while (MapManager::Instance()._Map[x][y] != NULL && i < 15)
+		while (MapManager::Instance()._Map[x][y] != NULL && i < 20)
 		{
 			x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
 			y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
-			i++;
+			while ((x < 0 || y < 0 || y >= height || x >= width) && i < 20)
+			{
+				x = (snake.getHeadSnakeX() - 1) + (rand() % 3);
+				y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
+				i++;
+			}
 		}
 		if (MapManager::Instance()._Map[x][y] != NULL)
 		{
 			i = 0;
 			while (MapManager::Instance()._Map[x][y] != NULL && i < 10)
 			{
-				i++;
 				x = (snake.getHeadSnakeX() - 2) + (rand() % 4);
 				y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
+				while ((x < 0 || y < 0 || y >= height || x >= width) && i < 20)
+				{
+					x = (snake.getHeadSnakeX() - 2) + (rand() % 4);
+					y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
+					i++;
+				}
 			}
 		}
 		if (MapManager::Instance()._Map[x][y] == NULL)
