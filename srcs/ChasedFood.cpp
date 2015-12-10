@@ -67,11 +67,12 @@ void				ChasedFood::taken(Snake & snake)
 				y = (snake.getHeadSnakeY() - 1) + (rand() % 3);
 				i++;
 			}
+			i++;
 		}
 		if (MapManager::Instance()._Map[x][y] != NULL)
 		{
 			i = 0;
-			while (MapManager::Instance()._Map[x][y] != NULL && i < 10)
+			while (MapManager::Instance()._Map[x][y] != NULL && i < 20)
 			{
 				x = (snake.getHeadSnakeX() - 2) + (rand() % 4);
 				y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
@@ -81,6 +82,7 @@ void				ChasedFood::taken(Snake & snake)
 					y = (snake.getHeadSnakeY() - 2) + (rand() % 4);
 					i++;
 				}
+				i++;
 			}
 		}
 		if (MapManager::Instance()._Map[x][y] == NULL)

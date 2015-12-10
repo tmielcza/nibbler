@@ -45,7 +45,7 @@ void				MultiFood::taken(Snake & snake)
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
 	snake.add_score(this->_value * 10);
 	for (int i = 0; i < this->_value; i++)
-		MapManager::Instance().foodpop(this->_pos, 3, 0, (e_PopMode)0);
+		MapManager::Instance().foodpop(this->_pos, 3, false, (e_PopMode)0);
 	delete this;
 }
 
