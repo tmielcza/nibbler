@@ -19,7 +19,7 @@ SoloMode::SoloMode(void)
 	this->_width = 22;
 	this->_height = 17;
 	this->_speed = 1;
-	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height);
+	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height, true);
 	this->init(true);
 }
 
@@ -30,7 +30,7 @@ SoloMode::SoloMode(bool wall)
 	this->_width = 22;
 	this->_height = 17;
 	this->_speed = 1;
-	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height);
+	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height, true);
 	this->init(wall);
 }
 
@@ -46,7 +46,7 @@ SoloMode::SoloMode(int nbplayers, int width, int height, bool wall)
 	this->_width = width;
 	this->_height = height;
 	this->_speed = 1;
-	this->_game = new GameManager(nbplayers, width, height);
+	this->_game = new GameManager(nbplayers, width, height, true);
 	this->init(wall);
 }
 
@@ -62,6 +62,7 @@ SoloMode	&	SoloMode::operator=(const SoloMode & src)
 	this->_width = src._width;
 	this->_height = src._height;
 	this->_speed = src._speed;
+	this->_game = src._game;
 	return (*this);
 }
 

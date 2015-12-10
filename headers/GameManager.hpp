@@ -36,7 +36,7 @@ class GameManager
 	public:
 
 	GameManager(void);
-	GameManager(int nbplayer, int width, int height);
+	GameManager(int nbplayer, int width, int height, bool master);
 	GameManager(const GameManager & copy);
 	~GameManager(void);
 
