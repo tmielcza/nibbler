@@ -136,7 +136,7 @@ void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode 
 	{
 		int x = upleft.getX() + (rand() % downright.getX());
 		int y = upleft.getY() + (rand() % downright.getY());
-		while (this->_Map[x][y] != NULL || x < this->_width || y < this->_height)
+		while (this->_Map[x][y] != NULL || x >= this->_width || y >= this->_height)
 		{
 			x = upleft.getX() + (rand() % downright.getX());
 			y = upleft.getY() + (rand() % downright.getY());
@@ -162,7 +162,7 @@ void	MapManager::foodpop(Point center, int radius, bool spawner, e_PopMode mode 
 			tmpy = 0;
 		int x = tmpx + (rand() % (radius * 2));
 		int y = tmpy + (rand() % (radius * 2));
-		while (this->_Map[x][y] != NULL || x < this->_width || y < this->_height)
+		while (this->_Map[x][y] != NULL || x >= this->_width || y >= this->_height)
 		{
 			x = tmpx + (rand() % (radius * 2));
 			y = tmpy + (rand() % (radius * 2));
