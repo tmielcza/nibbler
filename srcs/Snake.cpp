@@ -123,39 +123,7 @@ void							Snake::add_to_tail(void)
 	e_Cardinal			e = this->_tail->get_Direc();
 	int					x = this->_tail->getX();
 	int					y = this->_tail->getY();
-/*
-	int					x = 0;
-	int					y = 0;
 
-	if (e == North)
-	{
-		x = this->_tail->getX();
-		y = this->_tail->getY() - 1;
-		if (y < 0)
-			y = MapManager::Instance().getHeight() - 1;
-	}
-	else if (e == South)
-	{
-		x = this->_tail->getX();
-		y = this->_tail->getY() + 1;
-		if (y >= MapManager::Instance().getHeight())
-			y = 0;
-	}
-	else if (e == East)
-	{
-		x = this->_tail->getX() - 1;
-		y = this->_tail->getY();
-		if (x < 0)
-			x = MapManager::Instance().getWidth() - 1;
-	}
-	else if (e == West)
-	{
-		x = this->_tail->getX() + 1;
-		y = this->_tail->getY();
-		if (x >= MapManager::Instance().getWidth())
-			x = 0;
-	}
-*/
 	Segment *seg = new Segment(x, y, e, this->_index);
 //	MapManager::Instance()._Map[x][y] = seg;
 	this->_snake.push_back(seg);
@@ -449,7 +417,7 @@ void		Snake::Cut(size_t less)
 		delete s;
 	}
 	std::list<Segment *>::iterator		seg = this->_snake.begin();
-	std::list<Segment *>::iterator		end = this->_snake.begin();
+	std::list<Segment *>::iterator		end = this->_snake.end();
 	while (seg != end)
 	{
 		this->_tail = *seg;

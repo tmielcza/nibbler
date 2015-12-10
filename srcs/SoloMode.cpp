@@ -15,6 +15,7 @@
 SoloMode::SoloMode(void)
 {
 	std::cout << "Creating SoloMode !" << std::endl;
+	srand(time(NULL));
 	this->_nbPlayers = 1;
 	this->_width = 22;
 	this->_height = 17;
@@ -26,6 +27,7 @@ SoloMode::SoloMode(void)
 SoloMode::SoloMode(bool wall)
 {
 	std::cout << "Creating SoloMode !" << std::endl;
+	srand(time(NULL));
 	this->_nbPlayers = 1;
 	this->_width = 22;
 	this->_height = 17;
