@@ -43,6 +43,7 @@ void test2(void)
 
 	dis.popFood(2, 2);
 	dis.popFood(3, 2);
+	dis.popSlowFood(5, 5);
 	float last;
 
 	while (true)

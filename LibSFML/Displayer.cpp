@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/09 18:52:52 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/10 16:15:19 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -225,6 +225,13 @@ void	Displayer::popChasedFood(int x, int y, int size, float time)
 	vec2	position = this->posOnScreen(x, y);
 
 	this->_bonuses.push_back(new ChasedFood(position, time, size));
+}
+
+void	Displayer::popSlowFood(int x, int y)
+{
+	vec2	position = this->posOnScreen(x, y);
+
+	this->_bonuses.push_back(new SlowFood(position));
 }
 
 void	Displayer::depopFood(int x, int y)

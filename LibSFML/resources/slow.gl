@@ -1,0 +1,41 @@
+#version 120
+
+uniform float	time;
+uniform vec2	coord;
+uniform vec2	resolution;
+
+vec4 color(int r, int g, int b, int a)
+{
+	return (vec4(r / 255.0, g / 255.0, b / 255.0, a / 255.0));
+}
+
+void main()
+{
+	float	radius = 0.42;
+	float	PI = 3.14159265358979323846264;
+	vec2	pos = (gl_FragCoord.xy - coord) / resolution;
+//	pos.x += sign(pos.x) * sqrt(radius * radius - pos.y * pos.y) * ((cos(time * 5 * PI) + 1) / 2);
+//	float	tst = length(pos);
+	float	col = 0;
+	float	colCoef = 0;
+
+	vec4 col1 = color(0xff, 0xed, 0x81, 0xff);
+	vec4 col2 = color(0xff, 0x20, 0x10, 0xff);
+	gl_FragColor = vec4(0, 0, 0, 0);
+
+	int circles = 6;
+	for (int i = 0; i < circles; i++)
+	{
+		vec2 pos2 = pos;
+		float circle_time = pow(1 - mod(time + i * (1. / circles), 1), 1.5) * 1.5 * PI;
+		pos2.x += sign(pos.x) * sqrt(radius * radius - pos.y * pos.y) * ((cos(circle_time) + 1) / 2);
+		float tst = length(pos2);
+		col = max((1 - pow(abs(tst - radius) * 15, 2) * (cos(time * 4 * PI) + 2)) / 1, 0.);
+		colCoef = (1 - mod(time + i * (1. / circles), 1)) * col;
+		gl_FragColor += (1 - gl_FragColor.a) * mix(col2, col1, colCoef) * col;
+	}
+//	col = clamp(col, 0.0, 1.0);
+//	colCoef = clamp(colCoef, 0., 1.);
+//	gl_FragColor = mix(col2, col1, colCoef) * col;
+//	gl_FragColor = color(0xff, 0xed, 0x81, 0xff) * col;
+}

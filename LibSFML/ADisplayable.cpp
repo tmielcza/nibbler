@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/08 20:25:55 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/10 18:35:58 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -283,4 +283,16 @@ void	Wave::update(Displayer& dis)
 	this->_shad.setParameter("size", dis.getTime() - this->_time);
 	if (dis.getTime() - this->_time > 2)
 		this->_alive = false;
+}
+
+// Slow
+
+SlowFood::SlowFood(vec2 pos)
+	: ADisplayable(pos, "slow.gl", 0.0f)
+{
+}
+
+void	SlowFood::draw(Displayer& dis)
+{
+	dis.drawSprite(this->_shad, this->pos, {40, 40}, dis.getTime());
 }
