@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 16:09:05 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/10 20:39:53 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -48,6 +48,7 @@ public:
 	void				popSuperFood(int x, int y, int size);
 	void				popChasedFood(int x, int y, int size, float time);
 	void				popSlowFood(int x, int y);
+	void				popCutFood(int x, int y);
 	void				depopFood(int x, int y);
 	void				updateSuperFood(int x, int y, int size);
 	void				switchFoodMode(void);

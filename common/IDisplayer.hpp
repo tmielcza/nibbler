@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 18:42:04 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/10 20:38:59 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -59,6 +59,7 @@ public:
 	virtual void				popSuperFood(int x, int y, int size) = 0;
 	virtual void				popChasedFood(int x, int y, int size, float time) = 0;
 	virtual void				popSlowFood(int x, int y) = 0;
+	virtual void				popCutFood(int x, int y) = 0;
 	virtual void				depopFood(int x, int y) = 0;
 	virtual void				updateSuperFood(int x, int y, int size) = 0;
 	virtual void				switchFoodMode(void) = 0;

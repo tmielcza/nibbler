@@ -17,7 +17,7 @@ CutBonus::CutBonus(int value, int x, int y)
 	this->_time = 0;
 	this->_isalive = true;
 	this->_eatable = true;
-	GraphicsManager::Instance().popMultiFood(x, y);
+	GraphicsManager::Instance().popCutFood(x, y);
 }
 
 CutBonus::CutBonus(const CutBonus & src)

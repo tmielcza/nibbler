@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 18:35:58 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/10 20:34:58 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -293,6 +293,18 @@ SlowFood::SlowFood(vec2 pos)
 }
 
 void	SlowFood::draw(Displayer& dis)
+{
+	dis.drawSprite(this->_shad, this->pos, {40, 40}, dis.getTime());
+}
+
+// Cut
+
+CutFood::CutFood(vec2 pos)
+	: ADisplayable(pos, "cut.gl", 0.0f)
+{
+}
+
+void	CutFood::draw(Displayer& dis)
 {
 	dis.drawSprite(this->_shad, this->pos, {40, 40}, dis.getTime());
 }

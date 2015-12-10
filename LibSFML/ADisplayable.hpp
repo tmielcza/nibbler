@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:01:32 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 16:14:31 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/10 20:36:10 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -149,6 +149,13 @@ class	SlowFood : public ADisplayable
 {
 public:
 					SlowFood(vec2 pos);
+	virtual void	draw(Displayer& dis);
+};
+
+class	CutFood : public ADisplayable
+{
+public:
+					CutFood(vec2 pos);
 	virtual void	draw(Displayer& dis);
 };
 

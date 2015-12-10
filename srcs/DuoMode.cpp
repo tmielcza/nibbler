@@ -99,6 +99,7 @@ void			DuoMode::run(void)
 
 	std::cout << "Enter in while" << std::endl;
 	MapManager::Instance().foodpop(true);
+	MapManager::Instance().foodpop(true);
 	while (this->check_end())
 	{
 //		GraphicsManager::Instance().clear();

@@ -88,8 +88,6 @@ void		Player::update(double time)
 				this->_lastInputs.erase(tuchs);
 			}
 		}
-		std::cout << this->_Snake->getHeadSnakeX() << " "
-				  << this->_Snake->getHeadSnakeY() << std::endl;
 		this->_Snake->befor_move();
 		this->_Snake->move();
 		this->_time = 0.;

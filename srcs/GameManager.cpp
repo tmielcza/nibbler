@@ -89,6 +89,7 @@ bool		GameManager::IsAlive(void)
 			test = true;
 		else
 		{
+			std::cout << "Player1 " << std ::endl;
 			delete this->_me;
 			this->_me = NULL;
 		}
@@ -99,6 +100,7 @@ bool		GameManager::IsAlive(void)
 			test = true;
 		else
 		{
+			std::cout << "Player2 " << std::endl;
 			delete this->_me2;
 			this->_me2 = NULL;
 		}
