@@ -45,7 +45,10 @@ SuperFood	&		SuperFood::operator=(const SuperFood & src)
 void				SuperFood::taken(Snake & snake)
 {
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());
-	snake.add_score(this->_value * 10);
+	if (this->_value == 9)
+		snake.add_score((this->_value + 1) * 20);
+	else
+		snake.add_score((this->_value + 1) * 2);
 	delete this;
 }
 
