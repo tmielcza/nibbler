@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/11 19:22:06 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 20:58:34 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,7 +26,7 @@ Displayer::Displayer(int x, int y)
 	{
 	}
 	this->_text.setFont(this->_font);
-	this->_text.setCharacterSize(240);
+	this->_text.setCharacterSize(24);
 	this->_text.setColor(sf::Color::Red);
 }
 
@@ -88,12 +88,6 @@ void	Displayer::display(void)
 		else
 			it = this->_waves.erase(it);
 	}
-/*
-	for (auto wave : _waves)
-	{
-		wave->update(*this);
-	}
-*/
 	for (auto wave : _waves)
 	{
 		wave->draw(*this);

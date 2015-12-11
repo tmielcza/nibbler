@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/09 18:37:51 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 21:11:13 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -306,9 +306,9 @@ void							Snake::eat(Food const & eaten)
 	GraphicsManager::Instance().popWave(this->getHeadSnakeX(), this->getHeadSnakeY());
 	this->add_to_tail();
 	if (this->_nbmove <= 2 && this->_nbmove >= 0)
-		this->_score = eaten.get_value() * 2;
+		this->add_score(eaten.get_value() * 2);
 	else
-		this->_score = eaten.get_value();
+		this->add_score(eaten.get_value());
 //	this->_speed += 0.2;
 	this->_speed += this->_increm;
 	if (this->_increm > 0.05)
@@ -356,6 +356,11 @@ int								Snake::getIndex(void)
 double							Snake::getSpeed(void)
 {
 	return (this->_speed);
+}
+
+int								Snake::getScore(void)
+{
+	return (this->_score);
 }
 
 bool							Snake::IsAlive(void)

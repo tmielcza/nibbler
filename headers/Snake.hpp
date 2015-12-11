@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/06 18:56:58 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 20:56:32 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -67,6 +67,7 @@ class Snake
 	int							getHeadSnakeY(void);
 	int							getIndex(void);
 	double						getSpeed(void);
+	int							getScore(void);
 	bool						IsAlive(void);
 	void						draw(double time);
 	void						update_directions(void);
