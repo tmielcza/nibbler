@@ -16,15 +16,21 @@
 GameManager::GameManager(void)
 {
 	std::cout << "Creating GameManager !" << std::endl;
-	this->_master = true;
-	this->init(1, 25, 25);
+	this->_multi = false;
+	this->_massif = false;
+	this->_me = new Player();
 }
 
-GameManager::GameManager(int nbplayer, int width, int height, bool master)
+GameManager::GameManager(bool pl2, bool multi, bool massif)
 {
 	std::cout << "Creating GameManager !" << std::endl;
-	this->_master = master;
-	this->init(nbplayer, width, height);
+	this->_multi = multi;
+	this->_massif = massif;
+	this->_me = new Player();
+	if (pl2 == true)
+		this->_me2 = new Player();
+	else
+		this->_me2 = NULL;
 }
 
 GameManager::GameManager(const GameManager & copy)
@@ -58,7 +64,7 @@ GameManager	&	GameManager::operator=(const GameManager & ass)
 	this->_width = ass._width;
 	this->_height = ass._height;
 	this->_players = ass._players;
-	this->_master = ass._master;
+	this->_multi = ass._multi;
 	this->_me = ass._me;
 	this->_me2 = ass._me2;
 	return (*this);
@@ -77,18 +83,9 @@ double			GameManager::deltaTime(void)
 
 void		GameManager::init(int nbplayer, int width, int height)
 {
-	this->_master = true;
 	this->_nbPlayer = nbplayer;
 	this->_width = width;
 	this->_height = height;
-	MapManager::Instance().init(nbplayer, width, height);
-	this->_me = new Player();
-	this->_me2 = NULL;
-}
-
-void		GameManager::init_second(void)
-{
-	this->_me2 = new Player();
 }
 
 bool		GameManager::IsAlive(void)
@@ -152,9 +149,12 @@ void		GameManager::update(double time)
 		this->_me->update(time);
 	if (this->_me2 != NULL)
 		this->_me2->update(time);
-	while (pl != end)
+	if (this->_multi == true)
 	{
-		//(*pl)->updateSocket();
-		(*pl)->update(time);
+		while (pl != end)
+		{
+			//(*pl)->updateSocket();
+			(*pl)->update(time);
+		}
 	}
 }

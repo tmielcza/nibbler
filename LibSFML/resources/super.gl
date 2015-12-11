@@ -29,7 +29,6 @@ void main()
 		dst += (cos(time * PI * 20) - 1) * 0.1;
 	}
 	float	col = 1 - pow(abs(dst - radius) * 10, 2);	// Glow factor
-//		* (cos(time * 4 * PI) + 1.5);	// Time factor
 	float	bright;
 	if (branches > 1.f)
 		bright = sin(fract(branches) * PI);

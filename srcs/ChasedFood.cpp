@@ -99,6 +99,24 @@ void				ChasedFood::taken(Snake & snake)
 				i++;
 			}
 		}
+		if (MapManager::Instance()._Map[x][y] != NULL)
+		{
+			i = 0;
+			while (MapManager::Instance()._Map[x][y] != NULL && i < 20)
+			{
+				x = (snake.getHeadSnakeX() - 3) + (rand() % 5);
+				y = (snake.getHeadSnakeY() - 3) + (rand() % 5);
+				if (x < 0)
+					x = width - 1;
+				else if (x >= width)
+					x = 0;
+				if (y < 0)
+					y = height - 1;
+				else if (y >= height)
+					y = 0;
+				i++;
+			}
+		}
 		if (x >= 0 && x < width && y >= 0 && y < height &&
 			MapManager::Instance()._Map[x][y] == NULL)
 		{
