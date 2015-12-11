@@ -319,6 +319,8 @@ std::list<e_Input>	Displayer::getInput(void)
 			{sf::Keyboard::Key::S, I_Down2},
 			{sf::Keyboard::Key::A, I_Left2},
 			{sf::Keyboard::Key::D, I_Right2},
+			{sf::Keyboard::Key::Escape, I_Close},
+			{sf::Keyboard::Key::Space, I_Restart},
 			{sf::Keyboard::Key::Num1, I_Lib1},
 			{sf::Keyboard::Key::Num2, I_Lib2},
 			{sf::Keyboard::Key::Num3, I_Lib3},

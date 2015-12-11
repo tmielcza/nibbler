@@ -100,17 +100,29 @@ bool			SoloMode::check_end(void)
 
 void			SoloMode::run(void)
 {
-	double				delta = 0;
+	double					delta = 0;
+	std::list<e_Input>		inputs;
+	bool					leave = false;
 
 	std::cout << "Enter in while" << std::endl;
 	MapManager::Instance().foodpop(true);
-	while (this->check_end())
+	
+	while (this->_game->leaving() == false && leave != true)
 	{
-//		GraphicsManager::Instance().clear();
-		delta = this->_game->deltaTime();
-		this->_game->update(delta);
-		MapManager::Instance().update(delta);
-		GraphicsManager::Instance().display();
+		while (this->check_end())
+		{
+			delta = this->_game->deltaTime();
+			this->_game->update(delta);
+			MapManager::Instance().update(delta);
+			GraphicsManager::Instance().display();
+		}
+		inputs = GraphicsManager::Instance().getInput();
+		for (auto it = inputs.begin(); it != inputs.end(); it++)
+		{
+			if ((*it & I_Close) != 0)
+				leave = true;
+			if ((*it & I_Restart) != 0)
+				this->_game->restart();
+		}
 	}
-	while (42);
 }

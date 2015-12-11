@@ -395,3 +395,48 @@ void	MapManager::update(double time)
 		i++;
 	}
 }
+
+void					MapManager::restart(void)
+{
+	std::list<Food *>::iterator			fbegin = this->_foods.begin();
+	std::list<Food *>::iterator			fend = this->_foods.end();
+	std::list<ABonus *>::iterator		bbegin = this->_bonus.begin();
+	std::list<ABonus *>::iterator		bend = this->_bonus.end();
+	std::list<Wall *>::iterator			wbegin = this->_walls.begin();
+	std::list<Wall *>::iterator			wend = this->_walls.end();
+
+	while (fbegin != fend)
+	{
+		Food *f = *fbegin;
+		this->_foods.erase(fbegin);
+		fbegin = this->_foods.begin();
+		delete f;
+	}
+
+	while (bbegin != bend)
+	{
+		ABonus *b = *bbegin;
+		this->_bonus.erase(bbegin);
+		bbegin = this->_bonus.begin();
+		delete b;
+	}
+	int x = 0;
+	int y = 0;
+	while (x < this->_width)
+	{
+		y = 0;
+		while (y < this->_height)
+		{
+			this->_Map[x][y] = NULL;
+			y++;
+		}
+		x++;
+	}
+	while (wbegin != wend)
+	{
+		x = (*wbegin)->getX();
+		y = (*wbegin)->getY();
+		this->_Map[x][y] = (*wbegin);
+		wbegin++;
+	}
+}

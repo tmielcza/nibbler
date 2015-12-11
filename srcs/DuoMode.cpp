@@ -106,13 +106,14 @@ void			DuoMode::run(void)
 	std::cout << "Enter in while" << std::endl;
 	MapManager::Instance().foodpop(true);
 	MapManager::Instance().foodpop(true);
-	while (this->check_end())
+	while (this->_game->leaving() == false)
 	{
-//		GraphicsManager::Instance().clear();
-		delta = this->_game->deltaTime();
-		this->_game->update(delta);
-		MapManager::Instance().update(delta);
-		GraphicsManager::Instance().display();
+		while (this->check_end())
+		{
+			delta = this->_game->deltaTime();
+			this->_game->update(delta);
+			MapManager::Instance().update(delta);
+			GraphicsManager::Instance().display();
+		}
 	}
-	while (42);
 }

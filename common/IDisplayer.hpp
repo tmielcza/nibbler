@@ -46,6 +46,7 @@ enum	e_Input
 	I_Lib2 = 1 << 7,
 	I_Lib3 = 1 << 8,
 	I_Close = 1 << 9,
+	I_Restart = 1 << 11,
 	I_Dir = I_Up | I_Down | I_Right | I_Left
 };
 

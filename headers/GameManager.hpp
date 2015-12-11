@@ -28,8 +28,10 @@ class GameManager
 	int						_nbPlayer;
 	int						_width;
 	int						_height;
+	bool					_pl2;
 	bool					_multi;
 	bool					_massif;
+	bool					_leave;
 	std::list<Player*>		_players;
 	Player					*_me;
 	Player					*_me2;
@@ -46,7 +48,9 @@ class GameManager
 	double			deltaTime(void);
 	void			init(int nbplayer, int width, int height);
 	bool			IsAlive(void);
+	bool			leaving(void);
 	void			update(double time);
+	void			restart(void);
 
 };
 
