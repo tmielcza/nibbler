@@ -6,7 +6,7 @@
 #    By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/04/11 13:30:53 by tmielcza          #+#    #+#              #
-#    Updated: 2015/12/09 17:07:31 by tmielcza         ###   ########.fr        #
+#    Updated: 2015/12/11 17:59:25 by tmielcza         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -62,6 +62,6 @@ clean:
 	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME) $(TEST) $(TEST).dSYM
+	rm -rf $(NAME) $(TEST) $(TEST).dSYM ./**/#*# ./**/.DS_Store ./**/.#*
 
 re: fclean all

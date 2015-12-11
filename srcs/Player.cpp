@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/08 18:09:35 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 19:13:12 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -93,6 +93,10 @@ void		Player::update(double time)
 		this->_time = 0.;
 	}
 	this->_Snake->draw(this->_time);
+	GraphicsManager::Instance().drawScore(this->_time, this->_Snake->getHeadSnakeX(),
+										  this->_Snake->getHeadSnakeY(),
+										  (e_Dir)this->_Snake->getHeadSnakeDirec(),
+		100);
 }
 
 void		Player::add_touch(e_Cardinal touch)

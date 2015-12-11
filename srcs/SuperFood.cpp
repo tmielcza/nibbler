@@ -11,7 +11,7 @@ SuperFood::SuperFood(void)
 
 SuperFood::SuperFood(int value, int x, int y)
 {
-	GraphicsManager::Instance().popSuperFood(x, y, 1);
+	GraphicsManager::Instance().popSuperFood(x, y, 10 - value);
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_value = value;
