@@ -11,7 +11,7 @@ SuperFood::SuperFood(void)
 
 SuperFood::SuperFood(int value, int x, int y)
 {
-	GraphicsManager::Instance().popSuperFood(x, y, 1);
+	GraphicsManager::Instance().popSuperFood(x, y, 10 - value);
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_value = value;
@@ -44,7 +44,7 @@ SuperFood	&		SuperFood::operator=(const SuperFood & src)
 
 void				SuperFood::taken(Snake & snake)
 {
-	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
+	GraphicsManager::Instance().popWave(this->getX(), this->getY());
 	snake.add_score(this->_value * 10);
 	delete this;
 }

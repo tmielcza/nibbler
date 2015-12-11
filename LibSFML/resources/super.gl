@@ -20,10 +20,21 @@ void main()
 	float	truc = atan(pos.x / pos.y) * branches;	// Position on circle
 	if (pos.y < 0)
 		truc += mod(branches, 2.0) * PI;			// Symmetry
-	float	dst = length(pos) * (cos(truc) + 4 ) / 3;	// Curved distance
+	float	dst = length(pos);
+	if (branches > 1.f)
+		dst *=  (cos(truc) + 3 ) / 2;	// Curved distance
+	else
+	{
+		dst *= 1.3;
+		dst += (cos(time * PI * 20) - 1) * 0.1;
+	}
 	float	col = 1 - pow(abs(dst - radius) * 10, 2);	// Glow factor
 //		* (cos(time * 4 * PI) + 1.5);	// Time factor
-	float	bright = sin(fract(branches) * PI);
+	float	bright;
+	if (branches > 1.f)
+		bright = sin(fract(branches) * PI);
+	else
+		bright = (cos(time * PI * 20) + 1) * 0.5;
 
 	gl_FragColor = color(0xff, 0xa8, 0xf7, 0xff) +
 		color(0x5f, 0x5f, 0x5f, 0xff) * bright;

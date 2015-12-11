@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 20:34:58 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 17:54:09 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -89,10 +89,10 @@ void	MultiFood::draw(Displayer& dis)
 // Super
 
 SuperFood::SuperFood(vec2 pos, float time, float branches)
-	: ADisplayable(pos, "super.gl", fmod(time, 1)), _branches(branches),
+	: ADisplayable(pos, "super.gl", time), _branches(0.f),
 	  _time(time)
 {
-	this->setBranches(time, 10.f);
+	this->setBranches(time, branches);
 }
 
 void	SuperFood::draw(Displayer& dis)
@@ -132,27 +132,10 @@ void		SuperFood::update(Displayer& dis)
 	(void)dis; // Mieux ?
 
 	float coef = (dis.getTime() - this->_time) * 10.f;
-	if (coef <= 1.0f)
+	if (coef < 1.0f)
 		this->_branches = this->_fromBranches * (1 - coef) + this->_toBranches * coef;
-
-/*
-	if (this->_branches < this->_toBranches)
-	{
-		this->_branches += 0.05;
-		if (this->_branches > this->_toBranches)
-		{
-			this->_branches = this->_toBranches;
-		}
-	}
-	else if (this->_branches > this->_toBranches)
-	{
-		this->_branches -= 0.05;
-		if (this->_branches < this->_toBranches)
-		{
-			this->_branches = this->_toBranches;
-		}
-	}
-*/
+	else
+		this->_branches = this->_toBranches;
 }
 
 // Chased

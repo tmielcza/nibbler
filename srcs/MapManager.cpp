@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:43:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 16:53:31 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 16:30:38 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -127,7 +127,7 @@ void	MapManager::foodpop(bool spawner)
 	this->_foods.push_back(f);
 //	int r = rand() % 4;
 //	if (r == 2)
-		this->bonuspop(3);
+	this->bonuspop(2);
 }
 
 void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode = InsideMode)
