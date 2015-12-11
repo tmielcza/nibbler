@@ -1,7 +1,7 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   DuoMode.cpp                                        :+:      :+:    :+:   //
+//   MultiMode.cpp                                      :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
@@ -10,11 +10,11 @@
 //                                                                            //
 // ************************************************************************** //
 
-# include "DuoMode.hpp"
+# include "MultiMode.hpp"
 
-DuoMode::DuoMode(void)
+MultiMode::MultiMode(void)
 {
-	std::cout << "Creating DuoMode !" << std::endl;
+	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
 	this->_nbPlayers = 1;
 	this->_width = 22;
@@ -22,13 +22,13 @@ DuoMode::DuoMode(void)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(true);
-	this->_game = new GameManager(true, false, false);
+	this->_game = new GameManager(true, true, false);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
-DuoMode::DuoMode(bool wall)
+MultiMode::MultiMode(bool wall)
 {
-	std::cout << "Creating DuoMode !" << std::endl;
+	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
 	this->_nbPlayers = 1;
 	this->_width = 22;
@@ -36,18 +36,18 @@ DuoMode::DuoMode(bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(true, false, false);
+	this->_game = new GameManager(true, true, false);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
-DuoMode::DuoMode(const DuoMode & src)
+MultiMode::MultiMode(const MultiMode & src)
 {
 	*this = src;
 }
 
-DuoMode::DuoMode(int nbplayers, int width, int height, bool wall)
+MultiMode::MultiMode(int nbplayers, int width, int height, bool wall)
 {
-	std::cout << "Creating DuoMode !" << std::endl;
+	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
 	this->_nbPlayers = nbplayers;
 	this->_width = width;
@@ -55,17 +55,17 @@ DuoMode::DuoMode(int nbplayers, int width, int height, bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(true, false, false);
+	this->_game = new GameManager(true, true, false);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
-DuoMode::~DuoMode(void)
+MultiMode::~MultiMode(void)
 {
 	delete this->_game;
-	std::cout << "Destroying DuoMode !" << std::endl;
+	std::cout << "Destroying MultiMode !" << std::endl;
 }
 
-DuoMode	&	DuoMode::operator=(const DuoMode & src)
+MultiMode	&	MultiMode::operator=(const MultiMode & src)
 {
 	this->_nbPlayers = src._nbPlayers;
 	this->_width = src._width;
@@ -75,7 +75,7 @@ DuoMode	&	DuoMode::operator=(const DuoMode & src)
 	return (*this);
 }
 
-void			DuoMode::init(bool wall)
+void			MultiMode::init(bool wall)
 {
 	int		height = MapManager::Instance().getHeight();
 	int		width = MapManager::Instance().getWidth();
@@ -94,12 +94,12 @@ void			DuoMode::init(bool wall)
 	}
 }
 
-bool			DuoMode::check_end(void)
+bool			MultiMode::check_end(void)
 {
 	return (this->_game->IsAlive());
 }
 
-void			DuoMode::run(void)
+void			MultiMode::run(void)
 {
 	double				delta = 0;
 

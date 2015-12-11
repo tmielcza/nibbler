@@ -22,7 +22,8 @@ SoloMode::SoloMode(void)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(true);
-	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height, true);
+	this->_game = new GameManager(false, false, false);
+	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
 SoloMode::SoloMode(bool wall)
@@ -35,7 +36,8 @@ SoloMode::SoloMode(bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height, true);
+	this->_game = new GameManager(false, false, false);
+	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
 SoloMode::SoloMode(const SoloMode & src)
@@ -52,7 +54,8 @@ SoloMode::SoloMode(int nbplayers, int width, int height, bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(nbplayers, width, height, true);
+	this->_game = new GameManager(false, false, false);
+	this->_game->init(nbplayers, width, height);
 }
 
 SoloMode::~SoloMode(void)
