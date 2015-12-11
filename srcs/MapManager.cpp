@@ -125,9 +125,9 @@ void	MapManager::foodpop(bool spawner)
 	Food *f = new Food(1, x, y, spawner);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
-//	int r = rand() % 4;
-//	if (r == 2)
-		this->bonuspop(3);
+	int r = rand() % 4;
+	if (r == 2)
+		this->bonuspop();
 }
 
 void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode = InsideMode)

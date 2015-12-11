@@ -81,7 +81,6 @@ void		GameManager::init(int nbplayer, int width, int height)
 	this->_nbPlayer = nbplayer;
 	this->_width = width;
 	this->_height = height;
-	MapManager::Instance().init(nbplayer, width, height);
 	this->_me = new Player();
 	this->_me2 = NULL;
 }

@@ -20,9 +20,10 @@ DuoMode::DuoMode(void)
 	this->_width = 22;
 	this->_height = 17;
 	this->_speed = 1;
+	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
+	this->init(true);
 	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height, true);
 	this->_game->init_second();
-	this->init(true);
 }
 
 DuoMode::DuoMode(bool wall)
@@ -33,9 +34,10 @@ DuoMode::DuoMode(bool wall)
 	this->_width = 22;
 	this->_height = 17;
 	this->_speed = 1;
+	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
+	this->init(wall);
 	this->_game = new GameManager(this->_nbPlayers, this->_width, this->_height, true);
 	this->_game->init_second();
-	this->init(wall);
 }
 
 DuoMode::DuoMode(const DuoMode & src)
@@ -46,12 +48,15 @@ DuoMode::DuoMode(const DuoMode & src)
 DuoMode::DuoMode(int nbplayers, int width, int height, bool wall)
 {
 	std::cout << "Creating DuoMode !" << std::endl;
+	srand(time(NULL));
 	this->_nbPlayers = nbplayers;
 	this->_width = width;
 	this->_height = height;
 	this->_speed = 1;
-	this->_game = new GameManager(nbplayers, width, height, true);
+	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
+	this->_game = new GameManager(nbplayers, width, height, true);
+	this->_game->init_second();
 }
 
 DuoMode::~DuoMode(void)
