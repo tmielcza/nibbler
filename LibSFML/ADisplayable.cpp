@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/11 17:54:09 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 18:44:39 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -22,12 +22,6 @@ ADisplayable::ADisplayable(vec2 pos, std::string shaderName, float time)
 	this->_shad.loadFromFile("resources/" + shaderName, sf::Shader::Fragment);
 	this->_time = time;
 }
-
-/*
-ADisplayable::~ADisplayable(void)
-{
-}
-*/
 
 ADisplayable::ADisplayable(const ADisplayable& src)
 {
@@ -132,7 +126,7 @@ void		SuperFood::update(Displayer& dis)
 	(void)dis; // Mieux ?
 
 	float coef = (dis.getTime() - this->_time) * 10.f;
-	if (coef < 1.0f)
+	if (coef <= 1.0f)
 		this->_branches = this->_fromBranches * (1 - coef) + this->_toBranches * coef;
 	else
 		this->_branches = this->_toBranches;

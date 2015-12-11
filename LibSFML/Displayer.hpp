@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 20:39:53 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 19:00:36 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -56,6 +56,7 @@ public:
 	std::list<e_Input>	getInput(void);
 	void				drawTail(float time, int x, int y, e_Dir last, int id);
 	void				drawHead(float time, int x, int y, e_Dir last, int id);
+	void				drawScore(float time, int x, int y, e_Dir last, int score);
 	void				putWall(int x, int y);
 	void				popWave(int x, int y);
 	void				depopWave(ADisplayable* wave);
@@ -78,6 +79,9 @@ private:
 
 	sf::Shader					_tail;
 	sf::Shader					_head;
+
+	sf::Font					_font;
+	sf::Text					_text;
 
 	Background					_bg;
 

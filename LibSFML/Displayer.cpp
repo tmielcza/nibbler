@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 20:38:35 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/11 19:22:06 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -22,6 +22,12 @@ Displayer::Displayer(int x, int y)
 	this->_sprite.setTexture(this->_texture.getTexture());
 	this->_tmptexture.create(x * 40, y * 40);
 	this->_tmpsprite.setTexture(this->_tmptexture.getTexture());
+	if (!this->_font.loadFromFile("resources/Neon.ttf"))
+	{
+	}
+	this->_text.setFont(this->_font);
+	this->_text.setCharacterSize(240);
+	this->_text.setColor(sf::Color::Red);
 }
 
 Displayer::~Displayer(void)
@@ -94,6 +100,7 @@ void	Displayer::display(void)
 	}
 	this->_texture.display();
 	this->_win.draw(this->_sprite);
+	this->_win.draw(this->_text);
 	this->_win.display();
 	this->_delta = this->deltaTime();
 	this->_time += this->_delta;
@@ -170,6 +177,17 @@ void	Displayer::drawHead(float time, int x, int y, e_Dir last, int id)
 
 	this->_head.setParameter("index", (float)id);
 	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
+}
+
+void	Displayer::drawScore(float time, int x, int y, e_Dir last, int score)
+{
+	sf::Vector2f		pos;
+
+	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
+
+	this->_text.setPosition(pos);
+	this->_text.setString(std::to_string(score));
+	this->_win.draw(this->_text);
 }
 
 void	Displayer::popWave(int x, int y)
