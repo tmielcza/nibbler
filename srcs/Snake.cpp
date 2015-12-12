@@ -172,16 +172,17 @@ void							Snake::befor_move(void)
 	{
 		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
 		{
-			this->_alive = false;
-			if (dynamic_cast<Segment *>(MapManager::Instance()._Map[x][y]))
+			if (MapManager::Instance()._Map[x][y] != this->_tail)
+				this->_alive = false;
+			if (this->_alive == false)
 			{
-				std::cout << "Dead by a Segment : ";
-				std::cout << dynamic_cast<Segment *>(MapManager::Instance()._Map[x][y])->getID() <<std::endl;
+				if (dynamic_cast<Segment *>(MapManager::Instance()._Map[x][y]))
+					std::cout << "Dead by a Segment : ";
+				else if (dynamic_cast<Wall *>(MapManager::Instance()._Map[x][y]))
+					std::cout << "Dead by a Wall : ";
+				else
+					std::cout << "Dead by an unknown AEntity : ";
 			}
-			else if (dynamic_cast<Wall *>(MapManager::Instance()._Map[x][y]))
-				std::cout << "Dead by a Wall : ";
-			else
-				std::cout << "Dead by an unknown AEntity : ";
 		}
 		else
 		{
@@ -326,6 +327,7 @@ void							Snake::eat(Food const & eaten)
 void							Snake::take_bonus(ABonus & taken)
 {
 	taken.taken(*this);
+	this->_nbmove = 0;
 }
 
 e_Cardinal						Snake::getHeadSnakeDirec(void)

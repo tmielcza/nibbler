@@ -249,25 +249,25 @@ void	MapManager::bonuspop(void)
 	}
 	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
 	int r = rand() % 100;
-	if (r < 10)
+	if (r < 20)
 	{
 		SlowBonus *b = new SlowBonus(10, x, y);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 	}
-	else if (r < 20)
+	else if (r < 30)
 	{
 		CutBonus *b = new CutBonus(10, x, y);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 	}
-	else if (r < 40)
+	else if (r < 60)
 	{
 		SuperFood *b = new SuperFood(1, x, y);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 	}
-	else if (r < 70)
+	else if (r < 90)
 	{
 		int r2 = 5 + (rand() % 5);
 		ChasedFood *b = new ChasedFood(r2, x, y, 1);
