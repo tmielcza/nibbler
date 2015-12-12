@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:01:32 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/10 20:36:10 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/12 20:39:15 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -19,13 +19,14 @@
 #include <iostream> // Ta gueule 
 
 typedef	sf::Vector2f vec2;
+typedef	sf::Vector2<int> vec2i;
 
 class	Displayer;
 
 class	ADisplayable
 {
 public:
-					ADisplayable(vec2 pos, std::string shaderName, float time);
+					ADisplayable(vec2i gridpos, vec2 pos, std::string shaderName, float time);
 					ADisplayable(void);
 	virtual			~ADisplayable(void) {}
 					ADisplayable(const ADisplayable& src);
@@ -34,10 +35,11 @@ public:
 	virtual void	update(Displayer& dis);
 	bool			isAlive(void);
 
-	vec2		pos;
+	vec2i		Pos;
 	bool		_alive;
 
 protected:
+	vec2		pos;
 	sf::Shader	_shad;
 	float		_time;
 };
@@ -45,7 +47,7 @@ protected:
 class	Food : public ADisplayable
 {
 public:
-					Food(vec2 pos, float time);
+					Food(vec2i gridpos, vec2 pos, float time);
 	virtual void	draw(Displayer& dis);
 	virtual void	drawOff(Displayer& dis);
 };
@@ -53,7 +55,7 @@ public:
 class	MultiFood : public ADisplayable
 {
 public:
-					MultiFood(vec2 pos, float time);
+					MultiFood(vec2i gridpos, vec2 pos, float time);
 	virtual void	draw(Displayer& dis);
 };
 
@@ -64,7 +66,7 @@ public:
 					~SuperFood(void);
 					SuperFood(const SuperFood& src);
 	SuperFood&		operator=(const SuperFood& rhs);
-	SuperFood(vec2 pos, float time, float branches);
+					SuperFood(vec2i gridpos, vec2 pos, float time, float branches);
 	void			setBranches(float time, float branches);
 	virtual void	draw(Displayer& dis);
 	void			update(Displayer& dis);
@@ -83,7 +85,7 @@ public:
 					~ChasedFood(void);
 					ChasedFood(const ChasedFood& src);
 	ChasedFood&		operator=(const ChasedFood& rhs);
-					ChasedFood(vec2 pos, float total, float size);
+					ChasedFood(vec2i gridpos, vec2 pos, float total, float size);
 	virtual void	draw(Displayer& dis);
 	void			update(Displayer& dis);
 
@@ -108,7 +110,7 @@ public:
 					Tail(const Tail& src);
 	Tail&			operator=(const Tail& rhs);
 
-					Tail(vec2 pos, vec2 last);
+					Tail(vec2i gridpos, vec2 pos, vec2 last);
 	virtual void	draw(Displayer& dis);
 
 private:
@@ -123,7 +125,7 @@ public:
 					Head(const Head& src);
 	Head&			operator=(const Head& rhs);
 
-					Head(vec2 pos, vec2 last);
+					Head(vec2i gridpos, vec2 pos, vec2 last);
 	virtual void	draw(Displayer& dis);
 
 private:
@@ -133,7 +135,7 @@ private:
 class	Wall : public ADisplayable
 {
 public:
-					Wall(vec2 pos);
+					Wall(vec2i gridpos, vec2 pos);
 	virtual void	draw(Displayer& dis);
 };
 
@@ -148,14 +150,14 @@ public:
 class	SlowFood : public ADisplayable
 {
 public:
-					SlowFood(vec2 pos);
+					SlowFood(vec2i gridpos, vec2 pos);
 	virtual void	draw(Displayer& dis);
 };
 
 class	CutFood : public ADisplayable
 {
 public:
-					CutFood(vec2 pos);
+					CutFood(vec2i gridpos, vec2 pos);
 	virtual void	draw(Displayer& dis);
 };
 

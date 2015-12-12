@@ -6,21 +6,37 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/11 20:58:34 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/12 20:40:40 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #include "Displayer.hpp"
 
 Displayer::Displayer(int x, int y)
-	: _win(sf::VideoMode(x * 40, y * 40), "Nibbler"), _time(0), _bg(sf::Vector2f(x * 20, y * 20))
+	: _time(0)
 {
+	int		wx, wy;
+	if (x > 30 || y > 30)
+	{
+		int		max = x > y ? x : y;
+		wx = x * (30 * 40) / max;
+		wy = y * (30 * 40) / max;
+	}
+	else
+	{
+		wx = x * 40;
+		wy = y * 40;
+	}
+	std::cout << " sizes " << wx << " " << wy << std::endl;
+	this->_win = new sf::RenderWindow(sf::VideoMode(wx, wy), "Nibbler");
+	this->_bg = new Background(vec2(wx / 2, wy / 2));
+	this->_size = {x, y};
 	this->_isFoodOn = true;
 	this->_tail.loadFromFile("resources/tail.gl", sf::Shader::Fragment);
 	this->_head.loadFromFile("resources/head.gl", sf::Shader::Fragment);
-	this->_texture.create(x * 40, y * 40);
+	this->_texture.create(wx, wy);
 	this->_sprite.setTexture(this->_texture.getTexture());
-	this->_tmptexture.create(x * 40, y * 40);
+	this->_tmptexture.create(wx, wy);
 	this->_tmpsprite.setTexture(this->_tmptexture.getTexture());
 	if (!this->_font.loadFromFile("resources/Neon.ttf"))
 	{
@@ -32,7 +48,9 @@ Displayer::Displayer(int x, int y)
 
 Displayer::~Displayer(void)
 {
-	this->_win.close();
+	this->_win->close();
+	delete this->_win;
+	delete this->_bg;
 }
 
 double	Displayer::deltaTime(void)
@@ -58,7 +76,7 @@ double	Displayer::getTime(void) const
 
 vec2	Displayer::getSize(void) const
 {
-	return (sf::Vector2f(this->_win.getSize().x, this->_win.getSize().y));
+	return (sf::Vector2f(this->_win->getSize().x, this->_win->getSize().y));
 }
 
 void	Displayer::display(void)
@@ -93,9 +111,9 @@ void	Displayer::display(void)
 		wave->draw(*this);
 	}
 	this->_texture.display();
-	this->_win.draw(this->_sprite);
-	this->_win.draw(this->_text);
-	this->_win.display();
+	this->_win->draw(this->_sprite);
+	this->_win->draw(this->_text);
+	this->_win->display();
 	this->_delta = this->deltaTime();
 	this->_time += this->_delta;
 }
@@ -103,7 +121,7 @@ void	Displayer::display(void)
 void	Displayer::clear(void)
 {
 	this->_texture.clear();
-	this->_bg.draw(*this);
+	this->_bg->draw(*this);
 	this->_texture.display();
 }
 
@@ -112,7 +130,7 @@ void	Displayer::drawSprite(sf::Shader& shad, vec2 pos, vec2 size, float time)
 	sf::RectangleShape	rectangle(size);
 	sf::RenderStates	states;
 
-	shad.setParameter("coord", vec2(pos.x, this->_win.getSize().y - pos.y));
+	shad.setParameter("coord", vec2(pos.x, this->_win->getSize().y - pos.y));
 	shad.setParameter("resolution", size);
 	shad.setParameter("time", time);
 	rectangle.move(pos - size / 2.0f);
@@ -131,64 +149,80 @@ void	Displayer::postProcess(sf::Shader& shad)
 	this->_texture.display();
 }
 
-bool	Displayer::getFoodMode(void)
+bool	Displayer::getFoodMode(void) const
 {
 	return(this->_isFoodOn);
 }
 
-sf::Vector2f	Displayer::offsetFromDir(e_Dir dir)
+vec2	Displayer::offsetFromDir(e_Dir dir)
 {
-	static const std::map<e_Dir, sf::Vector2f> offsets = {
+	static const std::map<e_Dir, vec2> offsets = {
 		{Right, {-40, 0}},
 		{Left, {40, 0}},
 		{Up, {0, -40}},
 		{Down, {0, 40}},
 	};
+	vec2 off = offsets.at(dir);
 
-	return (offsets.at(dir));
+	off.x = off.x * this->_win->getSize().x / this->_size.x / 40;
+	off.y = off.y * this->_win->getSize().y / this->_size.y / 40;
+	return (off);
 }
 
-sf::Vector2f	Displayer::posOnScreen(int x, int y)
+vec2	Displayer::posOnScreen(int x, int y)
 {
-	return (sf::Vector2f(x * 40 + 20, y * 40 + 20));
+	x = (x * this->_win->getSize().x) / this->_size.x;
+	y = (y * this->_win->getSize().y) / this->_size.y;
+	x += 20 * this->_win->getSize().x / this->_size.x / 40;
+	y += 20 * this->_win->getSize().y / this->_size.y / 40;
+	return (vec2(x, y));
+}
+
+vec2	Displayer::getSpriteSize(sf::Vector2<int> size) const
+{
+	return (this->getSpriteSize(size.x, size.y));
+}
+vec2	Displayer::getSpriteSize(int x, int y) const
+{
+	x = x * this->_win->getSize().x / this->_size.x / 40;
+	y = y * this->_win->getSize().y / this->_size.y / 40;
+	return (vec2(x, y));
 }
 
 void	Displayer::drawTail(float time, int x, int y, e_Dir last, int id)
 {
-	sf::Vector2f		pos;
+	vec2	pos;
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
 	this->_tail.setParameter("index", (float)id);
-	this->drawSprite(this->_tail, pos, {40, 40}, this->getTime());
+	this->drawSprite(this->_tail, pos, this->getSpriteSize(40, 40), this->getTime());
 }
 
 void	Displayer::drawHead(float time, int x, int y, e_Dir last, int id)
 {
-	sf::Vector2f		pos;
+	vec2	pos;
 
 	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
 	this->_head.setParameter("index", (float)id);
-	this->drawSprite(this->_head, pos, {40, 40}, this->getTime());
+	this->drawSprite(this->_head, pos, this->getSpriteSize(40, 40), this->getTime());
 }
 
 void	Displayer::drawScore(float time, int x, int y, e_Dir last, int score)
 {
-	sf::Vector2f		pos;
-
-	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
+	vec2	pos = posOnScreen(x, y) + offsetFromDir(last) * (1 - time);
 
 	this->_text.setPosition(pos);
 	this->_text.setString(std::to_string(score));
-	this->_win.draw(this->_text);
+	this->_win->draw(this->_text);
 }
 
 void	Displayer::popWave(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
-	position.x /= this->_win.getSize().x;
-	position.y /= this->_win.getSize().y;
+	position.x /= this->_win->getSize().x;
+	position.y /= this->_win->getSize().y;
 	position.y = 1. - position.y;
 
 	this->_waves.push_back(new Wave(position, this->getTime()));
@@ -208,57 +242,57 @@ void	Displayer::putWall(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_walls.push_back(new Wall(position));
+	this->_walls.push_back(new Wall({x, y}, position));
 }
 
 void	Displayer::popFood(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_foods.push_back(new Food(position, this->getTime()));
+	this->_foods.push_back(new Food({x, y}, position, this->getTime()));
 }
 
 void	Displayer::popMultiFood(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_bonuses.push_back(new MultiFood(position, this->getTime()));
+	this->_bonuses.push_back(new MultiFood({x, y}, position, this->getTime()));
 }
 
 void	Displayer::popSuperFood(int x, int y, int size)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_bonuses.push_back(new SuperFood(position, this->getTime(), size));
+	this->_bonuses.push_back(new SuperFood({x, y}, position, this->getTime(), size));
 }
 
 void	Displayer::popChasedFood(int x, int y, int size, float time)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_bonuses.push_back(new ChasedFood(position, time, size));
+	this->_bonuses.push_back(new ChasedFood({x, y}, position, time, size));
 }
 
 void	Displayer::popSlowFood(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_bonuses.push_back(new SlowFood(position));
+	this->_bonuses.push_back(new SlowFood({x, y}, position));
 }
 
 void	Displayer::popCutFood(int x, int y)
 {
 	vec2	position = this->posOnScreen(x, y);
 
-	this->_bonuses.push_back(new CutFood(position));
+	this->_bonuses.push_back(new CutFood({x, y}, position));
 }
 
 void	Displayer::depopFood(int x, int y)
 {
 	for (auto it = this->_foods.begin(); it != this->_foods.end(); it++)
 	{
-		int _x = (int)((*it)->pos.x / 40);
-		int _y = (int)((*it)->pos.y / 40);
+		int _x = (int)((*it)->Pos.x);
+		int _y = (int)((*it)->Pos.y);
 		if (_x == x && _y == y) 
 		{
 			Food *f = *it;
@@ -269,8 +303,8 @@ void	Displayer::depopFood(int x, int y)
 	}
 	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++)
 	{
-		int _x = (int)((*it)->pos.x / 40);
-		int _y = (int)((*it)->pos.y / 40);
+		int _x = (int)((*it)->Pos.x);
+		int _y = (int)((*it)->Pos.y);
 		if (_x == x && _y == y)
 		{
 			delete *it;
@@ -284,8 +318,8 @@ void	Displayer::updateSuperFood(int x, int y, int size)
 {
 	for (auto it = this->_bonuses.begin(); it != this->_bonuses.end(); it++)
 	{
-		int _x = (int)((*it)->pos.x / 40);
-		int _y = (int)((*it)->pos.y / 40);
+		int _x = (int)((*it)->Pos.x);
+		int _y = (int)((*it)->Pos.y);
 		if (_x == x && _y == y)
 		{
 			SuperFood*	super = dynamic_cast<SuperFood*>(*it);
@@ -321,7 +355,7 @@ std::list<e_Input>	Displayer::getInput(void)
 		};
 
 	sf::Event event;
-	while (this->_win.pollEvent(event))
+	while (this->_win->pollEvent(event))
 	{
 		if (event.type == sf::Event::KeyPressed)
 		{
@@ -333,7 +367,7 @@ std::list<e_Input>	Displayer::getInput(void)
 		}
 		if (event.type == sf::Event::Closed)
 		{
-			this->_win.close();
+			this->_win->close();
 		}
 	}
 	return (inputs);
