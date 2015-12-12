@@ -101,12 +101,14 @@ bool			DuoMode::check_end(void)
 
 void			DuoMode::run(void)
 {
-	double				delta = 0;
+	double					delta = 0;
+	std::list<e_Input>		inputs;
+	bool					leave = false;
 
 	std::cout << "Enter in while" << std::endl;
 	MapManager::Instance().foodpop(true);
 	MapManager::Instance().foodpop(true);
-	while (this->_game->leaving() == false)
+	while (this->_game->leaving() == false && leave != true)
 	{
 		while (this->check_end())
 		{
@@ -114,6 +116,18 @@ void			DuoMode::run(void)
 			this->_game->update(delta);
 			MapManager::Instance().update(delta);
 			GraphicsManager::Instance().display();
+		}
+		inputs = GraphicsManager::Instance().getInput();
+		for (auto it = inputs.begin(); it != inputs.end(); it++)
+		{
+			if ((*it & I_Close) != 0)
+				leave = true;
+			if ((*it & I_Restart) != 0)
+			{
+				this->_game->restart();
+				MapManager::Instance().foodpop(true);
+				MapManager::Instance().foodpop(true);
+			}
 		}
 	}
 }

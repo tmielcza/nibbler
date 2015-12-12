@@ -106,7 +106,6 @@ void			SoloMode::run(void)
 
 	std::cout << "Enter in while" << std::endl;
 	MapManager::Instance().foodpop(true);
-	
 	while (this->_game->leaving() == false && leave != true)
 	{
 		while (this->check_end())
@@ -122,7 +121,11 @@ void			SoloMode::run(void)
 			if ((*it & I_Close) != 0)
 				leave = true;
 			if ((*it & I_Restart) != 0)
+			{
+				std::cout << "Restart the Game !" << std::endl;
 				this->_game->restart();
+				MapManager::Instance().foodpop(true);
+			}
 		}
 	}
 }

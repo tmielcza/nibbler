@@ -138,7 +138,10 @@ void		GameManager::update(double time)
 		if ((*it & I_Close) != 0)
 			this->_leave = true;
 		if ((*it & I_Restart) != 0)
+		{
 			this->restart();
+			MapManager::Instance().foodpop(true);
+		}
 		if ((*it & I_Dir) != 0)
 		{
 			input = (e_Input)(*it & I_Dir);

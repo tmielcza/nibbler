@@ -23,7 +23,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_alive = true;
-	this->_increm = 0.4;
+	this->_increm = 0.35;
 	this->init();
 }
 
@@ -33,7 +33,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
-	this->_increm = 0.5;
+	this->_increm = 0.35;
 	this->init(direction, x, y);
 	this->_alive = true;
 }
