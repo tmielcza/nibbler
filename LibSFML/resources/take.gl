@@ -12,27 +12,16 @@ void main()
 	float tsize = size;
 	vec2 texPos = gl_TexCoord[0].xy - tpos;
 	float dst = (length(texPos) - tsize) * 16;
-/*
-	float coef = 1;
-	if (dst < 1 && dst > -1)
-	{
-		coef = cos(dst * PI + PI);
-	}
-	texPos *= (coef + 15) / 16;
-	texPos += tpos;
-//*/
+	float coef = 0.0f;
 
-//*
-	float coef = 1.0f;
-	if (dst < 1 && dst > -1)
+	if (dst < 1 && dst > -1) // If in the wave
 	{
-		coef = cos(dst * PI + PI);
-		texPos += normalize(texPos) * coef / 100;
+		coef = -1 + cos(dst * PI + PI); // Wave slope
+		texPos += normalize(texPos) * coef / 100; // Texture offset with slope
 	}
 	texPos += tpos;
-//*/
 
 	vec4	col = vec4(texture2D(texture, texPos));
 
-	gl_FragColor = vec4(col.rgb * (1 + (1 - (coef + 1) / 2)), 1);
+	gl_FragColor = vec4(col.rgb * (1 - (coef / 2)), 1); // Lightens texture according to slope
 }

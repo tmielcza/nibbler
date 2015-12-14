@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 15:05:51 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/11 18:44:39 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/12 20:38:49 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,10 +15,11 @@
 
 // ADisplayable
 
-ADisplayable::ADisplayable(vec2 pos, std::string shaderName, float time)
+ADisplayable::ADisplayable(vec2i gridpos, vec2 pos, std::string shaderName, float time)
 {
 	this->_alive = true;
-	this->pos = pos;
+	this->Pos = gridpos;
+	this->pos = {pos.x, pos.y};
 	this->_shad.loadFromFile("resources/" + shaderName, sf::Shader::Fragment);
 	this->_time = time;
 }
@@ -47,8 +48,8 @@ bool		ADisplayable::isAlive(void)
 
 // Food
 
-Food::Food(vec2 pos, float time)
-	: ADisplayable(pos, "food.gl", fmod(time, 1))
+Food::Food(vec2i gridpos, vec2 pos, float time)
+	: ADisplayable(gridpos, pos, "food.gl", fmod(time, 1))
 {
 
 }
@@ -56,34 +57,34 @@ Food::Food(vec2 pos, float time)
 void	Food::draw(Displayer& dis)
 {
 	this->_shad.setParameter("on", dis.getFoodMode());
-	dis.drawSprite(this->_shad, this->pos, {40, 40},
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40),
 				   fmod(dis.getTime() + this->_time, 1));
 }
 
 void	Food::drawOff(Displayer& dis)
 {
 	this->_shad.setParameter("on", dis.getFoodMode());
-	dis.drawSprite(this->_shad, this->pos, {40, 40},
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40),
 				   fmod(dis.getTime() + this->_time, 1));
 }
 
 // Multi
 
-MultiFood::MultiFood(vec2 pos, float time)
-	: ADisplayable(pos, "multi.gl", fmod(time, 1))
+MultiFood::MultiFood(vec2i gridpos, vec2 pos, float time)
+	: ADisplayable(gridpos, pos, "multi.gl", fmod(time, 1))
 {
 }
 
 void	MultiFood::draw(Displayer& dis)
 {
-	dis.drawSprite(this->_shad, this->pos, {40, 40},
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40),
 				   fmod(dis.getTime() + this->_time, 1));
 }
 
 // Super
 
-SuperFood::SuperFood(vec2 pos, float time, float branches)
-	: ADisplayable(pos, "super.gl", time), _branches(0.f),
+SuperFood::SuperFood(vec2i gridpos, vec2 pos, float time, float branches)
+	: ADisplayable(gridpos, pos, "super.gl", time), _branches(0.f),
 	  _time(time)
 {
 	this->setBranches(time, branches);
@@ -92,7 +93,7 @@ SuperFood::SuperFood(vec2 pos, float time, float branches)
 void	SuperFood::draw(Displayer& dis)
 {
 	this->_shad.setParameter("branches", this->_branches);
-	dis.drawSprite(this->_shad, this->pos, {40, 40},
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40),
 				   fmod(dis.getTime() + this->_time, 1));
 }
 
@@ -134,8 +135,8 @@ void		SuperFood::update(Displayer& dis)
 
 // Chased
 
-ChasedFood::ChasedFood(vec2 pos, float total, float size)
-	: ADisplayable(pos, "chase.gl", 0), _left(total),
+ChasedFood::ChasedFood(vec2i gridpos, vec2 pos, float total, float size)
+	: ADisplayable(gridpos, pos, "chase.gl", 0), _left(total),
 	  _total(total), _size((size + 2) * 0.04)
 {
 }
@@ -144,7 +145,7 @@ void	ChasedFood::draw(Displayer& dis)
 {
 	this->_shad.setParameter("rot", 1 - this->_left / this->_total);
 	this->_shad.setParameter("size", this->_size);
-	dis.drawSprite(this->_shad, this->pos, {100, 100},
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(100, 100),
 				   fmod(dis.getTime() + this->_time, 1));
 }
 
@@ -179,7 +180,7 @@ void		ChasedFood::update(Displayer& dis)
 // Background
 
 Background::Background(vec2 pos)
-	:ADisplayable(pos, "bg.gl", 0)
+	:ADisplayable({0, 0}, pos, "bg.gl", 0)
 {
 }
 
@@ -195,8 +196,8 @@ Tail::~Tail(void)
 {
 }
 
-Tail::Tail(vec2 pos, vec2 last)
-	: ADisplayable(pos, "tail.gl", 0.f), _last(last)
+Tail::Tail(vec2i gridpos, vec2 pos, vec2 last)
+	: ADisplayable(gridpos, pos, "tail.gl", 0.f), _last(last)
 {
 }
 
@@ -216,8 +217,8 @@ Head::~Head(void)
 {
 }
 
-Head::Head(vec2 pos, vec2 last)
-	: ADisplayable(pos, "resources/head.gl", 0.f), _last(last)
+Head::Head(vec2i gridpos, vec2 pos, vec2 last)
+	: ADisplayable(gridpos, pos, "resources/head.gl", 0.f), _last(last)
 {
 }
 
@@ -227,25 +228,25 @@ void	Head::draw(Displayer& dis)
 	float time = fmod(dis.getTime(), 1.f);
 
 	pos = this->_last * (1.f - time) + this->pos * time;
-	dis.drawSprite(this->_shad, pos, {40, 40}, dis.getTime());
+	dis.drawSprite(this->_shad, pos, dis.getSpriteSize(40, 40), dis.getTime());
 }
 
 // Wall
 
-Wall::Wall(vec2 pos)
-	: ADisplayable(pos, "wall.gl", 0.f)
+Wall::Wall(vec2i gridpos, vec2 pos)
+	: ADisplayable(gridpos, pos, "wall.gl", 0.f)
 {
 }
 
 void	Wall::draw(Displayer& dis)
 {
-	dis.drawSprite(this->_shad, this->pos, {40, 40}, 0.f);
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40), 0.f);
 }
 
 // Wave
 
 Wave::Wave(vec2 pos, float time)
-	: ADisplayable(pos, "take.gl", time)
+	: ADisplayable({0, 0}, pos, "take.gl", time)
 {
 	this->_shad.setParameter("pos", pos);
 }
@@ -264,24 +265,24 @@ void	Wave::update(Displayer& dis)
 
 // Slow
 
-SlowFood::SlowFood(vec2 pos)
-	: ADisplayable(pos, "slow.gl", 0.0f)
+SlowFood::SlowFood(vec2i gridpos, vec2 pos)
+	: ADisplayable(gridpos, pos, "slow.gl", 0.0f)
 {
 }
 
 void	SlowFood::draw(Displayer& dis)
 {
-	dis.drawSprite(this->_shad, this->pos, {40, 40}, dis.getTime());
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40), dis.getTime());
 }
 
 // Cut
 
-CutFood::CutFood(vec2 pos)
-	: ADisplayable(pos, "cut.gl", 0.0f)
+CutFood::CutFood(vec2i gridpos, vec2 pos)
+	: ADisplayable(gridpos, pos, "cut.gl", 0.0f)
 {
 }
 
 void	CutFood::draw(Displayer& dis)
 {
-	dis.drawSprite(this->_shad, this->pos, {40, 40}, dis.getTime());
+	dis.drawSprite(this->_shad, this->pos, dis.getSpriteSize(40, 40), dis.getTime());
 }

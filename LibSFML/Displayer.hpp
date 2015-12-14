@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/11 19:00:36 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/13 19:23:20 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -39,7 +39,9 @@ public:
 	void				drawSprite(sf::Shader& shad, vec2 pos, vec2 size, float time);
 	void				postProcess(sf::Shader& shad);
 	double				getDeltaTime(void) const;
-	bool				getFoodMode(void);
+	bool				getFoodMode(void) const;
+	vec2				getSpriteSize(sf::Vector2<int> size) const;
+	vec2				getSpriteSize(int x, int y) const;
 
 	void				display(void);
 	void				clear(void);
@@ -52,6 +54,7 @@ public:
 	void				depopFood(int x, int y);
 	void				updateSuperFood(int x, int y, int size);
 	void				switchFoodMode(void);
+	void				setFoodMode(bool state);
 	vec2				getSize(void) const;
 	std::list<e_Input>	getInput(void);
 	void				drawTail(float time, int x, int y, e_Dir last, int id);
@@ -65,10 +68,11 @@ private:
 						Displayer(void);
 						Displayer(const Displayer& src);
 	double				deltaTime(void);
-	static sf::Vector2f	posOnScreen(int x, int y);
-	static sf::Vector2f	offsetFromDir(e_Dir dir);
+	vec2				posOnScreen(int x, int y);
+	vec2				offsetFromDir(e_Dir dir);
 
-	sf::RenderWindow			_win;
+	sf::RenderWindow*			_win;
+	sf::Vector2<int>			_size;
 
 	float						_time;
 
@@ -83,7 +87,7 @@ private:
 	sf::Font					_font;
 	sf::Text					_text;
 
-	Background					_bg;
+	Background*					_bg;
 
 	float						_delta;
 

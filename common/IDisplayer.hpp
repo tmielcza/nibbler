@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/11 15:41:34 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/11 19:01:13 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/13 19:20:23 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -64,6 +64,7 @@ public:
 	virtual void				depopFood(int x, int y) = 0;
 	virtual void				updateSuperFood(int x, int y, int size) = 0;
 	virtual void				switchFoodMode(void) = 0;
+	virtual void				setFoodMode(bool state) = 0;
 	virtual void				drawTail(float time, int x, int y, e_Dir last, int id) = 0;
 	virtual void				drawHead(float time, int x, int y, e_Dir last, int id) = 0;
 	virtual void				drawScore(float time, int x, int y, e_Dir last, int score) = 0;
