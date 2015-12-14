@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:22 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/12 20:40:40 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/14 17:09:16 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -110,9 +110,7 @@ void	Displayer::display(void)
 	{
 		wave->draw(*this);
 	}
-	this->_texture.display();
 	this->_win->draw(this->_sprite);
-	this->_win->draw(this->_text);
 	this->_win->display();
 	this->_delta = this->deltaTime();
 	this->_time += this->_delta;
@@ -215,7 +213,7 @@ void	Displayer::drawScore(float time, int x, int y, e_Dir last, int score)
 
 	this->_text.setPosition(pos);
 	this->_text.setString(std::to_string(score));
-	this->_win->draw(this->_text);
+	this->_texture.draw(this->_text);
 }
 
 void	Displayer::popWave(int x, int y)
@@ -332,6 +330,11 @@ void	Displayer::updateSuperFood(int x, int y, int size)
 void	Displayer::switchFoodMode(void)
 {
 	this->_isFoodOn = !this->_isFoodOn;
+}
+
+void	Displayer::setFoodMode(bool state)
+{
+	this->_isFoodOn = state;
 }
 
 std::list<e_Input>	Displayer::getInput(void)

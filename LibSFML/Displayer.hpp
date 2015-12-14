@@ -6,7 +6,7 @@
 //   By: tmielcza <tmielcza@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/09 14:16:31 by tmielcza          #+#    #+#             //
-//   Updated: 2015/12/12 20:16:49 by tmielcza         ###   ########.fr       //
+//   Updated: 2015/12/13 19:23:20 by tmielcza         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -54,6 +54,7 @@ public:
 	void				depopFood(int x, int y);
 	void				updateSuperFood(int x, int y, int size);
 	void				switchFoodMode(void);
+	void				setFoodMode(bool state);
 	vec2				getSize(void) const;
 	std::list<e_Input>	getInput(void);
 	void				drawTail(float time, int x, int y, e_Dir last, int id);
