@@ -203,45 +203,49 @@ void							Snake::move(void)
 	Point								tmp = (*seg)->getPos();
 	e_Cardinal							direc = (*seg)->get_Direc();
 
-	MapManager::Instance()._Map[x][y] = NULL;
-	if (direc == North)
+	std::cout << "Snake " << this->_index << " Pos : " << x << "-" << y << std::endl;
+	if (this->_alive == true)
 	{
-		y = (*seg)->getY() + 1;
-		if (y >= MapManager::Instance().getHeight())
-			y = 0;
-		(*seg)->setY(y);
+		MapManager::Instance()._Map[x][y] = NULL;
+		if (direc == North)
+		{
+			y = (*seg)->getY() + 1;
+			if (y >= MapManager::Instance().getHeight())
+				y = 0;
+			(*seg)->setY(y);
+		}
+		else if (direc == South)
+		{
+			y = (*seg)->getY() - 1;
+			if (y < 0)
+				y = MapManager::Instance().getHeight() - 1;
+			(*seg)->setY(y);
+		}
+		else if (direc == East)
+		{
+			x = (*seg)->getX() + 1;
+			if (x >= MapManager::Instance().getWidth())
+				x = 0;
+			(*seg)->setX(x);
+		}
+		else if (direc == West)
+		{
+			x = (*seg)->getX() - 1;
+			if (x < 0)
+				x = MapManager::Instance().getWidth() - 1;
+			(*seg)->setX(x);
 	}
-	else if (direc == South)
-	{
-		y = (*seg)->getY() - 1;
-		if (y < 0)
-			y = MapManager::Instance().getHeight() - 1;
-		(*seg)->setY(y);
-	}
-	else if (direc == East)
-	{
-		x = (*seg)->getX() + 1;
-		if (x >= MapManager::Instance().getWidth())
-			x = 0;
-		(*seg)->setX(x);
-	}
-	else if (direc == West)
-	{
-		x = (*seg)->getX() - 1;
-		if (x < 0)
-			x = MapManager::Instance().getWidth() - 1;
-		(*seg)->setX(x);
-	}
-	MapManager::Instance()._Map[x][y] = (*seg);
-	seg++;
-	while (seg != end)
-	{
-		Point tmp2 = (*seg)->getPos();
-		(*seg)->setPos(tmp);
-		MapManager::Instance()._Map[tmp2.getX()][tmp2.getY()] = NULL;
-		MapManager::Instance()._Map[tmp.getX()][tmp.getY()] = (*seg);
-		tmp = tmp2;
+		MapManager::Instance()._Map[x][y] = (*seg);
 		seg++;
+		while (seg != end)
+		{
+			Point tmp2 = (*seg)->getPos();
+			(*seg)->setPos(tmp);
+			MapManager::Instance()._Map[tmp2.getX()][tmp2.getY()] = NULL;
+			MapManager::Instance()._Map[tmp.getX()][tmp.getY()] = (*seg);
+			tmp = tmp2;
+			seg++;
+		}
 	}
 }
 

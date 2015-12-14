@@ -22,11 +22,11 @@ MultiMode::MultiMode(void)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(true);
-	this->_game = new GameManager(true, true, false);
+	this->_game = new GameManager(true, true, false, true);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
-MultiMode::MultiMode(bool wall)
+MultiMode::MultiMode(bool wall, bool master)
 {
 	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
@@ -36,7 +36,7 @@ MultiMode::MultiMode(bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(true, true, false);
+	this->_game = new GameManager(true, true, false, master);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
@@ -45,7 +45,7 @@ MultiMode::MultiMode(const MultiMode & src)
 	*this = src;
 }
 
-MultiMode::MultiMode(int nbplayers, int width, int height, bool wall)
+MultiMode::MultiMode(int nbplayers, int width, int height, bool wall, bool master)
 {
 	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
@@ -55,7 +55,7 @@ MultiMode::MultiMode(int nbplayers, int width, int height, bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(true, true, false);
+	this->_game = new GameManager(true, true, false, master);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
@@ -127,7 +127,6 @@ void			MultiMode::run(void)
 				this->_game->restart();
 				for (int i = 0; i < this->_nbPlayers; i++)
 					MapManager::Instance().foodpop(true);
-
 			}
 		}
 	}

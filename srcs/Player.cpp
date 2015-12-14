@@ -18,6 +18,19 @@ Player::Player(void)
 {
 	std::cout << "Creating Player !" << std::endl;
 	this->_Snake = new Snake();
+	this->_pl2 = false;
+	this->_local = true;
+	this->_time = 0;
+	MapManager::Instance().setSnake(this->_Snake);
+}
+
+Player::Player(bool pl2, bool local)
+{
+	std::cout << "Creating Player !" << std::endl;
+	this->_Snake = new Snake();
+	this->_pl2 = pl2;
+	this->_local = local;
+	this->_time = 0;
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
@@ -27,6 +40,8 @@ Player::Player(Snake *snake)
 	{
 		std::cout << "Creating Player !" << std::endl;
 		this->_Snake = snake;
+		this->_pl2 = false;
+		this->_local = true;
 		MapManager::Instance().setSnake(this->_Snake);
 	}
 }
@@ -107,4 +122,14 @@ void		Player::add_touch(e_Cardinal touch)
 int			Player::getSizeTouch(void)
 {
 	return (this->_lastInputs.size());
+}
+
+int			Player::getX(void)
+{
+	return (this->_Snake->getHeadSnakeX());
+}
+
+int			Player::getY(void)
+{
+	return (this->_Snake->getHeadSnakeY());
 }

@@ -23,10 +23,13 @@ class Player
 	Snake					*_Snake;
 	std::list<e_Cardinal>	_lastInputs;
 	double					_time;
+	bool					_local;
+	bool					_pl2;
 
 	public:
 
 	Player(void);
+	Player(bool pl2, bool local);
 	Player(Snake *snake);
 	Player(const Player & copy);
 	~Player(void);
@@ -37,6 +40,8 @@ class Player
 	void		update(double time);
 	void		add_touch(e_Cardinal touch);
 	int			getSizeTouch(void);
+	int			getX(void);
+	int			getY(void);
 
 };
 

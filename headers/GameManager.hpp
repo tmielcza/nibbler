@@ -29,9 +29,11 @@ class GameManager
 	int						_width;
 	int						_height;
 	bool					_pl2;
+	bool					_master;
 	bool					_multi;
 	bool					_massif;
 	bool					_leave;
+	int						_curPL;
 	std::list<Player*>		_players;
 	Player					*_me;
 	Player					*_me2;
@@ -39,7 +41,7 @@ class GameManager
 	public:
 
 	GameManager(void);
-	GameManager(bool pl2, bool multi, bool massif);
+	GameManager(bool pl2, bool multi, bool massif, bool master);
 	GameManager(const GameManager & copy);
 	~GameManager(void);
 
@@ -51,6 +53,7 @@ class GameManager
 	bool			leaving(void);
 	void			update(double time);
 	void			restart(void);
+	int				getCurPL(void);
 
 };
 

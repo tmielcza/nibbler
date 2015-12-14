@@ -45,7 +45,7 @@ int		main(int ac, char **av)
 				if (nbPlayers == 1)
 					nbPlayers = 2;
 			}
-			else if (strcmp(av[i], "-p") == 0)
+			else if (strcmp(av[i], "-pl") == 0)
 			{
 				i++;
 				nbPlayers = atoi(av[i]);
@@ -76,6 +76,14 @@ int		main(int ac, char **av)
 					std::cout << "Error: Map width isn't enought !" << std::endl;
 					exit(42);
 				}
+			}
+			else if (strcmp(av[i], "-h") == 0)
+			{
+				i++;
+			}
+			else if (strcmp(av[i], "-p") == 0)
+			{
+				i++;
 			}
 			i++;
 		}

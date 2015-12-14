@@ -22,7 +22,7 @@ DuoMode::DuoMode(void)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(true);
-	this->_game = new GameManager(true, false, false);
+	this->_game = new GameManager(true, false, false, true);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
@@ -36,7 +36,7 @@ DuoMode::DuoMode(bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(true, false, false);
+	this->_game = new GameManager(true, false, false, true);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
@@ -55,7 +55,7 @@ DuoMode::DuoMode(int nbplayers, int width, int height, bool wall)
 	this->_speed = 1;
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
-	this->_game = new GameManager(true, false, false);
+	this->_game = new GameManager(true, false, false, true);
 	this->_game->init(this->_nbPlayers, this->_width, this->_height);
 }
 
@@ -110,6 +110,8 @@ void			DuoMode::run(void)
 	MapManager::Instance().foodpop(true);
 	while (this->_game->leaving() == false && leave != true)
 	{
+		GraphicsManager::Instance().clear();
+		GraphicsManager::Instance().display();
 		while (this->check_end())
 		{
 			delta = this->_game->deltaTime();

@@ -16,23 +16,30 @@
 GameManager::GameManager(void)
 {
 	std::cout << "Creating GameManager !" << std::endl;
+	this->_master = true;
 	this->_multi = false;
 	this->_massif = false;
 	this->_leave = false;
 	this->_pl2 = false;
 	this->_me = new Player();
+	this->_curPL = 1;
 }
 
-GameManager::GameManager(bool pl2, bool multi, bool massif)
+GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 {
 	std::cout << "Creating GameManager !" << std::endl;
 	this->_multi = multi;
 	this->_massif = massif;
+	this->_master = master;
 	this->_leave = false;
 	this->_me = new Player();
+	this->_curPL = 1;
 	this->_pl2 = pl2;
 	if (pl2 == true)
-		this->_me2 = new Player();
+	{
+		this->_curPL++;
+		this->_me2 = new Player(true, true);
+	}
 	else
 		this->_me2 = NULL;
 }
@@ -139,8 +146,12 @@ void		GameManager::update(double time)
 			this->_leave = true;
 		if ((*it & I_Restart) != 0)
 		{
-			this->restart();
-			MapManager::Instance().foodpop(true);
+			if (this->_master == true)
+			{
+				this->restart();
+				for (int i = 0; i < this->_nbPlayer; i++)
+					MapManager::Instance().foodpop(true);
+			}
 		}
 		if ((*it & I_Dir) != 0)
 		{
@@ -166,7 +177,8 @@ void		GameManager::update(double time)
 	{
 		while (pl != end)
 		{
-			//(*pl)->updateSocket();
+			//(*pl)->updateSocketRcv();
+			//(*pl)->updateSocketSend();
 			(*pl)->update(time);
 		}
 	}
@@ -186,5 +198,10 @@ void			GameManager::restart(void)
 	MapManager::Instance().restart();
 	this->_me = new Player();
 	if (this->_pl2 == true)
-		this->_me2 = new Player();
+		this->_me2 = new Player(true, true);
+}
+
+int				GameManager::getCurPL(void)
+{
+	return (this->_curPL);
 }

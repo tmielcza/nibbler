@@ -25,9 +25,9 @@ class MultiMode : public AGameMode
 	public:
 
 	MultiMode(void);
-	MultiMode(bool wall);
+	MultiMode(bool wall, bool master);
 	MultiMode(const MultiMode & src);
-	MultiMode(int nbplayers, int width, int height, bool wall);
+	MultiMode(int nbplayers, int width, int height, bool wall, bool master);
 	~MultiMode(void);
 
 	MultiMode	&	operator=(const MultiMode & src);
