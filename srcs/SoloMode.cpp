@@ -109,6 +109,8 @@ void			SoloMode::run(void)
 	MapManager::Instance().foodpop(true);
 	while (this->_game->leaving() == false && leave != true)
 	{
+		GraphicsManager::Instance().clear();
+		GraphicsManager::Instance().display();
 		while (this->check_end())
 		{
 			delta = this->_game->deltaTime();
