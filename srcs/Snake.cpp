@@ -68,6 +68,11 @@ bool							Snake::check_place_snake(int x, int y)
 		good = false;
 	if (MapManager::Instance()._Map[x - 3][y] != NULL)
 		good = false;
+	if (y > 0 && MapManager::Instance()._Map[x][y - 1] != NULL)
+		good = false;
+	if (y < MapManager::Instance().getHeight() - 1 &&
+		MapManager::Instance()._Map[x][y + 1] != NULL)
+		good = false;
 	return (good);
 }
 

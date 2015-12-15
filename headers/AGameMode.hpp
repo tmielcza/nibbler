@@ -38,7 +38,7 @@ class AGameMode
 
 	AGameMode&		operator=(const AGameMode& src);
 
-	virtual void	init(bool wall) = 0;
+//	virtual void	init(bool wall) = 0;
 	virtual void	run(void) = 0;
 
 };

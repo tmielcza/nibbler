@@ -20,19 +20,24 @@ class MultiMode : public AGameMode
 {
 	private:
 
+	bool			_master;
+	bool			_pl2;
+	int				_port;
+//	std::string		_addr;
+
+	MultiMode(bool pl2, int port, std::string addr);
 	bool			check_end(void);
 
 	public:
 
 	MultiMode(void);
-	MultiMode(bool wall, bool master);
+	MultiMode(bool pl2, int port);
 	MultiMode(const MultiMode & src);
-	MultiMode(int nbplayers, int width, int height, bool wall, bool master);
 	~MultiMode(void);
 
 	MultiMode	&	operator=(const MultiMode & src);
 
-	void			init(bool wall);
+	void			init(int nbPlayers, int width, int height, bool wall);
 	void			run(void);
 
 };

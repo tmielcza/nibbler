@@ -38,7 +38,7 @@ GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 	if (pl2 == true)
 	{
 		this->_curPL++;
-		this->_me2 = new Player(true, true);
+		this->_me2 = new Player();
 	}
 	else
 		this->_me2 = NULL;
@@ -97,6 +97,35 @@ void		GameManager::init(int nbplayer, int width, int height)
 	this->_nbPlayer = nbplayer;
 	this->_width = width;
 	this->_height = height;
+}
+
+void		GameManager::init(int nbplayer, int width, int height, int port)
+{
+	this->_nbPlayer = nbplayer;
+	this->_width = width;
+	this->_height = height;
+	if (this->_multi == true && this->_master == false && this->_massif == false)
+	{
+		//Version Client
+		;
+	}
+	else if (this->_multi == true && this->_master == true && this->_massif == true)
+	{
+		//Version Client Massif
+		;
+	}
+	else if (this->_multi == true && this->_master == true && this->_massif == false)
+	{
+		//Version Server
+		this->_serv = new Server(port);
+		this->_serv->init_clt(this->_clients);
+	}
+	else if (this->_multi == true && this->_master == true && this->_massif == true)
+	{
+		//Version Server Massif
+		;
+	}
+	
 }
 
 bool		GameManager::IsAlive(void)
@@ -204,4 +233,9 @@ void			GameManager::restart(void)
 int				GameManager::getCurPL(void)
 {
 	return (this->_curPL);
+}
+
+void			GameManager::Server_Check(void)
+{
+	this->_serv->run_serv();
 }

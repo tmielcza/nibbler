@@ -17,99 +17,178 @@
 
 #include "SoloMode.hpp"
 #include "DuoMode.hpp"
+#include "MultiMode.hpp"
+
+typedef struct		s_env
+{
+	int		height;
+	int		width;
+	bool	wall;
+	bool	pl2;
+	bool	solo;
+	bool	master;
+	int		nbPlayers;
+	int		port;
+}					t_env;
+
+void	check_args(int ac, char **av, t_env *env)
+{
+	int i = 1;
+	while (i < ac)
+	{
+		if (strcmp(av[i], "-nowall") == 0)
+			env->wall = false;
+		else if (strcmp(av[i], "-duo") == 0)
+		{
+			env->pl2 = true;
+			if (env->nbPlayers == 1)
+				env->nbPlayers = 2;
+		}
+		else if (strcmp(av[i], "-player") == 0)
+		{
+			i++;
+			env->nbPlayers = atoi(av[i]);
+			if (env->nbPlayers < 0)
+			{
+				std::cout << "Error: Number of players can't be negatif !" << std::endl;
+					exit(-42);
+			}
+		}
+		else if (strcmp(av[i], "-height") == 0)
+			i++;
+		else if (strcmp(av[i], "-width") == 0)
+			i++;
+		else if (strcmp(av[i], "-host") == 0)
+		{
+			i++;
+			env->master = false;
+			env->solo = false;
+		}
+		else if (strcmp(av[i], "-port") == 0)
+		{
+			i++;
+			env->solo = false;
+			env->port = atoi(av[i]);
+			if (env->port < 1024 || env->port >= 49151)
+			{
+				std::cout << "Error : port ins't valide." << std::endl;
+				exit(-42);
+			}
+		}
+		else
+		{
+			std::cout << "Bad arguments : " << std::endl;
+			std::cout << "-nowall : to play without walls." << std::endl;
+			std::cout << "-duo : to play two players on this computer." << std::endl;
+			std::cout << "-height : to fix the height manually." << std::endl;
+			std::cout << "-width : to fix the width manually." << std::endl;
+			std::cout << "-player : to fix th number max of players." << std::endl;
+			std::cout << "-host : followed by an address IP of the hosting game." << std::endl;
+			std::cout << "-port : to fix the port if you playing network" << std::endl;
+			exit(-42);
+		}
+		i++;
+	}
+	i = 1;
+	while (i < ac)
+	{
+		if (strcmp(av[i], "-height") == 0)
+		{
+			i++;
+			env->height = atoi(av[i]);
+			if (env->height > ((env->nbPlayers * 2) + 4) || env->height < 16)
+			{
+				std::cout << "Error: Map height isn't enought !" << std::endl;
+				exit(-42);
+			}
+		}
+		else if (strcmp(av[i], "-width") == 0)
+		{
+			i++;
+			env->width = atoi(av[i]);
+			if ((env->width / env->nbPlayers) < 10 || env->width < 16)
+			{
+				std::cout << "Error: Map width isn't enought !" << std::endl;
+				exit(-42);
+			}
+		}
+		else if (strcmp(av[i], "-nowall") == 0)
+			;
+		else if (strcmp(av[i], "-duo") == 0)
+			;
+		else if (strcmp(av[i], "-player") == 0)
+			i++;
+		else if (strcmp(av[i], "-host") == 0)
+			i++;
+		else if (strcmp(av[i], "-port") == 0)
+			i++;
+		else
+		{
+			std::cout << "Bad arguments : " << std::endl;
+			std::cout << "-nowall : to play without walls." << std::endl;
+			std::cout << "-duo : to play two players on this computer." << std::endl;
+			std::cout << "-height : to fix the height manually." << std::endl;
+			std::cout << "-width : to fix the width manually." << std::endl;
+			std::cout << "-player : to fix th number max of players." << std::endl;
+			std::cout << "-host : followed by an address IP of the hosting game." << std::endl;
+			std::cout << "-port : to fix the port if you playing network" << std::endl;
+			exit(-42);
+		}
+		i++;
+	}
+}
 
 int		main(int ac, char **av)
 {
-	int		height = 22;
-	int		width = 22;
-	bool	wall = true;
-	bool	pl2 = false;
-	bool	solo = true;
-	int		nbPlayers = 1;
+	t_env	env;
+
+	env.height = 22;
+	env.width = 22;
+	env.wall = true;
+	env.pl2 = false;
+	env.solo = true;
+	env.master = true;
+	env.nbPlayers = 1;
+	env.port = 0;
 
 	if (ac < 2)
 	{
-		SoloMode		game(true);
+		SoloMode		game(env.wall);
 		game.run();
 	}
 	else
 	{
-		int i = 1;
-		while (i < ac)
+		check_args(ac, av, &env);
+		if (env.solo == true && env.pl2 == false)
 		{
-			if (strcmp(av[i], "-wall") == 0)
-				wall = false;
-			else if (strcmp(av[i], "-d") == 0)
-			{
-				pl2 = true;
-				if (nbPlayers == 1)
-					nbPlayers = 2;
-			}
-			else if (strcmp(av[i], "-pl") == 0)
-			{
-				i++;
-				nbPlayers = atoi(av[i]);
-				if (nbPlayers < 0)
-				{
-					std::cout << "Error: Number of players can't be negatif !" << std::endl;
-					exit(42);
-				}
-			}
-			else if (strcmp(av[i], "-r") == 0)
-				solo = false;
-			else if (strcmp(av[i], "-h") == 0)
-			{
-				i++;
-				height = atoi(av[i]);
-				if ((height / nbPlayers) < 3 || height < 16)
-				{
-					std::cout << "Error: Map height isn't enought !" << std::endl;
-					exit(42);
-				}
-			}
-			else if (strcmp(av[i], "-w") == 0)
-			{
-				i++;
-				width = atoi(av[i]);
-				if ((width / nbPlayers) < 10 || width < 16)
-				{
-					std::cout << "Error: Map width isn't enought !" << std::endl;
-					exit(42);
-				}
-			}
-			else if (strcmp(av[i], "-h") == 0)
-			{
-				i++;
-			}
-			else if (strcmp(av[i], "-p") == 0)
-			{
-				i++;
-			}
-			i++;
-		}
-		if (solo == true && pl2 == false)
-		{
-			SoloMode		game(nbPlayers, width, height, wall);
+			SoloMode		game(env.nbPlayers, env.width, env.height, env.wall);
 			game.run();
 		}
-		else if (solo == true && pl2 == true)
+		else if (env.solo == true && env.pl2 == true)
 		{
-			DuoMode			game(nbPlayers, width, height, wall);
+			DuoMode			game(env.nbPlayers, env.width, env.height, env.wall);
 			game.run();
 		}
-/*		else
+		else if (env.solo == false &&
+				 ((env.pl2 == false && env.nbPlayers > 1) || env.nbPlayers > 2))
 		{
-			if (nbPlayers <= 10)
+			if (env.nbPlayers <= 10)
 			{
-				MultiMode		game(nbPlayers, width, height, pl2, wall);
+				MultiMode		game(env.pl2, env.master);
+
+				game.init(env.nbPlayers, env.width, env.height, env.wall);
 				game.run();
 			}
+/*
 			else
 			{
-				MassMultiMode	game(nbPlayers, width, height, pl2, wall);
+				MassMultiMode	game(env.pl2, env.master);
+
+				game.init(env.nbPlayers, env.width, env.height, env.wall);
 				game.run();
 			}
-		}*/
+*/
+		}
 	}
 	return (0);
 }
