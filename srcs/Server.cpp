@@ -158,11 +158,33 @@ void		Server::create_snake(S_Client **clients, int cs, char *msg)
 	clients[cs]->set_write((char *)tmp.c_str());
 }
 
+void	Server::do_cmd(S_Client **clients, int cs, char *msg)
+{
+	Player *tmp1 = clients[cs]->getPlayer1();
+	Player *tmp2 = clients[cs]->getPlayer2();
+	if (msg[0] != 'I')
+	{
+		int index = atoi(msg + 1);
+		int direc = atoi(msg + 3);
+		if (tmp1 != NULL && tmp1->getIndex() == index)
+		{
+			if (tmp1->getSizeTouch() < 3)
+				tmp1->add_touch((e_Cardinal)direc);
+		}
+		else if (tmp2 != NULL && tmp2->getIndex() == index)
+		{
+			if (tmp2->getSizeTouch() < 3)
+				tmp2->add_touch((e_Cardinal)direc);
+		}
+	}
+}
+
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
-	if (clients[cs]->getPlayer1() != NULL)
+	
+	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
-		//make change of the client snake
+		this->do_cmd(clients, cs, msg);
 		send_msg_to_all(clients, cs, msg);
 	}
 	else
