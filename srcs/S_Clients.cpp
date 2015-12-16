@@ -97,3 +97,37 @@ char		*S_Client::get_read(void)
 	b_read.bc_read(tmp_read);
 	return (tmp_read);
 }
+
+Player		*S_Client::getPlayer1(void)
+{
+	return (this->_pl1);
+}
+
+Player		*S_Client::getPlayer2(void)
+{
+	return (this->_pl2);
+}
+
+std::string	S_Client::setPlayer1(void)
+{
+	this->_pl1 = new Player(false, true);
+	int x = this->_pl1->getX();
+	int y = this->_pl1->getY();
+	e_Cardinal direc = this->_pl1->getDirec();
+	int index = this->_pl1->getIndex();
+	std::string tmp = "C_S" + std::to_string(index) + "_" + std::to_string(direc) + "_";
+	tmp += std::to_string(x) + "-" + std::to_string(y) + "\n";
+	return (tmp);
+}
+
+std::string	S_Client::setPlayer2(void)
+{
+	this->_pl2 = new Player(false, true);
+	int x = this->_pl2->getX();
+	int y = this->_pl2->getY();
+	e_Cardinal direc = this->_pl2->getDirec();
+	int index = this->_pl2->getIndex();
+	std::string tmp = "C_S" + std::to_string(index) + "_" + std::to_string(direc) + "_";
+	tmp += std::to_string(x) + "-" + std::to_string(y) + "\n";
+	return (tmp);
+}

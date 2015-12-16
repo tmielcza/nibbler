@@ -37,7 +37,8 @@ class Server
 	void		init_fd(S_Client **clients);
 	void		check_actions(S_Client **clients, int cs, char *msg);
 	void		name_client(S_Client **clients, int cs, char *msg);
-	void		send_msg_to_all(S_Client **clients,int cs, char *msg);
+	void		create_snake(S_Client **clients, int cs, char *msg);
+	void		send_msg_to_all(S_Client **clients,int cs, const char *msg);
 	void		check_fd(S_Client **clients);
 	void		init_clt(void);
 	void		init_clt(S_Client **clients);
@@ -46,6 +47,7 @@ class Server
 	S_Client	**getClients(void);
 	int			disconnection(void);
 	int			getLimit(void);
+	int			getMaxFD(void);
 
 };
 

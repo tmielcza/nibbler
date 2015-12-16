@@ -30,6 +30,7 @@ class Player
 
 	Player(void);
 	Player(bool pl2, bool local);
+	Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local);
 	Player(Snake *snake);
 	Player(const Player & copy);
 	~Player(void);
@@ -42,6 +43,8 @@ class Player
 	int			getSizeTouch(void);
 	int			getX(void);
 	int			getY(void);
+	e_Cardinal	getDirec(void);
+	int			getIndex(void);
 
 };
 

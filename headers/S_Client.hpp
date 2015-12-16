@@ -48,6 +48,11 @@ class S_Client
 	int				get_type(void);
 	void			set_write(char *tmp);
 	char			*get_read(void);
+	Player			*getPlayer1(void);
+	Player			*getPlayer2(void);
+	std::string		setPlayer1(void);
+	std::string		setPlayer2(void);
+
 };
 
 #endif

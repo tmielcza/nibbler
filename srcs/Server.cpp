@@ -11,7 +11,6 @@ Server::Server(int port)
 	}
 	this->max_fd = rlp.rlim_cur;
 	init_srv(port);
-//	init_clt(this->clients);
 }
 
 Server::~Server(void)
@@ -85,7 +84,7 @@ void     Server::connection(S_Client **clients)
 	}
 	std::cout << "Client : " << cs << " connected." << std::endl;
 	clients[cs]->set_type(CLT_FD);
-	clients[cs]->set_write((char *)"Veuillez entrer un pseudo :");
+	clients[cs]->set_write((char *)"C_co");
 }
 
 void	Server::init_fd(S_Client **clients)
@@ -112,7 +111,7 @@ void	Server::init_fd(S_Client **clients)
 }
 
 
-void	Server::send_msg_to_all(S_Client **clients, int cs, char *msg)
+void	Server::send_msg_to_all(S_Client **clients, int cs, const char *msg)
 {
 	std::string	name;
 	char		buf[BC_SIZE];
@@ -151,12 +150,23 @@ void	Server::name_client(S_Client **clients, int cs, char *msg)
 	clients[cs]->set_name(name);
 }
 
+void		Server::create_snake(S_Client **clients, int cs, char *msg)
+{
+	std::string tmp = clients[cs]->setPlayer1();
+	if (msg[0] == 2)
+		tmp += clients[cs]->setPlayer2();
+	clients[cs]->set_write((char *)tmp.c_str());
+}
+
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
-	if (clients[cs]->is_named() == 1)
+	if (clients[cs]->getPlayer1() != NULL)
+	{
+		//make change of the client snake
 		send_msg_to_all(clients, cs, msg);
+	}
 	else
-		name_client(clients, cs, msg);
+		create_snake(clients, cs, msg);
 }
 
 void	Server::check_fd(S_Client **clients)
@@ -213,4 +223,9 @@ S_Client	**Server::getClients(void)
 int			Server::getLimit(void)
 {
 	return this->max_fd;
+}
+
+int			Server::getMaxFD(void)
+{
+	return (this->max_fd);
 }

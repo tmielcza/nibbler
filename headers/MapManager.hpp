@@ -45,6 +45,7 @@ class MapManager
 	std::list<Food*>	_foods;
 	std::list<ABonus*>	_bonus;
 	std::list<Wall*>	_walls;
+	std::string			_tosend;
 	bool				_berase;
 	int					_nbPlayer;
 	int					_width;
@@ -80,6 +81,7 @@ class MapManager
 	void				setSnake(Snake *snake);
 	void				update(double time);
 	void				restart(void);
+	std::string			takeToSend(void);
 
 };
 

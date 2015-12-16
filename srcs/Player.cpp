@@ -17,21 +17,37 @@
 Player::Player(void)
 {
 	std::cout << "Creating Player !" << std::endl;
-	this->_Snake = new Snake();
 	this->_pl2 = false;
 	this->_local = true;
 	this->_time = 0;
+	this->_Snake = new Snake();
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
 Player::Player(bool pl2, bool local)
 {
 	std::cout << "Creating Player !" << std::endl;
-	this->_Snake = new Snake();
 	this->_pl2 = pl2;
 	this->_local = local;
 	this->_time = 0;
-	MapManager::Instance().setSnake(this->_Snake);
+	if (this->_local == true)
+	{
+		this->_Snake = new Snake(local);
+		MapManager::Instance().setSnake(this->_Snake);
+	}
+}
+
+Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local)
+{
+	std::cout << "Creating Player !" << std::endl;
+	this->_pl2 = pl2;
+	this->_local = local;
+	this->_time = 0;
+	if (this->_local == true)
+	{
+		this->_Snake = new Snake(direc, x, y, index, local);
+		MapManager::Instance().setSnake(this->_Snake);
+	}
 }
 
 Player::Player(Snake *snake)
@@ -85,7 +101,7 @@ void		Player::update(double time)
 {
 	std::list<e_Cardinal>::iterator		tuchs = this->_lastInputs.begin();
 	std::list<e_Cardinal>::iterator		end = this->_lastInputs.end();
-
+	
 	this->_time += (time * this->_Snake->getSpeed());
 	if (this->_time >= 1)
 	{
@@ -132,4 +148,14 @@ int			Player::getX(void)
 int			Player::getY(void)
 {
 	return (this->_Snake->getHeadSnakeY());
+}
+
+e_Cardinal	Player::getDirec(void)
+{
+	return (this->_Snake->getHeadSnakeDirec());
+}
+
+int			Player::getIndex(void)
+{
+	return (this->_Snake->getIndex());
 }

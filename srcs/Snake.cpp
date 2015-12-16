@@ -23,11 +23,24 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_alive = true;
+	this->_local = true;
 	this->_increm = 0.35;
 	this->init();
 }
 
-Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
+Snake::Snake(bool local) : _index(Snake::_curIndex++)
+{
+	std::cout << "Creating Snake !! ";
+	this->_score = 0;
+	this->_nbmove = 0;
+	this->_speed = 4;
+	this->_alive = true;
+	this->_local = local;
+	this->_increm = 0.35;
+	this->init();
+}
+
+Snake::Snake(e_Cardinal direction, int x, int y, bool local, int index) : _index(index)
 {
 	std::cout << "Creating Snake !! ";
 	this->_score = 0;
@@ -36,6 +49,7 @@ Snake::Snake(e_Cardinal direction, int x, int y) : _index(Snake::_curIndex++)
 	this->_increm = 0.35;
 	this->init(direction, x, y);
 	this->_alive = true;
+	this->_local = local;
 }
 
 Snake::~Snake(void)
@@ -325,7 +339,7 @@ void							Snake::eat(Food const & eaten)
 		this->_increm -= 0.01;
 	if (this->_increm < 0.05)
 		this->_increm = 0.05;
-	if (eaten.getSpawner() == true)
+	if (this->_local == true && eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
 	if (this->_nbmove > 2)

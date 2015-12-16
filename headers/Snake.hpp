@@ -38,6 +38,7 @@ class Snake
 	double						_speed;
 	double						_increm;
 	bool						_alive;
+	bool						_local;
 
 	Snake(Snake const & copy);
 
@@ -47,7 +48,8 @@ class Snake
 	public:
 
 	Snake(void);
-	Snake(e_Cardinal direction, int x, int y);
+	Snake(bool local);
+	Snake(e_Cardinal direction, int x, int y, bool local, int index);
 	~Snake(void);
 
 	void						init(void);

@@ -12,6 +12,7 @@
 
 #include "GameManager.hpp"
 #include "AEntity.hpp"
+#include "Player.hpp"
 
 GameManager::GameManager(void)
 {
@@ -32,13 +33,13 @@ GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 	this->_massif = massif;
 	this->_master = master;
 	this->_leave = false;
-	this->_me = new Player();
+	this->_me = new Player(false, master);
 	this->_curPL = 1;
 	this->_pl2 = pl2;
 	if (pl2 == true)
 	{
 		this->_curPL++;
-		this->_me2 = new Player();
+		this->_me2 = new Player(true, master);
 	}
 	else
 		this->_me2 = NULL;
@@ -204,11 +205,30 @@ void		GameManager::update(double time)
 		this->_me2->update(time);
 	if (this->_multi == true)
 	{
-		while (pl != end)
+		if (this->_master == true)
 		{
-			//(*pl)->updateSocketRcv();
-			//(*pl)->updateSocketSend();
-			(*pl)->update(time);
+			const char *tmp = MapManager::Instance().takeToSend().c_str();
+			this->_serv->send_msg_to_all(this->_clients, -1, tmp);
+			for (int i = 0; i < this->_serv->getMaxFD(); i++)
+			{
+				if (this->_clients[i]->get_type() == CLT_FD)
+				{
+					Player *tmp1;
+					Player *tmp2;
+					if ((tmp1 = this->_clients[i]->getPlayer1()) != NULL)
+						tmp1->update(time);
+					if ((tmp2 = this->_clients[i]->getPlayer2()) != NULL)
+						tmp2->update(time);
+				}
+			}
+		}
+		else
+		{
+			while (pl != end)
+			{
+				(*pl)->update(time);
+				pl++;
+			}
 		}
 	}
 }
