@@ -22,6 +22,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
+	this->_slow = 0.;
 	this->_alive = true;
 	this->_local = true;
 	this->_increm = 0.35;
@@ -37,6 +38,7 @@ Snake::Snake(bool local) : _index(Snake::_curIndex++)
 	this->_alive = true;
 	this->_local = local;
 	this->_increm = 0.35;
+	this->_slow = 0.;
 	this->init();
 }
 
@@ -253,7 +255,7 @@ void							Snake::move(void)
 			if (x < 0)
 				x = MapManager::Instance().getWidth() - 1;
 			(*seg)->setX(x);
-	}
+		}
 		MapManager::Instance()._Map[x][y] = (*seg);
 		seg++;
 		while (seg != end)
@@ -264,6 +266,17 @@ void							Snake::move(void)
 			MapManager::Instance()._Map[tmp.getX()][tmp.getY()] = (*seg);
 			tmp = tmp2;
 			seg++;
+		}
+		if (this->_slow > 0)
+		{
+			double tmp = this->_slow / 10;
+			this->_slow -= tmp;
+			this->_speed += tmp;
+			if (this->_slow <= 0.01)
+			{
+				this->_speed += this->_slow;
+				this->_slow = 0;
+			}
 		}
 	}
 }
@@ -426,7 +439,9 @@ void							Snake::update_directions(void)
 
 void		Snake::Slow(double less)
 {
-	this->_speed -= ((this->_speed / 100) * less);
+	double tmp = ((this->_speed / 100) * less);
+	this->_slow = tmp / 2;
+	this->_speed -= tmp;
 }
 
 void		Snake::Cut(size_t less)

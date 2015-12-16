@@ -36,6 +36,7 @@ class Snake
 	int							_nbmove;
 	int						 	_score;
 	double						_speed;
+	double						_slow;
 	double						_increm;
 	bool						_alive;
 	bool						_local;
