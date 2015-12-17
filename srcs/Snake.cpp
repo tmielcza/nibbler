@@ -269,7 +269,7 @@ void							Snake::move(void)
 		}
 		if (this->_slow > 0)
 		{
-			double tmp = this->_slow / 10;
+			double tmp = this->_slow / 100 * 5;
 			this->_slow -= tmp;
 			this->_speed += tmp;
 			if (this->_slow <= 0.01)
@@ -364,6 +364,7 @@ void							Snake::take_bonus(ABonus & taken)
 {
 	taken.taken(*this);
 	this->_nbmove = 0;
+	GraphicsManager::Instance().setFoodMode(true);
 }
 
 e_Cardinal						Snake::getHeadSnakeDirec(void)

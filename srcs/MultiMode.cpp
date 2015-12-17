@@ -101,12 +101,11 @@ void			MultiMode::run(void)
 
 	std::cout << "Wait until everybody is here : ";
 	std::cout << this->_game->getCurPL() << "/" << this->_nbPlayers << std::endl;
-	while (this->_game->getCurPL() < this->_nbPlayers)
+	while ((this->_game->getCurPL() + this->_game->getServPL()) < this->_nbPlayers)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
-//		if (this->_master == true)
-//			this->_game->Server_connection();
+		this->_game->Server_Check(true);
 	}
 	std::cout << "Enter in while" << std::endl;
 	if (this->_master == true)
@@ -121,7 +120,7 @@ void			MultiMode::run(void)
 			if (this->_master == true)
 			{
 				delta = this->_game->deltaTime();
-//				this->_game->Server_Check(delta);
+				this->_game->Server_Check(false);
 			}
 			this->_game->update(delta);
 			MapManager::Instance().update(delta);

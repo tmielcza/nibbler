@@ -60,7 +60,8 @@ class GameManager
 	void			update(double time);
 	void			restart(void);
 	int				getCurPL(void);
-	void			Server_Check(void);
+	int				getServPL(void);
+	void			Server_Check(bool co);
 
 };
 

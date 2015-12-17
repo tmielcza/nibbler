@@ -22,6 +22,7 @@ class Server
 	int                 max_fd; //maximum fd available
 	int					fd_max; //maximum fd set
 	int					r;
+	int					nbPlayers;
 	S_Client			**clients;
 	struct sockaddr_in  sockserver;
 
@@ -32,7 +33,7 @@ class Server
 	public:
 	Server(int port);
 	~Server(void);
-	int			run_serv(void);
+	int			run_serv(bool co);
 	void		connection(S_Client **clients);
 	void		init_fd(S_Client **clients);
 	void		check_actions(S_Client **clients, int cs, char *msg);
@@ -41,6 +42,7 @@ class Server
 	void		create_snake(S_Client **clients, int cs, char *msg);
 	void		send_msg_to_all(S_Client **clients,int cs, const char *msg);
 	void		check_fd(S_Client **clients);
+	void		check_fd_noCo(S_Client **clients);
 	void		init_clt(void);
 	void		init_clt(S_Client **clients);
 	void		init_srv(int port);
@@ -49,6 +51,7 @@ class Server
 	int			disconnection(void);
 	int			getLimit(void);
 	int			getMaxFD(void);
+	int			getNbPlayers(void);
 
 };
 

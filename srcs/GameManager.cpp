@@ -255,7 +255,12 @@ int				GameManager::getCurPL(void)
 	return (this->_curPL);
 }
 
-void			GameManager::Server_Check(void)
+void			GameManager::Server_Check(bool co)
 {
-	this->_serv->run_serv();
+	this->_serv->run_serv(co);
+}
+
+int				GameManager::getServPL(void)
+{
+	return (this->_serv->getNbPlayers());
 }

@@ -11,6 +11,7 @@ Server::Server(int port)
 	}
 	this->max_fd = rlp.rlim_cur;
 	init_srv(port);
+	this->nbPlayers = 0;
 }
 
 Server::~Server(void)
@@ -152,9 +153,13 @@ void	Server::name_client(S_Client **clients, int cs, char *msg)
 
 void		Server::create_snake(S_Client **clients, int cs, char *msg)
 {
+	this->nbPlayers++;
 	std::string tmp = clients[cs]->setPlayer1();
 	if (msg[0] == 2)
+	{
 		tmp += clients[cs]->setPlayer2();
+		this->nbPlayers++;
+	}
 	clients[cs]->set_write((char *)tmp.c_str());
 }
 
@@ -217,7 +222,32 @@ void	Server::check_fd(S_Client **clients)
 	}
 }
 
-int		Server::run_serv(void)
+void	Server::check_fd_noCo(S_Client **clients)
+{
+	int		i;
+	char	*msg;
+
+	i = 0;
+	while (i < fd_max)
+	{
+		if (clients[i]->get_type() != FREE_FD)
+		{
+			if (FD_ISSET(i, &fd_read) != 0)
+			{
+				if ((msg = clients[i]->c_receive()) != NULL)
+					check_actions(clients, i, msg);
+			}
+			else if (FD_ISSET(i, &fd_write) != 0)
+				clients[i]->c_send();
+			if (FD_ISSET(i, &fd_read) != 0 || FD_ISSET(i, &fd_write) != 0)
+				r--;
+		}
+		i++;
+	}
+}
+
+
+int		Server::run_serv(bool co)
 {
 	int		r;
 	struct timeval	waitd;
@@ -226,9 +256,10 @@ int		Server::run_serv(void)
 	init_fd(this->clients);
 	r = select(fd_max, &fd_read, &fd_write, NULL, NULL);
 	std::cout << "Salut" << std::endl;
-//	if (r == -1)
-//		return (-1);
-	check_fd(this->clients);
+	if (co == true)
+		check_fd(this->clients);
+	else
+		check_fd_noCo(this->clients);
 	return (1);
 }
 
@@ -250,4 +281,9 @@ int			Server::getLimit(void)
 int			Server::getMaxFD(void)
 {
 	return (this->max_fd);
+}
+
+int			Server::getNbPlayers(void)
+{
+	return (this->nbPlayers);
 }
