@@ -29,6 +29,7 @@ typedef struct		s_env
 	bool	master;
 	int		nbPlayers;
 	int		port;
+	char	*addr;
 }					t_env;
 
 void	check_args(int ac, char **av, t_env *env)
@@ -63,12 +64,14 @@ void	check_args(int ac, char **av, t_env *env)
 			i++;
 			env->master = false;
 			env->solo = false;
+			env->addr = av[i];
 		}
 		else if (strcmp(av[i], "-port") == 0)
 		{
 			i++;
 			env->solo = false;
 			env->port = atoi(av[i]);
+			std::cout << "Port : " << env->port << std::endl;
 			if (env->port < 1024 || env->port >= 49151)
 			{
 				std::cout << "Error : port ins't valide." << std::endl;
@@ -170,24 +173,29 @@ int		main(int ac, char **av)
 			game.run();
 		}
 		else if (env.solo == false &&
-				 ((env.pl2 == false && env.nbPlayers > 1) || env.nbPlayers > 2))
+				 (((env.pl2 == false && env.nbPlayers > 1) || env.nbPlayers > 2) ||
+				 env.master == false))
 		{
-			if (env.nbPlayers <= 10)
+			if (env.master == true)
 			{
-				MultiMode		game(env.pl2, env.master);
+				MultiMode		game(env.pl2, env.port);
 
-				game.init(env.nbPlayers, env.width, env.height, env.wall);
+				std::cout << "Starting MultiMode" << std::endl;
+
+				game.init_serv(env.nbPlayers, env.width, env.height, env.wall);
 				game.run();
 			}
-/*
 			else
 			{
-				MassMultiMode	game(env.pl2, env.master);
+				MultiMode		game(env.pl2, env.addr, env.port);
 
-				game.init(env.nbPlayers, env.width, env.height, env.wall);
+				game.init_clt();
 				game.run();
 			}
-*/
+		}
+		else
+		{
+			std::cout << "Veuillez entrer un nombre max de Player pour le server." << std::endl;
 		}
 	}
 	return (0);

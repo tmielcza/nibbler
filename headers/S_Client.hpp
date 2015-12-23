@@ -52,6 +52,7 @@ class S_Client
 	Player			*getPlayer2(void);
 	std::string		setPlayer1(void);
 	std::string		setPlayer2(void);
+	bool			getPL2(void);
 
 };
 

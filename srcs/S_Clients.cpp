@@ -26,6 +26,7 @@ void	S_Client::c_send(void)
 
 	b_write.bc_read(tmp_write);
 	i = strlen(tmp_write);
+	std::cout << "Sending to " << this->sock << " : " << this->tmp_write << std::endl;
 	send(sock, tmp_write, i, 0);
 	bzero(tmp_write, i + 1);
 }
@@ -116,7 +117,7 @@ std::string	S_Client::setPlayer1(void)
 	e_Cardinal direc = this->_pl1->getDirec();
 	int index = this->_pl1->getIndex();
 	std::string tmp = "C_S" + std::to_string(index) + "_" + std::to_string(direc) + "_";
-	tmp += std::to_string(x) + "-" + std::to_string(y) + "\n";
+	tmp += std::to_string(x) + "-" + std::to_string(y);
 	return (tmp);
 }
 
@@ -128,6 +129,13 @@ std::string	S_Client::setPlayer2(void)
 	e_Cardinal direc = this->_pl2->getDirec();
 	int index = this->_pl2->getIndex();
 	std::string tmp = "C_S" + std::to_string(index) + "_" + std::to_string(direc) + "_";
-	tmp += std::to_string(x) + "-" + std::to_string(y) + "\n";
+	tmp += std::to_string(x) + "-" + std::to_string(y);
 	return (tmp);
+}
+
+bool		S_Client::getPL2(void)
+{
+	if (this->_pl2 != NULL)
+		return (true);
+	return (false);
 }

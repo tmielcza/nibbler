@@ -47,6 +47,7 @@ class MapManager
 	std::list<Wall*>	_walls;
 	std::string			_tosend;
 	bool				_berase;
+	bool				_wall;
 	int					_nbPlayer;
 	int					_width;
 	int					_height;
@@ -68,9 +69,11 @@ class MapManager
 	void				foodpop(bool spawner);
 	void				foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode);
 	void				foodpop(Point center, int radius, bool spawner, e_PopMode mode);
+	void				foodpop(int x, int y);
 	void				foodepop(int x, int y);
 	void				bonuspop(void);
 	void				bonuspop(int b);
+	void				bonuspop(int b, int x, int y, int r2);
 	void				bonusdepop(int x, int y);
 	void				add_Bonus(ABonus *bonus);
 	int					getBonusnb(void);
@@ -82,6 +85,8 @@ class MapManager
 	void				update(double time);
 	void				restart(void);
 	std::string			takeToSend(void);
+	bool				getWall(void);
+	void				setWall(bool wall);
 
 };
 

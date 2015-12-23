@@ -19,6 +19,7 @@
 # include "GraphicsManager.hpp"
 # include "Player.hpp"
 # include "Server.hpp"
+# include "Client.hpp"
 # include "S_Client.hpp"
 
 typedef std::chrono::high_resolution_clock Clock;
@@ -35,9 +36,10 @@ class GameManager
 	bool					_multi;
 	bool					_massif;
 	bool					_leave;
+	bool					_wall;
 	int						_curPL;
-//	Client					*_client;
-	std::list<Player*>		_players;
+	Client					*_client;
+	std::list<Player*>		*_players;
 	Server					*_serv;
 	S_Client				**_clients;
 	Player					*_me;
@@ -53,15 +55,22 @@ class GameManager
 	GameManager	&	operator=(const GameManager & ass);
 
 	double			deltaTime(void);
-	void			init(int nbplayer, int width, int height);
-	void			init(int nbplayer, int width, int height, int port);
+	void			init(int nbplayer, int width, int height, bool wall);
+	void			init_tcp(char *addr, int port);
 	bool			IsAlive(void);
 	bool			leaving(void);
 	void			update(double time);
 	void			restart(void);
 	int				getCurPL(void);
 	int				getServPL(void);
+	int				getCltPL(void);
 	void			Server_Check(bool co);
+	void			Client_Check(void);
+	bool			Client_init(void);
+	void			init_from_clt(void);
+	void			Bring_Serv_Clients(void);
+	void			Bring_Client_Serv(void);
+	void			setPlayertoServ(void);
 
 };
 

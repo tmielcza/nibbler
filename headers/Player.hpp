@@ -24,7 +24,7 @@ class Player
 	std::list<e_Cardinal>	_lastInputs;
 	double					_time;
 	bool					_local;
-	bool					_pl2;
+	bool					_pl2;	
 
 	public:
 
@@ -45,6 +45,7 @@ class Player
 	int			getY(void);
 	e_Cardinal	getDirec(void);
 	int			getIndex(void);
+	bool		getPL2(void);
 
 };
 

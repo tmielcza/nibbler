@@ -23,7 +23,7 @@ DuoMode::DuoMode(void)
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(true);
 	this->_game = new GameManager(true, false, false, true);
-	this->_game->init(this->_nbPlayers, this->_width, this->_height);
+	this->_game->init(this->_nbPlayers, this->_width, this->_height, true);
 }
 
 DuoMode::DuoMode(bool wall)
@@ -37,7 +37,7 @@ DuoMode::DuoMode(bool wall)
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
 	this->_game = new GameManager(true, false, false, true);
-	this->_game->init(this->_nbPlayers, this->_width, this->_height);
+	this->_game->init(this->_nbPlayers, this->_width, this->_height, wall);
 }
 
 DuoMode::DuoMode(const DuoMode & src)
@@ -56,7 +56,7 @@ DuoMode::DuoMode(int nbplayers, int width, int height, bool wall)
 	MapManager::Instance().init(this->_nbPlayers, this->_width, this->_height);
 	this->init(wall);
 	this->_game = new GameManager(true, false, false, true);
-	this->_game->init(this->_nbPlayers, this->_width, this->_height);
+	this->_game->init(this->_nbPlayers, this->_width, this->_height, wall);
 }
 
 DuoMode::~DuoMode(void)

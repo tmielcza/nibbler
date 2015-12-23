@@ -25,13 +25,19 @@ class Server
 	int					nbPlayers;
 	S_Client			**clients;
 	struct sockaddr_in  sockserver;
+	bool				_wall;
+	int					_width;
+	int					_height;
+	int					_maxPlayer;
+	Player				*_me1;
+	Player				*_me2;
 
 	Server(void);
 	Server(const Server & src);
 	Server	&	operator=(const Server & src);
 	
 	public:
-	Server(int port);
+	Server(int port, bool wall, int width, int height, int maxPlayer);
 	~Server(void);
 	int			run_serv(bool co);
 	void		connection(S_Client **clients);
@@ -52,6 +58,7 @@ class Server
 	int			getLimit(void);
 	int			getMaxFD(void);
 	int			getNbPlayers(void);
+	void		setPlayers(Player *me1, Player *me2);
 
 };
 

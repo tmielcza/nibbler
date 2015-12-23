@@ -30,11 +30,8 @@ Player::Player(bool pl2, bool local)
 	this->_pl2 = pl2;
 	this->_local = local;
 	this->_time = 0;
-	if (this->_local == true)
-	{
-		this->_Snake = new Snake(local);
-		MapManager::Instance().setSnake(this->_Snake);
-	}
+	this->_Snake = new Snake(local);
+	MapManager::Instance().setSnake(this->_Snake);
 }
 
 Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local)
@@ -43,11 +40,8 @@ Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local)
 	this->_pl2 = pl2;
 	this->_local = local;
 	this->_time = 0;
-	if (this->_local == true)
-	{
-		this->_Snake = new Snake(direc, x, y, index, local);
-		MapManager::Instance().setSnake(this->_Snake);
-	}
+	this->_Snake = new Snake(direc, x, y, index, local);
+	MapManager::Instance().setSnake(this->_Snake);
 }
 
 Player::Player(Snake *snake)
@@ -158,4 +152,9 @@ e_Cardinal	Player::getDirec(void)
 int			Player::getIndex(void)
 {
 	return (this->_Snake->getIndex());
+}
+
+bool		Player::getPL2(void)
+{
+	return (this->_pl2);
 }

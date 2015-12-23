@@ -25,7 +25,7 @@ SRC =	ABonus.cpp AEntity.cpp Food.cpp GameManager.cpp Player.cpp \
 		GraphicsManager.cpp MapManager.cpp Point.cpp Segment.cpp Snake.cpp \
 		Wall.cpp AGameMode.cpp SoloMode.cpp main.cpp SuperFood.cpp \
 		MultiFood.cpp ChasedFood.cpp CutBonus.cpp SlowBonus.cpp DuoMode.cpp \
-		MultiMode.cpp Server.cpp S_Clients.cpp Buff_Circle.cpp
+		MultiMode.cpp Server.cpp S_Clients.cpp Buff_Circle.cpp Client.cpp
 
 OBJ = $(SRC:%.cpp=$(DIROBJ)%.o)
 

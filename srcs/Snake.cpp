@@ -101,7 +101,7 @@ void							Snake::init(void)
 
 	while (check_place_snake(x, y) == false)
 		y = rand() % height;
-	std::cout << "at : " << x << "-" << y << std::endl;
+	std::cout << this->_index <<  " at : " << x << "-" << y << std::endl;
 	this->init(East, x, y);
 }
 

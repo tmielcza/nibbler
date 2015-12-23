@@ -23,7 +23,7 @@ class MultiMode : public AGameMode
 	bool			_master;
 	bool			_pl2;
 	int				_port;
-//	std::string		_addr;
+	char			*_addr;
 
 	MultiMode(bool pl2, int port, std::string addr);
 	bool			check_end(void);
@@ -32,12 +32,14 @@ class MultiMode : public AGameMode
 
 	MultiMode(void);
 	MultiMode(bool pl2, int port);
+	MultiMode(bool pl2, char *addr, int port);
 	MultiMode(const MultiMode & src);
 	~MultiMode(void);
 
 	MultiMode	&	operator=(const MultiMode & src);
 
-	void			init(int nbPlayers, int width, int height, bool wall);
+	void			init_serv(int nbPlayers, int width, int height, bool wall);
+	void			init_clt(void);
 	void			run(void);
 
 };
