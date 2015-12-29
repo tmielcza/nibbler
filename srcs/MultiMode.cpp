@@ -96,8 +96,6 @@ void			MultiMode::init_clt(void)
 			GraphicsManager::Instance().display();
 		}
 		this->_game->Client_Check();
-		std::cout << "Wait until everybody is here : ";
-		std::cout << this->_game->getCurPL() << "/" << this->_nbPlayers << std::endl;
 	}
 	std::cout << "Wait until everybody is here : ";
 	std::cout << this->_game->getCurPL() << "/" << this->_nbPlayers << std::endl;
@@ -135,9 +133,10 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
 		this->_game->Server_Check(true);
-		std::cout << "Wait until everybody is here : ";
-		std::cout << this->_game->getCurPL() << "/" << this->_nbPlayers << std::endl;
 	}
+		std::cout << "Wait until everybody is here : ";
+		std::cout << "(" << this->_game->getCurPL() << " + " << this->_game->getServPL();
+		std::cout << ")/" << this->_nbPlayers << std::endl;
 }
 
 bool			MultiMode::check_end(void)

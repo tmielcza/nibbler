@@ -220,6 +220,7 @@ void	MapManager::bonuspop(int b)
 {
 	int x = rand() % this->_width;
 	int y = rand() % this->_height;
+
 	while (this->_Map[x][y] != NULL)
 	{
 		x = rand() % this->_width;

@@ -73,4 +73,6 @@ class Client
 
 };
 
+char				**ft_strtab(char *str);
+
 #endif

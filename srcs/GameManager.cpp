@@ -43,21 +43,23 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-	std::list<Player *>::iterator		pl = this->_players->begin();
-	std::list<Player *>::iterator		end = this->_players->end();
-
-	while (pl != end)
+	if (this->_players != NULL)
 	{
+		std::list<Player *>::iterator		pl = this->_players->begin();
+		std::list<Player *>::iterator		end = this->_players->end();
+		
+		while (pl != end)
+		{
 		Player *del = *pl;
 		this->_players->erase(pl);
 		pl = this->_players->begin();
 		delete del;
+		}
+		if (this->_me != NULL)
+			delete this->_me;
+		if (this->_me2 != NULL)
+			delete this->_me2;
 	}
-	if (this->_me != NULL)
-		delete this->_me;
-	if (this->_me2 != NULL)
-		delete this->_me2;
-
 	std::cout << "Destroying GameManager !" << std::endl;
 }
 
@@ -298,8 +300,6 @@ void			GameManager::init_from_clt(void)
 	this->_nbPlayer = maxPlayer;
 	this->_width = width;
 	this->_height = height;
-	GraphicsManager::setLib(sfml, this->_width, this->_height);
-	MapManager::Instance().init(this->_nbPlayer, this->_width, this->_height);
 	if (wall == true)
 	{
 		for (int i = 0; i < height; i++)

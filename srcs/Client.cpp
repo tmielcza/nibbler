@@ -1,5 +1,6 @@
 #include "Client.hpp"
 #include "MapManager.hpp"
+#include "GraphicsManager.hpp"
 
 Client::Client(void)
 {
@@ -133,8 +134,14 @@ void		Client::Snake_direc(char *tmp)
 
 void		Client::popFood(char *tmp)
 {
-	int		x = atoi(tmp + 3);
-	int		y = atoi(tmp + 5);
+	int		i = 0;
+	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+		i++;
+	int x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	int y = atoi(tmp + i);
 	MapManager::Instance().foodpop(x, y);
 }
 
@@ -174,6 +181,7 @@ void		Client::init_Game(char *tmp)
 {
 	int			i = 3;
 	
+	std::cout << "Sentances : " << tmp << "." << std::endl;
 	this->_wall = (bool)atoi(tmp + 4);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
@@ -187,6 +195,8 @@ void		Client::init_Game(char *tmp)
 		i++;
 	i++;
 	this->_maxPlayer = atoi(tmp + i);
+	GraphicsManager::setLib(sfml, this->_width, this->_height);
+	MapManager::Instance().init(this->_maxPlayer, this->_width, this->_height);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
@@ -219,11 +229,9 @@ void		Client::init_Game(char *tmp)
 	{
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
-		if (tmp[i] != '\0')
-			i++;
-		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
-			   i++;
 		i++;
+		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+			i++;
 		index = atoi(tmp + i);
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
@@ -250,19 +258,28 @@ void		Client::init_Game(char *tmp)
 	{
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
-		i++;
+		if (tmp[i] != '\0')
+			i++;
 		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 			i++;
 		index = atoi(tmp + i);
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
+		if (tmp[i] != '\0')
+			i++;
 		direc = atoi(tmp + i);
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
 			i++;
 		x = atoi(tmp + i);
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
+		if (tmp[i] != '\0')
+			i++;
 		y = atoi(tmp + i);
+		if (tmp[i] != '\0')
+			i++;
 		std::cout << "Snake Other index : " << index << std::endl;
 		std::cout << "Snake Direc : " << direc << std::endl;
 		std::cout << "PosX : " << x << std::endl;
@@ -270,6 +287,8 @@ void		Client::init_Game(char *tmp)
 		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false);
 		this->_players.push_back(clt);
 		this->_nbPlayer++;
+		std::cout << "NbPlayer : " << this->_nbPlayer << std::endl;
+		std::cout << "Char : " << (int)tmp[i] << std::endl;
 	}
 	this->_init = true;
 }
@@ -311,7 +330,16 @@ void		Client::receive_data(void)
 		if (this->b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
-			make_cmd(tmp_read);
+			std::cout << "Receive : " << this->tmp_read;;
+			char **tab = ft_strtab(tmp_read);
+			for (int i = 0; tab[i] != NULL; i++)
+			{
+				if (tab[i] != NULL && tab[i][0] != '\0')
+				{
+					std::cout << "CMD : " << tab[i] << std::endl;
+					make_cmd(tab[i]);
+				}
+			}
 		}
 	}
 }
@@ -370,4 +398,35 @@ Player				*Client::getPlayer1(void)
 Player				*Client::getPlayer2(void)
 {
 	return (this->_me2);
+}
+
+char				**ft_strtab(char *str)
+{
+	char			**tab;
+	int				i = 0;
+	int				j = 0;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+			j++;
+		i++;
+	}
+	i = 0;
+	tab = (char **)malloc(sizeof(char *) * (j + 1));
+	j = 1;
+	tab[0] = str;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n' && str[i + 1] != '\0' && str[i + 1] != '\n')
+		{
+			str[i] = '\0';
+			std::cout << "My Fucking STR : " << str + i + 1 << std::endl;
+			tab[j] = str + i + 1;
+			j++;
+		}
+		i++;
+	}
+	tab[j] = NULL;
+	return (tab);
 }

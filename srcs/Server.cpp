@@ -105,7 +105,6 @@ void	Server::init_fd(S_Client **clients)
 	{
 		if (clients[i]->get_type() != FREE_FD)
 		{
-			std::cout << i << " : client." << std ::endl;
 			FD_SET(i, &(this->fd_read));
 			if (clients[i]->is_write() == 1)
 				FD_SET(i, &(this->fd_write));

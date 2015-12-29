@@ -18,7 +18,7 @@ int		Snake::_curIndex = 0;
 
 Snake::Snake(void) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !! ";
+	std::cout << "Creating Snake !! " << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
@@ -31,7 +31,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 
 Snake::Snake(bool local) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !! ";
+	std::cout << "Creating Snake !! " << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
@@ -44,7 +44,7 @@ Snake::Snake(bool local) : _index(Snake::_curIndex++)
 
 Snake::Snake(e_Cardinal direction, int x, int y, bool local, int index) : _index(index)
 {
-	std::cout << "Creating Snake !! ";
+	std::cout << "Creating Snake !! " << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
