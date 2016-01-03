@@ -84,7 +84,7 @@ class MapManager
 	void				setSnake(Snake *snake);
 	void				update(double time);
 	void				restart(void);
-	std::string			takeToSend(void);
+	char				*takeToSend(void);
 	bool				getWall(void);
 	void				setWall(bool wall);
 

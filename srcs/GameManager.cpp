@@ -208,8 +208,16 @@ void		GameManager::update(double time)
 	{
 		if (this->_master == true)
 		{
-			const char *tmp = MapManager::Instance().takeToSend().c_str();
-			this->_serv->send_msg_to_all(this->_clients, -1, tmp);
+			std::cout << "Here 1 ?" << std::endl;
+			 char *tmp = MapManager::Instance().takeToSend();
+			std::cout << "Here 2 ?" << std::endl;
+			if (tmp != NULL)
+			{
+				std::cout << "Tying TMP : ";
+				std::cout <<  tmp << std::endl;
+				this->_serv->send_msg_to_all(this->_clients, -1, tmp);
+			}
+			std::cout << "Here 3 ?" << std::endl;
 			for (int i = 0; i < this->_serv->getMaxFD(); i++)
 			{
 				if (this->_clients[i]->get_type() == CLT_FD)
@@ -300,6 +308,7 @@ void			GameManager::init_from_clt(void)
 	this->_nbPlayer = maxPlayer;
 	this->_width = width;
 	this->_height = height;
+	std::cout << "Here Player Max : " << this->_nbPlayer << std::endl;
 	if (wall == true)
 	{
 		for (int i = 0; i < height; i++)

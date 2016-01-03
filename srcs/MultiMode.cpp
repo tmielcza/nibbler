@@ -16,7 +16,7 @@ MultiMode::MultiMode(void)
 {
 	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
-	this->_nbPlayers = 4;
+	this->_nbPlayers = 400000;
 	this->_width = 50;
 	this->_height = 40;
 	this->_speed = 1;
@@ -28,7 +28,7 @@ MultiMode::MultiMode(bool pl2, int port)
 {
 	std::cout << "Creating MultiMode !" << std::endl;
 	srand(time(NULL));
-	this->_nbPlayers = 4;
+	this->_nbPlayers = 400000;
 	this->_width = 50;
 	this->_height = 40;
 	this->_speed = 1;
@@ -47,7 +47,7 @@ MultiMode::MultiMode(bool pl2, char *addr, int port)
 	this->_pl2 = pl2;
 	this->_port = port;
 	this->_addr = addr;
-	this->_nbPlayers = 2;
+	this->_nbPlayers = 400000000;
 }
 
 MultiMode::MultiMode(const MultiMode & src)
@@ -82,9 +82,9 @@ void			MultiMode::init_clt(void)
 	this->_game->init_tcp(this->_addr, this->_port);
 	std::cout << "Wait until everybody is here : ";
 	std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
-	while ((this->_game->getCltPL()) < this->_nbPlayers)
+	while (this->_game->getCltPL() < this->_nbPlayers)
 	{
-		if (this->_game->Client_init() == true && i == 0)
+		if (this->_game->Client_init() == true)
 		{
 			if (i == 0)
 			{
@@ -98,7 +98,7 @@ void			MultiMode::init_clt(void)
 		this->_game->Client_Check();
 	}
 	std::cout << "Wait until everybody is here : ";
-	std::cout << this->_game->getCurPL() << "/" << this->_nbPlayers << std::endl;
+	std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
 	
 }
 
@@ -147,25 +147,28 @@ bool			MultiMode::check_end(void)
 
 void			MultiMode::run(void)
 {
+	int						i = 0;
 	double					delta = 0;
 	std::list<e_Input>		inputs;
 	bool					leave = false;
 
-	std::cout << "Enter in while" << std::endl;
 	if (this->_master == true)
+	{
+		this->_game->Bring_Serv_Clients();
 		for (int i = 0; i < this->_nbPlayers; i++)
-		{
 			MapManager::Instance().foodpop(true);
-			this->_game->Bring_Serv_Clients();
-		}
+	}
 	else
 		this->_game->Bring_Client_Serv();
+	std::cout << "Enter in while" << std::endl;
 	while (this->_game->leaving() == false && leave != true)
-	{		
+	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
 		while (this->check_end())
 		{
+			i++;
+			std::cout << i << ": ";
 			delta = this->_game->deltaTime();
 			if (this->_master == true)
 				this->_game->Server_Check(false);

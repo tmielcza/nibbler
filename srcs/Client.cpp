@@ -254,12 +254,12 @@ void		Client::init_Game(char *tmp)
 	}
 	else
 		this->_me2 = NULL;
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	if (tmp[i] != '\0')
+		i++;
 	while (tmp[i] != '\0')
 	{
-		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-			i++;
-		if (tmp[i] != '\0')
-			i++;
 		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 			i++;
 		index = atoi(tmp + i);
@@ -278,8 +278,14 @@ void		Client::init_Game(char *tmp)
 		if (tmp[i] != '\0')
 			i++;
 		y = atoi(tmp + i);
-		if (tmp[i] != '\0')
+		std::cout << "Sentence : " << tmp;
+		std::cout << " Char : " << (int)tmp[i] << " or ";
+		std::cout << tmp[i] << " at " << i << " for " << strlen(tmp) << std::endl;
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
+//		if (tmp[i] != '\0')
+//			i++;
+		std::cout << "Char : " << (int)tmp[i] << " at " << i << std::endl;
 		std::cout << "Snake Other index : " << index << std::endl;
 		std::cout << "Snake Direc : " << direc << std::endl;
 		std::cout << "PosX : " << x << std::endl;
@@ -288,7 +294,6 @@ void		Client::init_Game(char *tmp)
 		this->_players.push_back(clt);
 		this->_nbPlayer++;
 		std::cout << "NbPlayer : " << this->_nbPlayer << std::endl;
-		std::cout << "Char : " << (int)tmp[i] << std::endl;
 	}
 	this->_init = true;
 }
@@ -425,6 +430,8 @@ char				**ft_strtab(char *str)
 			tab[j] = str + i + 1;
 			j++;
 		}
+		else if (str[i] == '\n')
+			str[i] = '\0';
 		i++;
 	}
 	tab[j] = NULL;
