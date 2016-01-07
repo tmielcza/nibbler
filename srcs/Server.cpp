@@ -201,11 +201,11 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 		while (msg[i] != '\0' && msg[i] >= '0' && msg[i] <='9')
 			i++;
 		i++;
-//		int x = atoi(msg + i);
+		int x = atoi(msg + i);
 		while (msg[i] != '\0' && msg[i] >= '0' && msg[i] <='9')
 			i++;
 		i++;
-//		int y = atoi(msg + i);
+		int y = atoi(msg + i);
 		while (msg[i] != '\0' && msg[i] >= '0' && msg[i] <='9')
 			i++;
 		i++;
@@ -214,12 +214,46 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 		if (tmp1 != NULL && tmp1->getIndex() == index)
 		{
 			if (tmp1->getSizeTouch() < 3)
-				tmp1->add_touch((e_Cardinal)direc);
+			{
+				if (tmp1->getSizeTouch() == 0)
+				{
+					int _x = tmp1->getX();
+					int _y = tmp1->getY();
+					if (x != _x || y != _y)
+					{
+						tmp1->setX(x);
+						tmp1->setY(x);
+						tmp1->setDirec((e_Cardinal)direc);
+						tmp1->move();
+					}
+					else
+						tmp1->add_touch((e_Cardinal)direc);
+				}
+				else
+					tmp1->add_touch((e_Cardinal)direc);
+			}
 		}
 		else if (tmp2 != NULL && tmp2->getIndex() == index)
 		{
 			if (tmp2->getSizeTouch() < 3)
-				tmp2->add_touch((e_Cardinal)direc);
+			{
+				if (tmp2->getSizeTouch() == 0)
+				{
+					int _x = tmp2->getX();
+					int _y = tmp2->getY();
+					if (x != _x || y != _y)
+					{
+						tmp2->setX(x);
+						tmp2->setY(x);
+						tmp2->setDirec((e_Cardinal)direc);
+						tmp2->move();
+					}
+					else
+						tmp2->add_touch((e_Cardinal)direc);
+				}
+				else
+					tmp2->add_touch((e_Cardinal)direc);
+			}
 		}
 	}
 }

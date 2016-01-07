@@ -141,7 +141,22 @@ void		Client::Snake_direc(char *tmp)
 			if ((*snake)->getIndex() == index)
 				if ((*snake)->getSizeTouch() < 3)
 				{
-					(*snake)->add_touch((e_Cardinal)direc);
+					if ((*snake)->getSizeTouch() == 0)
+					{
+						int _x = (*snake)->getX();
+						int _y = (*snake)->getY();
+						if (_x != x || _y != y)
+						{
+							(*snake)->setX(x);
+							(*snake)->setY(y);
+							(*snake)->setDirec((e_Cardinal)direc);
+							(*snake)->move();
+						}
+						else
+							(*snake)->add_touch((e_Cardinal)direc);
+					}
+					else
+						(*snake)->add_touch((e_Cardinal)direc);
 				}
 			snake++;
 		}
