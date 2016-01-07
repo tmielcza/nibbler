@@ -43,9 +43,13 @@ class Player
 	int			getSizeTouch(void);
 	int			getX(void);
 	int			getY(void);
+	void		setX(int x);
+	void		setY(int y);
+	void		setDirec(e_Cardinal direc);
 	e_Cardinal	getDirec(void);
 	int			getIndex(void);
 	bool		getPL2(void);
+	void		move(void);
 
 };
 

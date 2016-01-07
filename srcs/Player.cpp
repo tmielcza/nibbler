@@ -36,11 +36,11 @@ Player::Player(bool pl2, bool local)
 
 Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local)
 {
-	std::cout << "Creating Player !" << std::endl;
 	this->_pl2 = pl2;
 	this->_local = local;
 	this->_time = 0;
-	this->_Snake = new Snake(direc, x, y, index, local);
+	std::cout << "Creating Player in Player index : " << index << std::endl;
+	this->_Snake = new Snake(direc, x, y, local, index);
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
@@ -149,6 +149,21 @@ e_Cardinal	Player::getDirec(void)
 	return (this->_Snake->getHeadSnakeDirec());
 }
 
+void		Player::setX(int x)
+{
+	this->_Snake->setHeadSnakeX(x);
+}
+
+void		Player::setY(int y)
+{
+	this->_Snake->setHeadSnakeY(y);
+}
+
+void		Player::setDirec(e_Cardinal direc)
+{
+	this->_Snake->setHeadSnakeDirec(direc);
+}
+
 int			Player::getIndex(void)
 {
 	return (this->_Snake->getIndex());
@@ -157,4 +172,9 @@ int			Player::getIndex(void)
 bool		Player::getPL2(void)
 {
 	return (this->_pl2);
+}
+
+void		Player::move(void)
+{
+	this->_Snake->move();
 }

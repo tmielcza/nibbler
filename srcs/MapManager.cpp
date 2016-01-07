@@ -137,7 +137,7 @@ void	MapManager::foodpop(bool spawner)
 
 void	MapManager::foodpop(int x, int y)
 {
-	Food *f = new Food(1, x, y, false);
+	Food *f = new Food(1, x, y, true);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
 }
@@ -566,8 +566,12 @@ char				*MapManager::takeToSend(void)
 	if (this->_tosend == "")
 		return (NULL);
 	char *tmp = (char *)this->_tosend.c_str();
-	this->_tosend = "";
 	return (tmp);
+}
+
+void				MapManager::ClearToSend(void)
+{
+	this->_tosend = "";
 }
 
 bool				MapManager::getWall(void)

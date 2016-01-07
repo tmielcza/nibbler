@@ -18,7 +18,6 @@ int		Snake::_curIndex = 0;
 
 Snake::Snake(void) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !! " << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
@@ -31,7 +30,6 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 
 Snake::Snake(bool local) : _index(Snake::_curIndex++)
 {
-	std::cout << "Creating Snake !! " << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
@@ -44,7 +42,6 @@ Snake::Snake(bool local) : _index(Snake::_curIndex++)
 
 Snake::Snake(e_Cardinal direction, int x, int y, bool local, int index) : _index(index)
 {
-	std::cout << "Creating Snake !! " << std::endl;
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
@@ -101,7 +98,6 @@ void							Snake::init(void)
 
 	while (check_place_snake(x, y) == false)
 		y = rand() % height;
-	std::cout << this->_index <<  " at : " << x << "-" << y << std::endl;
 	this->init(East, x, y);
 }
 
@@ -109,6 +105,8 @@ void							Snake::init(e_Cardinal direction, int x, int y)
 {
 	Segment		*seg;
 
+	std::cout << "Creating Snake in init Index : " << this->_index;
+	std::cout << " at pos " << x << "-" << y << " direction " << direction << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (x < 0)
@@ -132,6 +130,7 @@ void							Snake::init(e_Cardinal direction, int x, int y)
 			x++;
 	}
 	this->_tail = seg;
+
 }
 
 std::list<Segment*>	&			Snake::get_snake(void)
@@ -224,7 +223,6 @@ void							Snake::move(void)
 	Point								tmp = (*seg)->getPos();
 	e_Cardinal							direc = (*seg)->get_Direc();
 
-	std::cout << "Snake " << this->_index << " Pos : " << x << "-" << y << std::endl;
 	if (this->_alive == true)
 	{
 		MapManager::Instance()._Map[x][y] = NULL;
@@ -385,6 +383,27 @@ int								Snake::getHeadSnakeY(void)
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 
 	return ((*head)->getY());
+}
+
+void							Snake::setHeadSnakeX(int x)
+{
+	std::list<Segment*>::iterator			head = this->_snake.begin();
+
+	(*head)->setX(x);
+}
+
+void							Snake::setHeadSnakeY(int y)
+{
+	std::list<Segment*>::iterator			head = this->_snake.begin();
+
+	(*head)->setY(y);
+}
+
+void							Snake::setHeadSnakeDirec(e_Cardinal direc)
+{
+	std::list<Segment*>::iterator			head = this->_snake.begin();
+
+	(*head)->set_Direc(direc);
 }
 
 int								Snake::getIndex(void)

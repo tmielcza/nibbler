@@ -5,12 +5,23 @@ S_Client::S_Client(int me)
 	sock = me;
 	bzero(tmp_read, BC_SIZE + 1);
 	bzero(tmp_write, BC_SIZE + 1);
+	this->_alive = true;
 }
 
 S_Client::~S_Client()
 {
 	bzero(tmp_read, BC_SIZE + 1);
 	bzero(tmp_write, BC_SIZE + 1);
+}
+
+void	S_Client::setAlive(bool alive)
+{
+	this->_alive = alive;
+}
+
+bool	S_Client::getAlive(void)
+{
+	return (this->_alive);
 }
 
 int		S_Client::is_write(void)
@@ -39,7 +50,7 @@ char	*S_Client::c_receive(void)
 	if (r <= 0)
 	{
 		type = FREE_FD;
-		std::cout << "S_Client : " << sock << " disconnected." << std::endl;
+		std::cout << "S_Client : " << this->sock << " disconnected." << std::endl;
 		name = "";
 		close(sock);
 	}
@@ -50,6 +61,7 @@ char	*S_Client::c_receive(void)
 		if (b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(tmp_read);
+			std::cout << "Receiving from " << this->sock << " : " << tmp_read << std::endl;
 			return (tmp_read);
 		}
 	}
@@ -109,9 +121,11 @@ Player		*S_Client::getPlayer2(void)
 	return (this->_pl2);
 }
 
-std::string	S_Client::setPlayer1(void)
+
+std::string	S_Client::setPlayer1(bool create)
 {
-	this->_pl1 = new Player(false, true);
+	if (create == true)
+		this->_pl1 = new Player(false, true);
 	int x = this->_pl1->getX();
 	int y = this->_pl1->getY();
 	e_Cardinal direc = this->_pl1->getDirec();
@@ -121,9 +135,10 @@ std::string	S_Client::setPlayer1(void)
 	return (tmp);
 }
 
-std::string	S_Client::setPlayer2(void)
+std::string	S_Client::setPlayer2(bool create)
 {
-	this->_pl2 = new Player(false, true);
+	if (create == true)
+		this->_pl2 = new Player(false, true);
 	int x = this->_pl2->getX();
 	int y = this->_pl2->getY();
 	e_Cardinal direc = this->_pl2->getDirec();
@@ -138,4 +153,26 @@ bool		S_Client::getPL2(void)
 	if (this->_pl2 != NULL)
 		return (true);
 	return (false);
+}
+
+bool		S_Client::P1IsAlive(void)
+{
+	return (this->_pl1->IsAlive());
+}
+
+bool		S_Client::P2IsAlive(void)
+{
+	return (this->_pl2->IsAlive());
+}
+
+void		S_Client::EndingP1(void)
+{
+	delete this->_pl1;
+	this->_pl1 = NULL;
+}
+
+void		S_Client::EndingP2(void)
+{
+	delete this->_pl2;
+	this->_pl2 = NULL;
 }

@@ -90,7 +90,10 @@ void			MultiMode::init_clt(void)
 			{
 				std::cout << "Init my Client." << std::endl;
 				this->_game->init_from_clt();
+				this->_nbPlayers = this->_game->getMaxPlayer();
 				i = 1;
+				std::cout << "Wait until everybody is here : ";
+				std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
 			}
 			GraphicsManager::Instance().clear();
 			GraphicsManager::Instance().display();
@@ -99,7 +102,13 @@ void			MultiMode::init_clt(void)
 	}
 	std::cout << "Wait until everybody is here : ";
 	std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
-	
+	this->_game->Bring_Client_Serv();
+	while ((time(NULL) % 6) != 0)
+	{
+		GraphicsManager::Instance().clear();
+		GraphicsManager::Instance().display();
+		this->_game->Client_Check();
+	}
 }
 
 void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
@@ -134,9 +143,18 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 		GraphicsManager::Instance().display();
 		this->_game->Server_Check(true);
 	}
-		std::cout << "Wait until everybody is here : ";
-		std::cout << "(" << this->_game->getCurPL() << " + " << this->_game->getServPL();
-		std::cout << ")/" << this->_nbPlayers << std::endl;
+	std::cout << "Wait until everybody is here : ";
+	std::cout << "(" << this->_game->getCurPL() << " + " << this->_game->getServPL();
+	std::cout << ")/" << this->_nbPlayers << std::endl;
+	this->_game->Bring_Serv_Clients();
+	for (int i = 0; i < this->_nbPlayers; i++)
+		MapManager::Instance().foodpop(true);
+	while ((time(NULL) % 6) != 0)
+	{
+		GraphicsManager::Instance().clear();
+		GraphicsManager::Instance().display();
+		this->_game->Server_Check(false);
+	}
 }
 
 bool			MultiMode::check_end(void)
@@ -147,28 +165,17 @@ bool			MultiMode::check_end(void)
 
 void			MultiMode::run(void)
 {
-	int						i = 0;
 	double					delta = 0;
 	std::list<e_Input>		inputs;
 	bool					leave = false;
 
-	if (this->_master == true)
-	{
-		this->_game->Bring_Serv_Clients();
-		for (int i = 0; i < this->_nbPlayers; i++)
-			MapManager::Instance().foodpop(true);
-	}
-	else
-		this->_game->Bring_Client_Serv();
-	std::cout << "Enter in while" << std::endl;
+	std::cout << "Enter in Game" << std::endl;
 	while (this->_game->leaving() == false && leave != true)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
 		while (this->check_end())
 		{
-			i++;
-			std::cout << i << ": ";
 			delta = this->_game->deltaTime();
 			if (this->_master == true)
 				this->_game->Server_Check(false);

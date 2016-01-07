@@ -62,7 +62,6 @@ GameManager::~GameManager(void)
 	}
 	std::cout << "Destroying GameManager !" << std::endl;
 }
-
 GameManager	&	GameManager::operator=(const GameManager & ass)
 {
 	this->_nbPlayer = ass._nbPlayer;
@@ -158,10 +157,68 @@ bool		GameManager::IsAlive(void)
 			this->_me2 = NULL;
 		}
 	}
+	if (this->_multi == true && this->_master == true)
+	{
+		int i = 0;
+		while (i < this->_serv->getMaxFD())
+		{
+			if (this->_clients[i]->get_type() == CLT_FD)
+			{
+				Player *tmp1;
+				Player *tmp2;
+				if ((tmp1 = this->_clients[i]->getPlayer1()) != NULL)
+				{
+					if (this->_clients[i]->P1IsAlive() == true)
+						test = true;
+					else
+					{
+						this->_clients[i]->EndingP1();
+						if (this->_clients[i]->getPlayer2() == NULL)
+							this->_clients[i]->setAlive(false);
+					}
+				}
+				if ((tmp2 = this->_clients[i]->getPlayer2()) != NULL)
+				{
+					if (this->_clients[i]->P2IsAlive() == true)
+						test = true;
+					else
+					{
+						this->_clients[i]->EndingP2();
+						if (this->_clients[i]->getPlayer1() == NULL)
+							this->_clients[i]->setAlive(false);
+					}
+				}
+			}
+			i++;
+		}
+	}
+	else if (this->_multi == true)
+	{
+		std::list<Player *>::iterator		pl = this->_players->begin();
+		std::list<Player *>::iterator		end = this->_players->end();
+
+		while (pl != end)
+		{
+			if ((*pl)->IsAlive() == true)
+				test = true;
+			else
+			{
+				Player *del;
+				del = (*pl);
+				this->_players->erase(pl);
+				delete del;
+				pl = this->_players->begin();
+
+			}
+			pl++;
+		}
+	}
 	if (this->_leave == true)
 		test = false;
 	return (test);
 }
+
+
 
 void		GameManager::update(double time)
 {
@@ -191,12 +248,41 @@ void		GameManager::update(double time)
 			if (this->_me != NULL && player1)
 			{
 				if (this->_me->getSizeTouch() < 3)
+				{
 					this->_me->add_touch((e_Cardinal)input);
+					std::string tmp = "S";
+					tmp += std::to_string(this->_me->getIndex());
+					tmp += "_";
+					tmp += std::to_string(this->_me->getX());
+					tmp += "_";
+					tmp += std::to_string(this->_me->getY());
+					tmp += "_";
+					tmp += std::to_string((int)input);
+					std::cout << "Turn : " << tmp << std::endl;
+					if (this->_multi == true && this->_master == true)
+						this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
+					else if (this->_multi == true)
+						this->_client->set_write((char *)tmp.c_str());
+				}
 			}
 			else if (this->_me2 != NULL && !player1)
 			{
 				if (this->_me2->getSizeTouch() < 3)
+				{
 					this->_me2->add_touch((e_Cardinal)input);
+					std::string tmp = "S";
+					tmp += std::to_string(this->_me2->getIndex());
+					tmp += "_";
+					tmp += std::to_string(this->_me2->getX());
+					tmp += "_";
+					tmp += std::to_string(this->_me2->getY());
+					tmp += "_";
+					tmp += std::to_string((int)input);
+					if (this->_multi == true && this->_master == true)
+						this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
+					else if (this->_multi == true)
+						this->_client->set_write((char *)tmp.c_str());
+				}
 			}
 		}
 	}
@@ -208,16 +294,12 @@ void		GameManager::update(double time)
 	{
 		if (this->_master == true)
 		{
-			std::cout << "Here 1 ?" << std::endl;
-			 char *tmp = MapManager::Instance().takeToSend();
-			std::cout << "Here 2 ?" << std::endl;
+			char *tmp = MapManager::Instance().takeToSend();
 			if (tmp != NULL)
 			{
-				std::cout << "Tying TMP : ";
-				std::cout <<  tmp << std::endl;
 				this->_serv->send_msg_to_all(this->_clients, -1, tmp);
+				MapManager::Instance().ClearToSend();
 			}
-			std::cout << "Here 3 ?" << std::endl;
 			for (int i = 0; i < this->_serv->getMaxFD(); i++)
 			{
 				if (this->_clients[i]->get_type() == CLT_FD)
@@ -287,6 +369,11 @@ int				GameManager::getCltPL(void)
 	return (this->_client->getNBPlayers());
 }
 
+int				GameManager::getMaxPlayer(void)
+{
+	return (this->_nbPlayer);
+}
+
 int				GameManager::getServPL(void)
 {
 	return (this->_serv->getNbPlayers());
@@ -308,7 +395,6 @@ void			GameManager::init_from_clt(void)
 	this->_nbPlayer = maxPlayer;
 	this->_width = width;
 	this->_height = height;
-	std::cout << "Here Player Max : " << this->_nbPlayer << std::endl;
 	if (wall == true)
 	{
 		for (int i = 0; i < height; i++)

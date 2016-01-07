@@ -60,6 +60,7 @@ class Client
 	void				popFood(char *tmp);
 	void				popBonus(char *tmp);
 	void				init_Game(char *tmp);
+	void				init_Others(char *tmp);
 	std::list<Player*>	*getClients(void);
 	void				make_cmd(char *tmp);
 	Player				*getPlayer1(void);

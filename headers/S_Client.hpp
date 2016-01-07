@@ -29,6 +29,7 @@ class S_Client
 	char			tmp_write[BC_SIZE + 1];
 	Player			*_pl1;
 	Player			*_pl2;
+	bool			_alive;
 	
 	S_Client(void);
 	S_Client(const S_Client & src);
@@ -50,9 +51,15 @@ class S_Client
 	char			*get_read(void);
 	Player			*getPlayer1(void);
 	Player			*getPlayer2(void);
-	std::string		setPlayer1(void);
-	std::string		setPlayer2(void);
+	std::string		setPlayer1(bool create);
+	std::string		setPlayer2(bool create);
 	bool			getPL2(void);
+	bool			P1IsAlive(void);
+	bool			P2IsAlive(void);
+	void			EndingP1(void);
+	void			EndingP2(void);
+	void			setAlive(bool alive);
+	bool			getAlive(void);
 
 };
 

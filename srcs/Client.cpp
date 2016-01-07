@@ -104,6 +104,7 @@ void		Client::send_data()
 
 	this->b_write.bc_read(this->tmp_write);
 	i = strlen(tmp_write);
+	std::cout << "Sending : " << this->tmp_write << std::endl;
 	send(sock, this->tmp_write, i, 0);
 	bzero(&this->tmp_write, i);
 }
@@ -111,12 +112,25 @@ void		Client::send_data()
 void		Client::Snake_direc(char *tmp)
 {
 	int		index = atoi(tmp + 1);
+	int		direc;
+	int		x;
+	int		y;
 	int		i;
 
 	i = 1;
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
-	int		direc = atoi(tmp + i + 1);
+	i++;
+	x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	y = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	direc = atoi(tmp + i);
+	std::cout << "Snake " << index << " Direction " << direc << " on " << i << std::endl;
 	if (direc != 0)
 	{
 		std::list<Player*>::iterator	snake = this->_players.begin();
@@ -126,7 +140,9 @@ void		Client::Snake_direc(char *tmp)
 		{
 			if ((*snake)->getIndex() == index)
 				if ((*snake)->getSizeTouch() < 3)
+				{
 					(*snake)->add_touch((e_Cardinal)direc);
+				}
 			snake++;
 		}
 	}
@@ -147,7 +163,7 @@ void		Client::popFood(char *tmp)
 
 void		Client::popBonus(char *tmp)
 {
-	int		i = 3;
+	int		i = 0;
 	int		b;
 	int		r2 = 10;
 
@@ -161,12 +177,15 @@ void		Client::popBonus(char *tmp)
 		b = 3;
 	else if (tmp[1] == 'M')
 		b = 4;
-	int x = atoi(tmp + 4);
-	i++;
+	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+		   i++;
+	int x = atoi(tmp + i);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
-	i++;
+	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+		i++;
 	int y = atoi(tmp + i);
+	std::cout << "popBonus at : " << x << "-" << y << std::endl;
 	if (b == 3 || b == 4)
 	{
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
@@ -195,6 +214,7 @@ void		Client::init_Game(char *tmp)
 		i++;
 	i++;
 	this->_maxPlayer = atoi(tmp + i);
+	MapManager::Instance().setWall(this->_wall);
 	GraphicsManager::setLib(sfml, this->_width, this->_height);
 	MapManager::Instance().init(this->_maxPlayer, this->_width, this->_height);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
@@ -219,10 +239,7 @@ void		Client::init_Game(char *tmp)
 	std::cout << "Width : " << this->_width << std::endl;
 	std::cout << "Height : " << this->_height << std::endl;
 	std::cout << "MaxPlayer : " << this->_maxPlayer << std::endl;
-	std::cout << "Snake me index : " << index << std::endl;
-	std::cout << "Snake Direc : " << direc << std::endl;
-	std::cout << "PosX : " << x << std::endl;
-	std::cout << "PosY : " << y << std::endl;
+	std::cout << "Creating Player index : " << index << std::endl;
 	this->_me1 = new Player((e_Cardinal)direc, x, y, index, false, false);
 	this->_nbPlayer++;
 	if (this->_pl2 == true)
@@ -245,10 +262,6 @@ void		Client::init_Game(char *tmp)
 			i++;
 		i++;
 		y = atoi(tmp + i);
-		std::cout << "Snake me2 index : " << index << std::endl;
-		std::cout << "Snake Direc : " << direc << std::endl;
-		std::cout << "PosX : " << x << std::endl;
-		std::cout << "PosY : " << y << std::endl;
 		this->_me2 = new Player((e_Cardinal)direc, x, y, index, true, false);
 		this->_nbPlayer++;
 	}
@@ -258,6 +271,7 @@ void		Client::init_Game(char *tmp)
 		i++;
 	if (tmp[i] != '\0')
 		i++;
+	std::cout << "Start while at : " << &tmp[i] << std::endl;
 	while (tmp[i] != '\0')
 	{
 		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
@@ -278,24 +292,52 @@ void		Client::init_Game(char *tmp)
 		if (tmp[i] != '\0')
 			i++;
 		y = atoi(tmp + i);
-		std::cout << "Sentence : " << tmp;
-		std::cout << " Char : " << (int)tmp[i] << " or ";
-		std::cout << tmp[i] << " at " << i << " for " << strlen(tmp) << std::endl;
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
-//		if (tmp[i] != '\0')
-//			i++;
-		std::cout << "Char : " << (int)tmp[i] << " at " << i << std::endl;
-		std::cout << "Snake Other index : " << index << std::endl;
-		std::cout << "Snake Direc : " << direc << std::endl;
-		std::cout << "PosX : " << x << std::endl;
-		std::cout << "PosY : " << y << std::endl;
+		std::cout << "Creating Player index : " << index << std::endl;
 		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false);
 		this->_players.push_back(clt);
 		this->_nbPlayer++;
-		std::cout << "NbPlayer : " << this->_nbPlayer << std::endl;
 	}
 	this->_init = true;
+}
+
+void		Client::init_Others(char *tmp)
+{
+	int		i = 0;
+	int		index;
+	int		direc;
+	int		x;
+	int		y;
+
+	while (tmp[i] != '\0')
+	{
+		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+			i++;
+		index = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
+			i++;
+		direc = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
+			i++;
+		x = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
+			i++;
+		y = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		std::cout << "Creating Player index : " << index << std::endl;
+		std::cout << "Pos : " << x << "-" << y << " to " << direc << std::endl;
+		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false);
+		this->_players.push_back(clt);
+		this->_nbPlayer++;
+	}
 }
 
 void		Client::make_cmd(char *tmp)
@@ -314,7 +356,12 @@ void		Client::make_cmd(char *tmp)
 			this->set_write((char*)"1\n");
 	}
 	else if (strncmp(tmp, "C_M", 3) == 0)
-		init_Game(tmp);
+	{
+		if (this->_init == false)
+			init_Game(tmp);
+		else
+			init_Others(tmp);
+	}
 }
 
 void		Client::receive_data(void)
@@ -335,13 +382,12 @@ void		Client::receive_data(void)
 		if (this->b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
-			std::cout << "Receive : " << this->tmp_read;;
 			char **tab = ft_strtab(tmp_read);
 			for (int i = 0; tab[i] != NULL; i++)
 			{
 				if (tab[i] != NULL && tab[i][0] != '\0')
 				{
-					std::cout << "CMD : " << tab[i] << std::endl;
+					std::cout << "Receive : " << tab[i] << std::endl;
 					make_cmd(tab[i]);
 				}
 			}

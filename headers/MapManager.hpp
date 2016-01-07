@@ -85,6 +85,7 @@ class MapManager
 	void				update(double time);
 	void				restart(void);
 	char				*takeToSend(void);
+	void				ClearToSend(void);
 	bool				getWall(void);
 	void				setWall(bool wall);
 

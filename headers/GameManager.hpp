@@ -64,6 +64,7 @@ class GameManager
 	int				getCurPL(void);
 	int				getServPL(void);
 	int				getCltPL(void);
+	int				getMaxPlayer(void);
 	void			Server_Check(bool co);
 	void			Client_Check(void);
 	bool			Client_init(void);
