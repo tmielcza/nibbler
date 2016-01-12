@@ -260,18 +260,21 @@ void		GameManager::update(double time)
 					tmp += std::to_string(this->_me->getY());
 					tmp += "_";
 					tmp += std::to_string((int)input);
-					if (this->_multi == true && this->_master == true)
+					if (this->_me->verify_lL((e_Cardinal)input) == 1)
 					{
-						this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
-						this->_serv->run_serv(false);
+						if (this->_multi == true && this->_master == true)
+						{
+							this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
+							this->_serv->run_serv(false);
+						}
+						else if (this->_multi == true)
+						{
+							this->_client->set_write((char *)tmp.c_str());
+							this->_client->run_clt();
+						}
+						std::cout << "Turn : " << tmp << std::endl;
+						this->_me->add_touch((e_Cardinal)input);
 					}
-					else if (this->_multi == true)
-					{
-						this->_client->set_write((char *)tmp.c_str());
-						this->_client->run_clt();
-					}
-					std::cout << "Turn : " << tmp << std::endl;
-					this->_me->add_touch((e_Cardinal)input);
 				}
 			}
 			else if (this->_me2 != NULL && !player1)

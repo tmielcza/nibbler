@@ -156,7 +156,6 @@ void		Client::Snake_direc(char *tmp)
 							{
 								std::cout << "Attempting to set Snake : " << x << "-" << y;
 								std::cout << " direc : " << direc << std::endl;
-//								MapManager::Instance()._Map[_x][_y] = NULL;
 								(*snake)->add_touch((e_Cardinal)direc);
 							}
 							else

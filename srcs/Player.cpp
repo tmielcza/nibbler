@@ -80,15 +80,30 @@ bool		Player::IsAlive(void)
 	return (this->_Snake->IsAlive());
 }
 
-int			Player::verify_lL(e_Cardinal d)
+bool		Player::verify_lL(e_Cardinal d)
 {
-	if ((this->_Snake->getHeadSnakeDirec() & Longitude) &&
-		(d & Latitude))
-		return 1;
-	else if ((this->_Snake->getHeadSnakeDirec() & Latitude) &&
-			 (d & Longitude))
-		return 1;
-	return 0;
+	if (this->_lastInputs.size() == 0)
+	{
+		if ((this->_Snake->getHeadSnakeDirec() & Longitude) &&
+			(d & Latitude))
+			return true;
+		else if ((this->_Snake->getHeadSnakeDirec() & Latitude) &&
+				 (d & Longitude))
+			return true;
+		return false;
+	}
+	else
+	{
+		std::list<e_Cardinal>::iterator			begin = this->_lastInputs.begin();
+
+		if (((*begin) & Longitude) &&
+			(d & Latitude))
+			return true;
+		else if (((*begin) & Latitude) &&
+				 (d & Longitude))
+			return true;
+		return false;
+	}
 }
 
 void		Player::update(double time)
@@ -102,11 +117,13 @@ void		Player::update(double time)
 		this->_Snake->update_directions();
 		if (this->_lastInputs.size() > 0)
 		{
-			while (tuchs != end && this->verify_lL(*tuchs) != 1)
+/*
+			while (tuchs != end && this->verify_lL(*tuchs) != true)
 			{
 				this->_lastInputs.erase(tuchs);
 				tuchs++;
 			}
+*/
 			if (tuchs != end)
 			{
 				this->_Snake->turn(*tuchs);
