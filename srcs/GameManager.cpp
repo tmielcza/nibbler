@@ -34,6 +34,8 @@ GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 	this->_leave = false;
 	this->_curPL = 1;
 	this->_pl2 = pl2;
+	if (this->_pl2 == true)
+		std::cout << "HELLO WORLD !!" << std::endl;
 }
 
 GameManager::GameManager(const GameManager & copy)
@@ -50,10 +52,11 @@ GameManager::~GameManager(void)
 		
 		while (pl != end)
 		{
-		Player *del = *pl;
-		this->_players->erase(pl);
-		pl = this->_players->begin();
-		delete del;
+			Player *del;
+			del = *pl;
+			this->_players->erase(pl);
+			pl = this->_players->begin();
+			delete del;
 		}
 		if (this->_me != NULL)
 			delete this->_me;
@@ -109,7 +112,7 @@ void		GameManager::init_tcp(char *addr, int port)
 	if (this->_multi == true && this->_master == false && this->_massif == false)
 	{
 		//Version Client
-		this->_client = new Client();
+		this->_client = new Client(this->_pl2);
 		this->_client->init(addr, port);
 	}
 	else if (this->_multi == true && this->_master == true && this->_massif == true)
@@ -249,7 +252,6 @@ void		GameManager::update(double time)
 			{
 				if (this->_me->getSizeTouch() < 3)
 				{
-					this->_me->add_touch((e_Cardinal)input);
 					std::string tmp = "S";
 					tmp += std::to_string(this->_me->getIndex());
 					tmp += "_";
@@ -258,11 +260,18 @@ void		GameManager::update(double time)
 					tmp += std::to_string(this->_me->getY());
 					tmp += "_";
 					tmp += std::to_string((int)input);
-					std::cout << "Turn : " << tmp << std::endl;
 					if (this->_multi == true && this->_master == true)
+					{
 						this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
+						this->_serv->run_serv(false);
+					}
 					else if (this->_multi == true)
+					{
 						this->_client->set_write((char *)tmp.c_str());
+						this->_client->run_clt();
+					}
+					std::cout << "Turn : " << tmp << std::endl;
+					this->_me->add_touch((e_Cardinal)input);
 				}
 			}
 			else if (this->_me2 != NULL && !player1)
@@ -286,6 +295,10 @@ void		GameManager::update(double time)
 			}
 		}
 	}
+	if (this->_multi == true && this->_master == true)
+		this->_serv->run_serv(false);
+	else if (this->_multi == true)
+		this->_client->run_clt();
 	if (this->_me != NULL)
 		this->_me->update(time);
 	if (this->_me2 != NULL)
@@ -342,6 +355,14 @@ void			GameManager::restart(void)
 	this->_me = new Player();
 	if (this->_pl2 == true)
 		this->_me2 = new Player(true, true);
+	if (this->_multi == true && this->_master == true)
+	{
+		this->_serv->send_msg_to_all(this->_clients, 0, (char *)"Rstart");
+		for (int i = 0; i < this->_serv->getMaxFD(); i++)
+		{
+//			this->_clients[i]->
+		}
+	}
 }
 
 int				GameManager::getCurPL(void)

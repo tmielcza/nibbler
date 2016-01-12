@@ -130,7 +130,8 @@ void		Client::Snake_direc(char *tmp)
 		i++;
 	i++;
 	direc = atoi(tmp + i);
-	std::cout << "Snake " << index << " Direction " << direc << " on " << i << std::endl;
+	std::cout << "Snake " << index << " Direction " << direc << " at " << x << "-" << y;
+	std::cout << " at i = " << i << std::endl;
 	if (direc != 0)
 	{
 		std::list<Player*>::iterator	snake = this->_players.begin();
@@ -139,25 +140,39 @@ void		Client::Snake_direc(char *tmp)
 		while (snake != end)
 		{
 			if ((*snake)->getIndex() == index)
+			{
 				if ((*snake)->getSizeTouch() < 3)
 				{
 					if ((*snake)->getSizeTouch() == 0)
 					{
-						int _x = (*snake)->getX();
-						int _y = (*snake)->getY();
-						if (_x != x || _y != y)
+						int mydirec = (int)(*snake)->getDirec();
+						if (((direc == 1 || direc == 2) &&
+							 (mydirec == 4 || mydirec == 8)) ||
+							((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
 						{
-							(*snake)->setX(x);
-							(*snake)->setY(y);
-							(*snake)->setDirec((e_Cardinal)direc);
-							(*snake)->move();
+							int _x = (*snake)->getX();
+							int _y = (*snake)->getY();
+							if (_x != x || _y != y)
+							{
+								std::cout << "Attempting to set Snake : " << x << "-" << y;
+								std::cout << " direc : " << direc << std::endl;
+//								MapManager::Instance()._Map[_x][_y] = NULL;
+								(*snake)->add_touch((e_Cardinal)direc);
+							}
+							else
+								(*snake)->add_touch((e_Cardinal)direc);
 						}
-						else
-							(*snake)->add_touch((e_Cardinal)direc);
 					}
 					else
-						(*snake)->add_touch((e_Cardinal)direc);
+					{
+						int mydirec = (int)(*snake)->getFirstTouch();
+						if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8))
+							||
+							((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
+							(*snake)->add_touch((e_Cardinal)direc);
+					}
 				}
+			}
 			snake++;
 		}
 	}
@@ -394,7 +409,7 @@ void		Client::receive_data(void)
 		this->tmp_read[r] = '\0';
 		this->b_read.bc_write(this->tmp_read, 0);
 		bzero(tmp_read, BC_SIZE + 1);
-		if (this->b_read.bc_iscmd() == 1)
+		while (this->b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
 			char **tab = ft_strtab(tmp_read);

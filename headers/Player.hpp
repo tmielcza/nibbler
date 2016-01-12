@@ -41,6 +41,7 @@ class Player
 	void		update(double time);
 	void		add_touch(e_Cardinal touch);
 	int			getSizeTouch(void);
+	e_Cardinal	getFirstTouch(void);
 	int			getX(void);
 	int			getY(void);
 	void		setX(int x);

@@ -266,11 +266,13 @@ void	MapManager::bonuspop(int b)
 		{
 			this->_tosend = "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 		else
 		{
 			this->_tosend += "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 	}
 	else if (b == 4)
@@ -283,11 +285,13 @@ void	MapManager::bonuspop(int b)
 		{
 			this->_tosend = "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 		else
 		{
 			this->_tosend += "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 	}
 }
@@ -377,11 +381,13 @@ void	MapManager::bonuspop(void)
 		{
 			this->_tosend = "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 		else
 		{
 			this->_tosend += "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 	}
 	else if (r < 100)
@@ -394,11 +400,13 @@ void	MapManager::bonuspop(void)
 		{
 			this->_tosend = "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 		else
 		{
 			this->_tosend += "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
+			this->_tosend += "\n";
 		}
 	}
 

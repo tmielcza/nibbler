@@ -134,6 +134,14 @@ int			Player::getSizeTouch(void)
 	return (this->_lastInputs.size());
 }
 
+e_Cardinal	Player::getFirstTouch(void)
+{
+	std::list<e_Cardinal>::iterator		firstTouch = this->_lastInputs.begin();
+
+	e_Cardinal tmp = (*firstTouch);
+	return (tmp);
+}
+
 int			Player::getX(void)
 {
 	return (this->_Snake->getHeadSnakeX());
@@ -176,5 +184,6 @@ bool		Player::getPL2(void)
 
 void		Player::move(void)
 {
+//	this->_Snake->befor_move();
 	this->_Snake->move();
 }

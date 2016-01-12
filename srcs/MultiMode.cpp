@@ -176,11 +176,11 @@ void			MultiMode::run(void)
 		GraphicsManager::Instance().display();
 		while (this->check_end())
 		{
-			delta = this->_game->deltaTime();
 			if (this->_master == true)
 				this->_game->Server_Check(false);
 			else
 				this->_game->Client_Check();
+			delta = this->_game->deltaTime();
 			this->_game->update(delta);
 			MapManager::Instance().update(delta);
 			GraphicsManager::Instance().display();

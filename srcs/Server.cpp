@@ -1,4 +1,6 @@
 #include "Server.hpp"
+#include "MapManager.hpp"
+#include "Client.hpp"
 
 Server::Server(int port, bool wall, int width, int height, int playerMax)
 {
@@ -213,24 +215,35 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 		std::cout << "Pos Snake " << index <<  " : " << direc << std::endl;
 		if (tmp1 != NULL && tmp1->getIndex() == index)
 		{
+			int mydirec = (int)tmp1->getDirec();
+			std::cout << "Curent Direction of " << tmp1->getIndex() << " : " << mydirec;
+			std::cout << std::endl;
 			if (tmp1->getSizeTouch() < 3)
 			{
 				if (tmp1->getSizeTouch() == 0)
 				{
-					int _x = tmp1->getX();
-					int _y = tmp1->getY();
-					if (x != _x || y != _y)
+					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
+						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
 					{
-						tmp1->setX(x);
-						tmp1->setY(x);
-						tmp1->setDirec((e_Cardinal)direc);
-						tmp1->move();
+						int _x = tmp1->getX();
+						int _y = tmp1->getY();
+						if (x != _x || y != _y)
+						{
+							std::cout << "Attempting to set Snake : " << x << "-" << y;
+							std::cout << " Direc : " << direc << std::endl;
+							tmp1->add_touch((e_Cardinal)direc);
+						}
+						else
+							tmp1->add_touch((e_Cardinal)direc);
 					}
-					else
-						tmp1->add_touch((e_Cardinal)direc);
 				}
 				else
-					tmp1->add_touch((e_Cardinal)direc);
+				{
+					int mydirec = (int)tmp1->getFirstTouch();
+					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
+						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
+						tmp1->add_touch((e_Cardinal)direc);
+				}
 			}
 		}
 		else if (tmp2 != NULL && tmp2->getIndex() == index)
@@ -239,20 +252,27 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 			{
 				if (tmp2->getSizeTouch() == 0)
 				{
-					int _x = tmp2->getX();
-					int _y = tmp2->getY();
-					if (x != _x || y != _y)
+					int mydirec = (int)tmp2->getDirec();
+					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
+						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
 					{
-						tmp2->setX(x);
-						tmp2->setY(x);
-						tmp2->setDirec((e_Cardinal)direc);
-						tmp2->move();
+						int _x = tmp2->getX();
+						int _y = tmp2->getY();
+						if (x != _x || y != _y)
+						{
+							tmp2->add_touch((e_Cardinal)direc);
+						}
+						else
+							tmp2->add_touch((e_Cardinal)direc);
 					}
-					else
-						tmp2->add_touch((e_Cardinal)direc);
 				}
 				else
-					tmp2->add_touch((e_Cardinal)direc);
+				{
+					int mydirec = (int)tmp2->getFirstTouch();
+					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
+						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
+						tmp2->add_touch((e_Cardinal)direc);
+				}
 			}
 		}
 	}
@@ -260,13 +280,12 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
-	if ((clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL) &&
-		clients[cs]->getAlive() == true)
+	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
 		this->do_cmd(clients, cs, msg);
 		send_msg_to_all(clients, cs, msg);
 	}
-	else
+	else if (clients[cs]->getAlive() == true)
 		create_snake(clients, cs, msg);
 	
 }
@@ -286,7 +305,15 @@ void	Server::check_fd(S_Client **clients)
 			if (FD_ISSET(i, &fd_read) != 0)
 			{
 				if ((msg = clients[i]->c_receive()) != NULL)
-					check_actions(clients, i, msg);
+				{
+					char **tab = ft_strtab(msg);
+					for (int j = 0; tab[j] != NULL; j++)
+					{
+						std::cout << "Message to Server from Client : " << tab[j];
+						std::cout << "." <<std::endl;
+						check_actions(clients, i, tab[j]);
+					}
+				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)
 				clients[i]->c_send();
