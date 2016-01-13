@@ -132,6 +132,7 @@ void		Player::update(double time)
 		}
 		this->_Snake->befor_move();
 		this->_Snake->move();
+		//
 		this->_time = 0.;
 	}
 	this->_Snake->draw(this->_time);

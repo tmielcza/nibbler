@@ -9,9 +9,10 @@ ChasedFood::ChasedFood(void)
 
 }
 
-ChasedFood::ChasedFood(int value, int x, int y, int place)
+ChasedFood::ChasedFood(int value, int x, int y, int place, bool spawner)
 {
 	this->_place = place;
+	this->_spawner = spawner;
 	this->_pos.setX(x);
 	this->_pos.setY(y);
 	this->_value = value;
@@ -43,6 +44,7 @@ ChasedFood	&		ChasedFood::operator=(const ChasedFood & src)
 	this->_time = src._time;
 	this->_isalive = src._isalive;
 	this->_pos = src._pos;
+	this->_spawner = src._spawner;
 	return (*this);
 }
 
@@ -120,9 +122,18 @@ void				ChasedFood::taken(Snake & snake)
 		if (x >= 0 && x < width && y >= 0 && y < height &&
 			MapManager::Instance()._Map[x][y] == NULL)
 		{
-			ChasedFood *b = new ChasedFood(this->_value, x, y, this->_place + 1);
-			MapManager::Instance()._Map[x][y] = b;
-			MapManager::Instance().add_Bonus(b);
+			if (this->_spawner == true)
+			{
+				std::cout << "ChasedFood pop at : " << x << "-" << y << std::endl;
+				ChasedFood *b = new ChasedFood(this->_value, x, y, this->_place + 1, true);
+				MapManager::Instance()._Map[x][y] = b;
+				MapManager::Instance().add_Bonus(b);
+				std::string tmp = "BH_";
+				tmp += std::to_string(x) + "_" + std::to_string(y) + "_";
+				this->_place++;
+				tmp += std::to_string(this->_value) + "_" + std::to_string(this->_place);
+				MapManager::Instance().setToSend((char *)tmp.c_str());
+			}
 		}
 		else
 			pop = false;
@@ -132,6 +143,37 @@ void				ChasedFood::taken(Snake & snake)
 	else
 		snake.add_score(200);
 	delete this;
+}
+
+char				*ChasedFood::sendPos(void)
+{
+	std::string		tmp = "BH_";
+
+	tmp += std::to_string(this->_pos.getX());
+	tmp += "_";
+	tmp += std::to_string(this->_pos.getY());
+	tmp += "_";
+	tmp += std::to_string(this->_value);
+	tmp += "_";
+	tmp += std::to_string(this->_place);
+	tmp += "\n";
+	return ((char *)tmp.c_str());
+}
+
+char				*ChasedFood::sendPosNext(void)
+{
+	std::string		tmp = "BH_";
+
+	tmp += std::to_string(this->_pos.getX());
+	tmp += "_";
+	tmp += std::to_string(this->_pos.getY());
+	tmp += "_";
+	tmp += std::to_string(this->_value);
+	tmp += "_";
+	this->_place++;
+	tmp += std::to_string(this->_place);
+	tmp += "\n";
+	return ((char *)tmp.c_str());
 }
 
 void				ChasedFood::update(double time)

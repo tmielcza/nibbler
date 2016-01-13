@@ -127,9 +127,9 @@ void	MapManager::foodpop(bool spawner)
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
 	if (this->_tosend == "")
-		this->_tosend = "F_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+		this->_tosend = "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	else
-		this->_tosend += "F_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+		this->_tosend += "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	int r = rand() % 4;
 	if (r == 2)
 		this->bonuspop();
@@ -160,9 +160,9 @@ void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode 
 			this->_Map[x][y] = f;
 			this->_foods.push_back(f);
 			if (this->_tosend == "")
-				this->_tosend = "F_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+				this->_tosend = "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 			else
-				this->_tosend += "F_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+				this->_tosend += "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		}
 	}
 }
@@ -190,9 +190,9 @@ void	MapManager::foodpop(Point center, int radius, bool spawner, e_PopMode mode 
 			this->_Map[x][y] = f;
 			this->_foods.push_back(f);
 			if (this->_tosend == "")
-				this->_tosend = "F_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+				this->_tosend = "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 			else
-				this->_tosend += "F_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+				this->_tosend += "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		}
 	}
 }
@@ -232,9 +232,9 @@ void	MapManager::bonuspop(int b)
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
-			this->_tosend = "BS_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend = "BS_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		else
-			this->_tosend += "BS_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend += "BS_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	}
 	else if (b == 1)
 	{
@@ -242,9 +242,9 @@ void	MapManager::bonuspop(int b)
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
-			this->_tosend = "BC_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend = "BC_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		else
-			this->_tosend += "BC_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend += "BC_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	}
 	else if (b == 2)
 	{
@@ -252,51 +252,51 @@ void	MapManager::bonuspop(int b)
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
-			this->_tosend = "BF_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend = "BF_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		else
-			this->_tosend += "BF_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend += "BF_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	}
 	else if (b == 3)
 	{
 		int r2 = 5 + (rand() % 5);
-		ChasedFood *b = new ChasedFood(r2, x, y, 1);
+		ChasedFood *b = new ChasedFood(r2, x, y, 1, true);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
 		{
-			this->_tosend = "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
-			this->_tosend += std::to_string(r2);
+			this->_tosend = "BH_" + std::to_string(x) + "_" + std::to_string(y) + ":";
+			this->_tosend += std::to_string(r2) + "_1";
 			this->_tosend += "\n";
 		}
 		else
 		{
-			this->_tosend += "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
-			this->_tosend += std::to_string(r2);
+			this->_tosend += "BH_" + std::to_string(x) + "_" + std::to_string(y) + ":";
+			this->_tosend += std::to_string(r2) + "_1";
 			this->_tosend += "\n";
 		}
 	}
 	else if (b == 4)
 	{
 		int r2 = 2 + (rand() % 4);
-		MultiFood *b = new MultiFood(r2, x, y);
+		MultiFood *b = new MultiFood(r2, x, y, true);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
 		{
-			this->_tosend = "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
+			this->_tosend = "BM_" + std::to_string(x) + "_" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
 			this->_tosend += "\n";
 		}
 		else
 		{
-			this->_tosend += "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
+			this->_tosend += "BM_" + std::to_string(x) + "_" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
 			this->_tosend += "\n";
 		}
 	}
 }
 
-void	MapManager::bonuspop(int b, int x, int y, int r2)
+void	MapManager::bonuspop(int b, int x, int y, int r2, int r3)
 {
 	if (b == 0)
 	{
@@ -318,13 +318,13 @@ void	MapManager::bonuspop(int b, int x, int y, int r2)
 	}
 	else if (b == 3)
 	{
-		ChasedFood *b = new ChasedFood(r2, x, y, 1);
+		ChasedFood *b = new ChasedFood(r2, x, y, r3, false);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 	}
 	else if (b == 4)
 	{
-		MultiFood *b = new MultiFood(r2, x, y);
+		MultiFood *b = new MultiFood(r2, x, y, false);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 	}
@@ -347,9 +347,9 @@ void	MapManager::bonuspop(void)
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
-			this->_tosend = "BS_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend = "BS_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		else
-			this->_tosend += "BS_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend += "BS_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	}
 	else if (r < 30)
 	{
@@ -357,9 +357,9 @@ void	MapManager::bonuspop(void)
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
-			this->_tosend = "BC_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend = "BC_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		else
-			this->_tosend += "BC_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend += "BC_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	}
 	else if (r < 60)
 	{
@@ -367,44 +367,44 @@ void	MapManager::bonuspop(void)
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
-			this->_tosend = "BF_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend = "BF_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 		else
-			this->_tosend += "BF_" + std::to_string(x) + "-" + std::to_string(y) + "\n";
+			this->_tosend += "BF_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
 	}
 	else if (r < 90)
 	{
 		int r2 = 5 + (rand() % 5);
-		ChasedFood *b = new ChasedFood(r2, x, y, 1);
+		ChasedFood *b = new ChasedFood(r2, x, y, 1, true);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
 		{
-			this->_tosend = "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
-			this->_tosend += std::to_string(r2);
+			this->_tosend = "BH_" + std::to_string(x) + "_" + std::to_string(y) + ":";
+			this->_tosend += std::to_string(r2) + "_1";
 			this->_tosend += "\n";
 		}
 		else
 		{
-			this->_tosend += "BH_" + std::to_string(x) + "-" + std::to_string(y) + ":";
-			this->_tosend += std::to_string(r2);
+			this->_tosend += "BH_" + std::to_string(x) + "_" + std::to_string(y) + ":";
+			this->_tosend += std::to_string(r2) + "_1";
 			this->_tosend += "\n";
 		}
 	}
 	else if (r < 100)
 	{
 		int r2 = 2 + (rand() % 4);
-		MultiFood *b = new MultiFood(r2, x, y);
+		MultiFood *b = new MultiFood(r2, x, y, true);
 		this->_Map[x][y] = b;
 		this->_bonus.push_back(b);
 		if (this->_tosend == "")
 		{
-			this->_tosend = "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
+			this->_tosend = "BM_" + std::to_string(x) + "_" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
 			this->_tosend += "\n";
 		}
 		else
 		{
-			this->_tosend += "BM_" + std::to_string(x) + "-" + std::to_string(y) + ":";
+			this->_tosend += "BM_" + std::to_string(x) + "_" + std::to_string(y) + ":";
 			this->_tosend += std::to_string(r2);
 			this->_tosend += "\n";
 		}
@@ -425,7 +425,7 @@ void	MapManager::bonusdepop(int x, int y)
 		{
 			this->_berase = true;
 			this->_bonus.erase(start);
-			std::cout << "Bonus depop at : " << _x << "-" << _y << std::endl;
+			std::cout << "Bonus depop at : " << _x << "_" << _y << std::endl;
 			return;
 		}
 		start++;
@@ -575,6 +575,14 @@ char				*MapManager::takeToSend(void)
 		return (NULL);
 	char *tmp = (char *)this->_tosend.c_str();
 	return (tmp);
+}
+
+void				MapManager::setToSend(char *tmp)
+{
+	if (this->_tosend == "")
+		this->_tosend = tmp;
+	else
+		this->_tosend += tmp;
 }
 
 void				MapManager::ClearToSend(void)

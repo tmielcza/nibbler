@@ -14,7 +14,7 @@ class ChasedFood : public ABonus
 	public:
 
 	ChasedFood(void);
-	ChasedFood(int value, int x, int y, int place);
+	ChasedFood(int value, int x, int y, int place, bool spawner);
 	ChasedFood(const ChasedFood & src);
 	~ChasedFood(void);
 
@@ -23,6 +23,8 @@ class ChasedFood : public ABonus
 	void				taken(Snake & snake);
 	void				update(double time);
 	void				draw(double time);
+	char				*sendPos(void);
+	char				*sendPosNext(void);
 
 };
 

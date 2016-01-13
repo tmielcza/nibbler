@@ -195,6 +195,7 @@ void		Client::popBonus(char *tmp)
 	int		i = 0;
 	int		b;
 	int		r2 = 10;
+	int		r3 = 0;
 
 	if (tmp[1] == 'S')
 		b = 0;
@@ -221,8 +222,18 @@ void		Client::popBonus(char *tmp)
 			i++;
 		i++;
 		r2 = atoi(tmp + i);
+		if (b == 3)
+		{
+			while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+				i++;
+						i++;
+			r3 = atoi(tmp + i);
+			
+		}
+		else
+			;
 	}
-	MapManager::Instance().bonuspop(b, x, y, r2);
+	MapManager::Instance().bonuspop(b, x, y, r2, r3);
 }
 
 void		Client::init_Game(char *tmp)

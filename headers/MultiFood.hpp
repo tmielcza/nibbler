@@ -6,10 +6,14 @@
 
 class MultiFood : public ABonus
 {
+	private:
+
+	bool		_spawner;
+
 	public:
 
 	MultiFood(void);
-	MultiFood(int value, int x, int y);
+	MultiFood(int value, int x, int y, bool spawner);
 	MultiFood(const MultiFood & src);
 	~MultiFood(void);
 

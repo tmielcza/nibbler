@@ -73,7 +73,7 @@ class MapManager
 	void				foodepop(int x, int y);
 	void				bonuspop(void);
 	void				bonuspop(int b);
-	void				bonuspop(int b, int x, int y, int r2);
+	void				bonuspop(int b, int x, int y, int r2, int r3);
 	void				bonusdepop(int x, int y);
 	void				add_Bonus(ABonus *bonus);
 	int					getBonusnb(void);
@@ -85,6 +85,7 @@ class MapManager
 	void				update(double time);
 	void				restart(void);
 	char				*takeToSend(void);
+	void				setToSend(char *tmp);
 	void				ClearToSend(void);
 	bool				getWall(void);
 	void				setWall(bool wall);

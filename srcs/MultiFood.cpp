@@ -9,7 +9,7 @@ MultiFood::MultiFood(void)
 
 }
 
-MultiFood::MultiFood(int value, int x, int y)
+MultiFood::MultiFood(int value, int x, int y, bool spawner)
 {
 	GraphicsManager::Instance().popMultiFood(x, y);
 	this->_pos.setX(x);
@@ -18,6 +18,7 @@ MultiFood::MultiFood(int value, int x, int y)
 	this->_time = 0;
 	this->_isalive = true;
 	this->_eatable = true;
+	this->_spawner = spawner;
 }
 
 MultiFood::MultiFood(const MultiFood & src)
@@ -44,8 +45,11 @@ void				MultiFood::taken(Snake & snake)
 {
 	GraphicsManager::Instance().popWave(this->getX(), this->getY());	
 	snake.add_score(this->_value * 10);
-	for (int i = 0; i < this->_value; i++)
-		MapManager::Instance().foodpop(this->_pos, 3, false, (e_PopMode)0);
+	if (this->_spawner == true)
+	{
+		for (int i = 0; i < this->_value; i++)
+			MapManager::Instance().foodpop(this->_pos, 3, false, (e_PopMode)0);
+	}
 	delete this;
 }
 

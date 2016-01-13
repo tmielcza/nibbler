@@ -31,6 +31,7 @@ class ABonus : public AEntity
 
 	int		_value;
 	bool	_isalive;
+	bool	_spawner;
 	double	_time;
 
 	public:
