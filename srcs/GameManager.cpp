@@ -263,12 +263,12 @@ void		GameManager::update(double time)
 						if (this->_multi == true && this->_master == true)
 						{
 							this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
-							this->_serv->run_serv(false);
+//							this->_serv->run_serv(false);
 						}
 						else if (this->_multi == true)
 						{
 							this->_client->set_write((char *)tmp.c_str());
-							this->_client->run_clt();
+//							this->_client->run_clt();
 						}
 						this->_me->add_touch((e_Cardinal)input);
 					}
@@ -313,7 +313,18 @@ void		GameManager::update(double time)
 		}
 	}
 	if (this->_me2 != NULL)
+	{
 		this->_me2->update(time);
+		char *tmp = this->_me2->takeToSend();
+		if (tmp != NULL)
+		{
+			if (this->_multi == true && this->_master == true)
+				this->_serv->send_msg_to_all(this->_clients, 0, tmp);
+			else if (this->_multi == true)
+				this->_client->set_write(tmp);
+			this->_me->ClearToSend();
+		}
+	}
 	if (this->_multi == true)
 	{
 		if (this->_master == true)

@@ -103,7 +103,8 @@ void			MultiMode::init_clt(void)
 	std::cout << "Wait until everybody is here : ";
 	std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
 	this->_game->Bring_Client_Serv();
-	while ((time(NULL) % 6) != 0)
+
+	while ((time(NULL) % 7) != 0)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
@@ -149,7 +150,7 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 	this->_game->Bring_Serv_Clients();
 	for (int i = 0; i < this->_nbPlayers; i++)
 		MapManager::Instance().foodpop(true);
-	while ((time(NULL) % 6) != 0)
+	while ((time(NULL) % 7) != 0)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
@@ -176,14 +177,17 @@ void			MultiMode::run(void)
 		GraphicsManager::Instance().display();
 		while (this->check_end())
 		{
+			this->_game->update(delta);
+			MapManager::Instance().update(delta);
+			GraphicsManager::Instance().display();
 			if (this->_master == true)
 				this->_game->Server_Check(false);
 			else
 				this->_game->Client_Check();
 			delta = this->_game->deltaTime();
-			this->_game->update(delta);
-			MapManager::Instance().update(delta);
-			GraphicsManager::Instance().display();
+//			this->_game->update(delta);
+//			MapManager::Instance().update(delta);
+//			GraphicsManager::Instance().display();
 		}
 		inputs = GraphicsManager::Instance().getInput();
 		for (auto it = inputs.begin(); it != inputs.end(); it++)
