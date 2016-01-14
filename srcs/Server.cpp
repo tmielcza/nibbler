@@ -148,14 +148,11 @@ void		Server::create_snake(S_Client **clients, int cs, char *msg)
 	this->nbPlayers++;
 	tmp += std::to_string(this->_wall) + "_" + std::to_string(this->_width) + "-";
 	tmp += std::to_string(this->_height) + ":" + std::to_string(this->_maxPlayer) + "_";
-	std::cout << "Create pl1" << std::endl;
 	std::string tmp2 = clients[cs]->setPlayer1(true);
 	tmp += tmp2;
-	std::cout << "Create pl1 bis" << std::endl;
 	tmp1 += tmp2;
 	if (msg[0] == '2')
 	{
-		std::cout << "Create pl2" << std::endl;
 		std::string tmp3 = "_";
 		tmp3 += clients[cs]->setPlayer2(true);
 		tmp += tmp3;
@@ -212,12 +209,9 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 			i++;
 		i++;
 		int direc = atoi(msg + i);
-		std::cout << "Pos Snake " << index <<  " : " << direc << std::endl;
 		if (tmp1 != NULL && tmp1->getIndex() == index)
 		{
 			int mydirec = (int)tmp1->getDirec();
-			std::cout << "Curent Direction of " << tmp1->getIndex() << " : " << mydirec;
-			std::cout << std::endl;
 			if (tmp1->getSizeTouch() < 3)
 			{
 				if (tmp1->getSizeTouch() == 0)
@@ -228,11 +222,7 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 						int _x = tmp1->getX();
 						int _y = tmp1->getY();
 						if (x != _x || y != _y)
-						{
-							std::cout << "Attempting to set Snake : " << x << "-" << y;
-							std::cout << " Direc : " << direc << std::endl;
 							tmp1->add_touch((e_Cardinal)direc);
-						}
 						else
 							tmp1->add_touch((e_Cardinal)direc);
 					}
@@ -278,11 +268,66 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 	}
 }
 
+void	Server::VerifySnakes(char *tmp)
+{
+    int    i = 2;
+    int    index =atoi(tmp + i);
+    int         x;
+    int         y;
+    int         direc;
+
+    while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+		i++;
+    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+        i++;
+    i++;
+    x = atoi(tmp + i);
+    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+        i++;
+    i++;
+    y = atoi(tmp + i);
+    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+        i++;
+    i++;
+    direc = atoi(tmp + i);
+	for (int j = 0; j < (this->fd_max + 1); j++)
+	{
+		if (this->clients[j]->get_type() == CLT_FD)
+		{
+			Player *tmp1;
+			Player *tmp2;
+			tmp1 = this->clients[j]->getPlayer1();
+			tmp2 = this->clients[j]->getPlayer2();
+			if (tmp1 != NULL && tmp1->getIndex() == index)
+			{
+				if (tmp1->getX() != x)
+					tmp1->setX(x);
+				if (tmp1->getY() != y)
+					tmp1->setY(y);
+				if (tmp1->getDirec() != (e_Cardinal)direc)
+					tmp1->setDirec((e_Cardinal)direc);
+			}
+			else if (tmp2 != NULL && tmp2->getIndex() == index)
+			{
+				if (tmp2->getX() != x)
+					tmp2->setX(x);
+				if (tmp2->getY() != y)
+					tmp2->setY(y);
+				if (tmp2->getDirec() != (e_Cardinal)direc)
+					tmp2->setDirec((e_Cardinal)direc);
+			}
+		}
+	}
+}
+
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
 	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
-		this->do_cmd(clients, cs, msg);
+		if (msg[0] == 'V')
+			this->VerifySnakes(msg);
+		else
+			this->do_cmd(clients, cs, msg);
 		send_msg_to_all(clients, cs, msg);
 	}
 	else if (clients[cs]->getAlive() == true)
@@ -305,15 +350,7 @@ void	Server::check_fd(S_Client **clients)
 			if (FD_ISSET(i, &fd_read) != 0)
 			{
 				if ((msg = clients[i]->c_receive()) != NULL)
-				{
-					char **tab = ft_strtab(msg);
-					for (int j = 0; tab[j] != NULL; j++)
-					{
-						std::cout << "Message to Server from Client : " << tab[j];
-						std::cout << "." <<std::endl;
-						check_actions(clients, i, tab[j]);
-					}
-				}
+					check_actions(clients, i, msg);
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)
 				clients[i]->c_send();

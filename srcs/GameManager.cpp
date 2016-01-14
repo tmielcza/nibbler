@@ -34,8 +34,6 @@ GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 	this->_leave = false;
 	this->_curPL = 1;
 	this->_pl2 = pl2;
-	if (this->_pl2 == true)
-		std::cout << "HELLO WORLD !!" << std::endl;
 }
 
 GameManager::GameManager(const GameManager & copy)
@@ -95,13 +93,13 @@ void		GameManager::init(int nbplayer, int width, int height, bool wall)
 	this->_height = height;
 	this->_wall = wall;
 	if (this->_master == true)
-		this->_me = new Player(false, this->_master);
+		this->_me = new Player(false, this->_master, true);
 	else
 		this->_me = NULL;
 	if (this->_master == true && this->_pl2 == true)
 	{
 		this->_curPL++;
-		this->_me2 = new Player(true, this->_master);
+		this->_me2 = new Player(true, this->_master, true);
 	}
 	else
 		this->_me2 = NULL;
@@ -272,7 +270,6 @@ void		GameManager::update(double time)
 							this->_client->set_write((char *)tmp.c_str());
 							this->_client->run_clt();
 						}
-						std::cout << "Turn : " << tmp << std::endl;
 						this->_me->add_touch((e_Cardinal)input);
 					}
 				}
@@ -303,7 +300,18 @@ void		GameManager::update(double time)
 	else if (this->_multi == true)
 		this->_client->run_clt();
 	if (this->_me != NULL)
+	{
 		this->_me->update(time);
+		char *tmp = this->_me->takeToSend();
+		if (tmp != NULL)
+		{
+			if (this->_multi == true && this->_master == true)
+				this->_serv->send_msg_to_all(this->_clients, 0, tmp);
+			else if (this->_multi == true)
+				this->_client->set_write(tmp);
+			this->_me->ClearToSend();
+		}
+	}
 	if (this->_me2 != NULL)
 		this->_me2->update(time);
 	if (this->_multi == true)
@@ -357,7 +365,7 @@ void			GameManager::restart(void)
 	MapManager::Instance().restart();
 	this->_me = new Player();
 	if (this->_pl2 == true)
-		this->_me2 = new Player(true, true);
+		this->_me2 = new Player(true, true, true);
 	if (this->_multi == true && this->_master == true)
 	{
 		this->_serv->send_msg_to_all(this->_clients, 0, (char *)"Rstart");

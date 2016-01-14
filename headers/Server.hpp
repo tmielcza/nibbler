@@ -59,6 +59,7 @@ class Server
 	int			getMaxFD(void);
 	int			getNbPlayers(void);
 	void		setPlayers(Player *me1, Player *me2);
+	void		VerifySnakes(char *tmp);
 
 };
 

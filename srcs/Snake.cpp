@@ -23,24 +23,24 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_speed = 4;
 	this->_slow = 0.;
 	this->_alive = true;
-	this->_local = true;
+	this->_client = true;
 	this->_increm = 0.35;
 	this->init();
 }
 
-Snake::Snake(bool local) : _index(Snake::_curIndex++)
+Snake::Snake(bool client) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_alive = true;
-	this->_local = local;
+	this->_client = client;
 	this->_increm = 0.35;
 	this->_slow = 0.;
 	this->init();
 }
 
-Snake::Snake(e_Cardinal direction, int x, int y, bool local, int index) : _index(index)
+Snake::Snake(e_Cardinal direction, int x, int y, bool client, int index) : _index(index)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
@@ -48,7 +48,7 @@ Snake::Snake(e_Cardinal direction, int x, int y, bool local, int index) : _index
 	this->_increm = 0.35;
 	this->init(direction, x, y);
 	this->_alive = true;
-	this->_local = local;
+	this->_client = client;
 }
 
 Snake::~Snake(void)
@@ -350,7 +350,7 @@ void							Snake::eat(Food const & eaten)
 		this->_increm -= 0.01;
 	if (this->_increm < 0.05)
 		this->_increm = 0.05;
-	if (this->_local == true && eaten.getSpawner() == true)
+	if (this->_client == true && eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
 	if (this->_nbmove > 2)
@@ -389,14 +389,22 @@ void							Snake::setHeadSnakeX(int x)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 
+	int _x = (*head)->getX();
+	int _y = (*head)->getY();
+	MapManager::Instance()._Map[_x][_y] = NULL;
 	(*head)->setX(x);
+	MapManager::Instance()._Map[x][_y] = (*head);
 }
 
 void							Snake::setHeadSnakeY(int y)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 
+	int _x = (*head)->getX();
+	int _y = (*head)->getY();
+	MapManager::Instance()._Map[_x][_y] = NULL;
 	(*head)->setY(y);
+	MapManager::Instance()._Map[_x][y] = (*head);
 }
 
 void							Snake::setHeadSnakeDirec(e_Cardinal direc)

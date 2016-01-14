@@ -71,6 +71,7 @@ class Client
 	int					getHeight(void);
 	int					getMaxPlayer(void);
 	int					getNBPlayers(void);
+	void				VerifySnakes(char *tmp);
 
 };
 

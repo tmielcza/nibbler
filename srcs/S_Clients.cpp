@@ -37,7 +37,7 @@ void	S_Client::c_send(void)
 
 	b_write.bc_read(tmp_write);
 	i = strlen(tmp_write);
-	std::cout << "Sending to " << this->sock << " : " << this->tmp_write << std::endl;
+	std::cout << "Sending to " << this->sock << " : " << this->tmp_write;
 	send(sock, tmp_write, i, 0);
 	bzero(tmp_write, i + 1);
 }
@@ -60,9 +60,9 @@ char	*S_Client::c_receive(void)
 		bzero(tmp_read, BC_SIZE + 1);
 		if (b_read.bc_iscmd() == 1)
 		{
-			b_read.bc_read(tmp_read);
-			std::cout << "Receiving from " << this->sock << " : " << tmp_read << std::endl;
-			return (tmp_read);
+			b_read.bc_read(this->tmp_read);
+			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
+			return (this->tmp_read);
 		}
 	}
 	return (NULL);
@@ -125,7 +125,7 @@ Player		*S_Client::getPlayer2(void)
 std::string	S_Client::setPlayer1(bool create)
 {
 	if (create == true)
-		this->_pl1 = new Player(false, true);
+		this->_pl1 = new Player(false, true, false);
 	int x = this->_pl1->getX();
 	int y = this->_pl1->getY();
 	e_Cardinal direc = this->_pl1->getDirec();
@@ -138,7 +138,7 @@ std::string	S_Client::setPlayer1(bool create)
 std::string	S_Client::setPlayer2(bool create)
 {
 	if (create == true)
-		this->_pl2 = new Player(false, true);
+		this->_pl2 = new Player(false, true, false);
 	int x = this->_pl2->getX();
 	int y = this->_pl2->getY();
 	e_Cardinal direc = this->_pl2->getDirec();

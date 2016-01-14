@@ -69,6 +69,7 @@ void		Client::check_actions(void)
 		{
 			this->r--;
 			this->send_data();
+
 		}
 	}
 }
@@ -104,7 +105,7 @@ void		Client::send_data()
 
 	this->b_write.bc_read(this->tmp_write);
 	i = strlen(tmp_write);
-	std::cout << "Sending : " << this->tmp_write << std::endl;
+	std::cout << "Sending : " << this->tmp_write;
 	send(sock, this->tmp_write, i, 0);
 	bzero(&this->tmp_write, i);
 }
@@ -130,8 +131,6 @@ void		Client::Snake_direc(char *tmp)
 		i++;
 	i++;
 	direc = atoi(tmp + i);
-	std::cout << "Snake " << index << " Direction " << direc << " at " << x << "-" << y;
-	std::cout << " at i = " << i << std::endl;
 	if (direc != 0)
 	{
 		std::list<Player*>::iterator	snake = this->_players.begin();
@@ -153,11 +152,7 @@ void		Client::Snake_direc(char *tmp)
 							int _x = (*snake)->getX();
 							int _y = (*snake)->getY();
 							if (_x != x || _y != y)
-							{
-								std::cout << "Attempting to set Snake : " << x << "-" << y;
-								std::cout << " direc : " << direc << std::endl;
 								(*snake)->add_touch((e_Cardinal)direc);
-							}
 							else
 								(*snake)->add_touch((e_Cardinal)direc);
 						}
@@ -275,12 +270,7 @@ void		Client::init_Game(char *tmp)
 		i++;
 	i++;
 	int y = atoi(tmp + i);
-	std::cout << "Wall : " << this->_wall << std::endl;
-	std::cout << "Width : " << this->_width << std::endl;
-	std::cout << "Height : " << this->_height << std::endl;
-	std::cout << "MaxPlayer : " << this->_maxPlayer << std::endl;
-	std::cout << "Creating Player index : " << index << std::endl;
-	this->_me1 = new Player((e_Cardinal)direc, x, y, index, false, false);
+	this->_me1 = new Player((e_Cardinal)direc, x, y, index, false, false, true);
 	this->_nbPlayer++;
 	if (this->_pl2 == true)
 	{
@@ -302,7 +292,7 @@ void		Client::init_Game(char *tmp)
 			i++;
 		i++;
 		y = atoi(tmp + i);
-		this->_me2 = new Player((e_Cardinal)direc, x, y, index, true, false);
+		this->_me2 = new Player((e_Cardinal)direc, x, y, index, true, false, true);
 		this->_nbPlayer++;
 	}
 	else
@@ -311,7 +301,6 @@ void		Client::init_Game(char *tmp)
 		i++;
 	if (tmp[i] != '\0')
 		i++;
-	std::cout << "Start while at : " << &tmp[i] << std::endl;
 	while (tmp[i] != '\0')
 	{
 		while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
@@ -335,7 +324,7 @@ void		Client::init_Game(char *tmp)
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
 		std::cout << "Creating Player index : " << index << std::endl;
-		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false);
+		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false, false);
 		this->_players.push_back(clt);
 		this->_nbPlayer++;
 	}
@@ -374,15 +363,56 @@ void		Client::init_Others(char *tmp)
 			i++;
 		std::cout << "Creating Player index : " << index << std::endl;
 		std::cout << "Pos : " << x << "-" << y << " to " << direc << std::endl;
-		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false);
+		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false, false);
 		this->_players.push_back(clt);
 		this->_nbPlayer++;
 	}
 }
 
+void		Client::VerifySnakes(char *tmp)
+{
+	int			i = 2;
+	int			index = atoi(tmp + i);
+	int			x;
+	int			y;
+	int			direc;
+
+	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+		i++;
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	y = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	direc = atoi(tmp + i);
+	std::list<Player*>::iterator player = this->_players.begin();
+	std::list<Player*>::iterator end = this->_players.end();
+	while (player != end)
+	{
+		if ((*player)->getIndex() == index)
+		{
+			if ((*player)->getX() != x)
+				(*player)->setX(x);
+			if ((*player)->getY() != y)
+				(*player)->setY(y);
+			if ((*player)->getDirec() != direc)
+				(*player)->setDirec((e_Cardinal)direc);
+		}
+		player++;
+	}
+}
+
 void		Client::make_cmd(char *tmp)
 {
-	if (strncmp(tmp, "S", 1) == 0)
+	if (strncmp(tmp, "V", 1) == 0)
+		this->VerifySnakes(tmp);
+	else if (strncmp(tmp, "S", 1) == 0)
 		Snake_direc(tmp);
 	else if (strncmp(tmp, "F", 1) == 0)
 		popFood(tmp);
@@ -512,7 +542,6 @@ char				**ft_strtab(char *str)
 		if (str[i] == '\n' && str[i + 1] != '\0' && str[i + 1] != '\n')
 		{
 			str[i] = '\0';
-			std::cout << "My Fucking STR : " << str + i + 1 << std::endl;
 			tab[j] = str + i + 1;
 			j++;
 		}

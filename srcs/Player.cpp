@@ -18,29 +18,35 @@ Player::Player(void)
 {
 	std::cout << "Creating Player !" << std::endl;
 	this->_pl2 = false;
+	this->_client = true;
 	this->_local = true;
 	this->_time = 0;
 	this->_Snake = new Snake();
+	this->_tosend = "";
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
-Player::Player(bool pl2, bool local)
+Player::Player(bool pl2, bool client, bool local)
 {
 	std::cout << "Creating Player !" << std::endl;
+	this->_tosend = "";
 	this->_pl2 = pl2;
 	this->_local = local;
+	this->_client = client;
 	this->_time = 0;
-	this->_Snake = new Snake(local);
+	this->_Snake = new Snake(client);
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
-Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local)
+Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool client, bool local)
 {
+	this->_tosend = "";
 	this->_pl2 = pl2;
 	this->_local = local;
+	this->_client = client;
 	this->_time = 0;
 	std::cout << "Creating Player in Player index : " << index << std::endl;
-	this->_Snake = new Snake(direc, x, y, local, index);
+	this->_Snake = new Snake(direc, x, y, client, index);
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
@@ -51,7 +57,8 @@ Player::Player(Snake *snake)
 		std::cout << "Creating Player !" << std::endl;
 		this->_Snake = snake;
 		this->_pl2 = false;
-		this->_local = true;
+		this->_tosend = "";
+		this->_client = true;
 		MapManager::Instance().setSnake(this->_Snake);
 	}
 }
@@ -132,8 +139,15 @@ void		Player::update(double time)
 		}
 		this->_Snake->befor_move();
 		this->_Snake->move();
-		//
 		this->_time = 0.;
+		if (this->_local == true)
+		{
+			this->_tosend = "VS";
+			this->_tosend += std::to_string(this->getIndex()) + "_";
+			this->_tosend += std::to_string(this->getX()) + "_";
+			this->_tosend += std::to_string(this->getY()) + "_";
+			this->_tosend += std::to_string(this->getDirec());
+		}
 	}
 	this->_Snake->draw(this->_time);
 	GraphicsManager::Instance().drawScore(this->_time, this->_Snake->getHeadSnakeX(),
@@ -204,4 +218,17 @@ void		Player::move(void)
 {
 //	this->_Snake->befor_move();
 	this->_Snake->move();
+}
+
+char		*Player::takeToSend(void)
+{
+	if (this->_tosend == "")
+		return NULL;
+	char *tmp = (char *)this->_tosend.c_str();
+	return tmp;
+}
+
+void		Player::ClearToSend(void)
+{
+	this->_tosend = "";
 }

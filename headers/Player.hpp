@@ -22,15 +22,17 @@ class Player
 
 	Snake					*_Snake;
 	std::list<e_Cardinal>	_lastInputs;
+	std::string				_tosend;
 	double					_time;
 	bool					_local;
-	bool					_pl2;	
+	bool					_client;
+	bool					_pl2;
 
 	public:
 
 	Player(void);
-	Player(bool pl2, bool local);
-	Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool local);
+	Player(bool pl2, bool client, bool local);
+	Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool client, bool local);
 	Player(Snake *snake);
 	Player(const Player & copy);
 	~Player(void);
@@ -51,6 +53,8 @@ class Player
 	int			getIndex(void);
 	bool		getPL2(void);
 	void		move(void);
+	char		*takeToSend(void);
+	void		ClearToSend(void);
 
 };
 

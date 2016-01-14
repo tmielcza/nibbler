@@ -39,7 +39,7 @@ class Snake
 	double						_slow;
 	double						_increm;
 	bool						_alive;
-	bool						_local;
+	bool						_client;
 
 	Snake(Snake const & copy);
 
@@ -49,8 +49,8 @@ class Snake
 	public:
 
 	Snake(void);
-	Snake(bool local);
-	Snake(e_Cardinal direction, int x, int y, bool local, int index);
+	Snake(bool client);
+	Snake(e_Cardinal direction, int x, int y, bool client, int index);
 	~Snake(void);
 
 	void						init(void);
