@@ -105,7 +105,7 @@ void		Client::send_data()
 
 	this->b_write.bc_read(this->tmp_write);
 	i = strlen(tmp_write);
-	std::cout << "Sending : " << this->tmp_write;
+//	std::cout << "Sending : " << this->tmp_write;
 	send(sock, this->tmp_write, i, 0);
 	bzero(&this->tmp_write, i);
 }
@@ -174,7 +174,8 @@ void		Client::Snake_direc(char *tmp)
 
 void		Client::popFood(char *tmp)
 {
-	int		i = 0;
+	int		i = 2;
+	int		spawner = atoi(tmp + 1);
 	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 		i++;
 	int x = atoi(tmp + i);
@@ -182,7 +183,10 @@ void		Client::popFood(char *tmp)
 		i++;
 	i++;
 	int y = atoi(tmp + i);
-	MapManager::Instance().foodpop(x, y);
+	if (spawner == 1)
+		MapManager::Instance().foodpop(true, x, y);
+	else if (spawner == 0)
+		MapManager::Instance().foodpop(false, x, y);
 }
 
 void		Client::popBonus(char *tmp)
@@ -408,16 +412,67 @@ void		Client::VerifySnakes(char *tmp)
 	}
 }
 
+void		Client::Snake_Eat(char *tmp)
+{
+	int		i = 3;
+	int		index = atoi(tmp + i);
+	int		x;
+	int		y;
+
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	y = atoi(tmp + i);
+	MapManager::Instance().Snake_Eat(index, x, y);
+}
+
+void		Client::Snake_Take(char *tmp)
+{
+	int		i = 3;
+	int		index = atoi(tmp + i);
+	int		x;
+	int		y;
+
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	y = atoi(tmp + i);
+	MapManager::Instance().Snake_Take(index, x, y);
+}
+
+void		Client::Snake_Death(char *tmp)
+{
+	int		index = atoi(tmp + 2);
+	MapManager::Instance().Snake_Death(index);
+}
+
 void		Client::make_cmd(char *tmp)
 {
-	if (strncmp(tmp, "V", 1) == 0)
+	if (tmp[0] == 'V')
 		this->VerifySnakes(tmp);
-	else if (strncmp(tmp, "S", 1) == 0)
+	else if (tmp[0] == 'S')
 		Snake_direc(tmp);
-	else if (strncmp(tmp, "F", 1) == 0)
+	else if (tmp[0] == 'E')
+	{
+		if (tmp[1] == 'F')
+			this->Snake_Eat(tmp);
+		else if (tmp[1] == 'B')
+			this->Snake_Take(tmp);
+	}
+	else if (tmp[0] =='F')
 		popFood(tmp);
-	else if (strncmp(tmp, "B", 1) == 0)
+	else if (tmp[0] == 'B')
 		popBonus(tmp);
+	else if (tmp[0] == 'D')
+		this->Snake_Death(tmp);
 	else if (strncmp(tmp, "C_co", 4) == 0)
 	{
 		if (this->_pl2 == true)
@@ -457,7 +512,7 @@ void		Client::receive_data(void)
 			{
 				if (tab[i] != NULL && tab[i][0] != '\0')
 				{
-					std::cout << "Receive : " << tab[i] << std::endl;
+//					std::cout << "Receive : " << tab[i] << std::endl;
 					make_cmd(tab[i]);
 				}
 			}

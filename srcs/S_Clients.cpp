@@ -1,4 +1,5 @@
 #include "S_Client.hpp"
+#include "Client.hpp"
 
 S_Client::S_Client(int me)
 {
@@ -37,12 +38,12 @@ void	S_Client::c_send(void)
 
 	b_write.bc_read(tmp_write);
 	i = strlen(tmp_write);
-	std::cout << "Sending to " << this->sock << " : " << this->tmp_write;
+//	std::cout << "Sending to " << this->sock << " : " << this->tmp_write;
 	send(sock, tmp_write, i, 0);
 	bzero(tmp_write, i + 1);
 }
 
-char	*S_Client::c_receive(void)
+char	**S_Client::c_receive(void)
 {
 	int		r;
 
@@ -61,8 +62,9 @@ char	*S_Client::c_receive(void)
 		if (b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
-			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
-			return (this->tmp_read);
+//			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
+			char **tab = ft_strtab(this->tmp_read);
+			return (tab);
 		}
 	}
 	return (NULL);

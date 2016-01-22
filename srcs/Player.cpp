@@ -34,7 +34,7 @@ Player::Player(bool pl2, bool client, bool local)
 	this->_local = local;
 	this->_client = client;
 	this->_time = 0;
-	this->_Snake = new Snake(client);
+	this->_Snake = new Snake(client, local);
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
@@ -46,7 +46,7 @@ Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool client,
 	this->_client = client;
 	this->_time = 0;
 	std::cout << "Creating Player in Player index : " << index << std::endl;
-	this->_Snake = new Snake(direc, x, y, client, index);
+	this->_Snake = new Snake(direc, x, y, client, local, index);
 	MapManager::Instance().setSnake(this->_Snake);
 }
 
@@ -218,6 +218,16 @@ void		Player::move(void)
 {
 //	this->_Snake->befor_move();
 	this->_Snake->move();
+}
+
+char		*Player::SnaketakeToSend(void)
+{
+	return (this->_Snake->takeToSend());
+}
+
+void		Player::SnakeClearToSend(void)
+{
+	this->_Snake->ClearToSend();
 }
 
 char		*Player::takeToSend(void)

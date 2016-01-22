@@ -69,7 +69,7 @@ class MapManager
 	void				foodpop(bool spawner);
 	void				foodpop(Point upleft, Point downright, bool spawner, e_PopMode mode);
 	void				foodpop(Point center, int radius, bool spawner, e_PopMode mode);
-	void				foodpop(int x, int y);
+	void				foodpop(bool spawner, int x, int y);
 	void				foodepop(int x, int y);
 	void				bonuspop(void);
 	void				bonuspop(int b);
@@ -89,6 +89,9 @@ class MapManager
 	void				ClearToSend(void);
 	bool				getWall(void);
 	void				setWall(bool wall);
+	void				Snake_Eat(int index, int x, int y);
+	void				Snake_Take(int index, int x, int y);
+	void				Snake_Death(int index);
 
 };
 

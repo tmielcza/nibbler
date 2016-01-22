@@ -40,7 +40,7 @@ class S_Client
 	~S_Client(void);
 	void			c_send(void);
 	int				is_write(void);
-	char			*c_receive(void);
+	char			**c_receive(void);
 	void			clear_tmp_read(void);
 	void			set_name(std::string me);
 	std::string		get_name(void);

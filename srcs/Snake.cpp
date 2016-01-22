@@ -24,31 +24,38 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_slow = 0.;
 	this->_alive = true;
 	this->_client = true;
+	this->_local = true;
 	this->_increm = 0.35;
+	this->_tosend = "";
 	this->init();
 }
 
-Snake::Snake(bool client) : _index(Snake::_curIndex++)
+Snake::Snake(bool client, bool local) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_alive = true;
 	this->_client = client;
+	this->_local = local;
 	this->_increm = 0.35;
 	this->_slow = 0.;
+	this->_tosend = "";
 	this->init();
 }
 
-Snake::Snake(e_Cardinal direction, int x, int y, bool client, int index) : _index(index)
+Snake::Snake(e_Cardinal direction, int x, int y, bool client, bool local, int index)
+  : _index(index)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
 	this->_speed = 4;
 	this->_increm = 0.35;
+	this->_tosend = "";
 	this->init(direction, x, y);
 	this->_alive = true;
 	this->_client = client;
+	this->_local = local;
 }
 
 Snake::~Snake(void)
@@ -192,10 +199,12 @@ void							Snake::befor_move(void)
 	{
 		if (MapManager::Instance()._Map[x][y]->getEatable() == false)
 		{
-			if (MapManager::Instance()._Map[x][y] != this->_tail)
+			if (this->_local == true && MapManager::Instance()._Map[x][y] != this->_tail)
 				this->_alive = false;
 			if (this->_alive == false)
 			{
+				this->_tosend = "DS";
+				this->_tosend += std::to_string(this->_index);
 				if (dynamic_cast<Segment *>(MapManager::Instance()._Map[x][y]))
 					std::cout << "Dead by a Segment : ";
 				else if (dynamic_cast<Wall *>(MapManager::Instance()._Map[x][y]))
@@ -340,11 +349,16 @@ void							Snake::eat(Food const & eaten)
 {
 	GraphicsManager::Instance().popWave(this->getHeadSnakeX(), this->getHeadSnakeY());
 	this->add_to_tail();
+	this->_tosend = "EFS";
+	this->_tosend += std::to_string(this->_index);
+	this->_tosend += "-";
+	this->_tosend += std::to_string(eaten.getX());
+	this->_tosend += "-";
+	this->_tosend += std::to_string(eaten.getY());
 	if (this->_nbmove <= 2 && this->_nbmove >= 0)
 		this->add_score(eaten.get_value() * 2);
 	else
 		this->add_score(eaten.get_value());
-//	this->_speed += 0.2;
 	this->_speed += this->_increm;
 	if (this->_increm > 0.05)
 		this->_increm -= 0.01;
@@ -363,6 +377,12 @@ void							Snake::take_bonus(ABonus & taken)
 	taken.taken(*this);
 	this->_nbmove = 0;
 	GraphicsManager::Instance().setFoodMode(true);
+	this->_tosend = "EBS";
+	this->_tosend += std::to_string(this->_index);
+	this->_tosend += "-";
+	this->_tosend += std::to_string(taken.getX());
+	this->_tosend += "-";
+	this->_tosend += std::to_string(taken.getY());
 }
 
 e_Cardinal						Snake::getHeadSnakeDirec(void)
@@ -434,6 +454,11 @@ bool							Snake::IsAlive(void)
 	return (this->_alive);
 }
 
+void							Snake::SetAlive(bool alive)
+{
+	this->_alive = alive;
+}
+
 void							Snake::draw(double time)
 {
 	float x, y;
@@ -497,4 +522,16 @@ void		Snake::Cut(size_t less)
 		this->_tail = *seg;
 		seg++;
 	}
+}
+
+char		*Snake::takeToSend(void)
+{
+	if (this->_tosend == "")
+		return NULL;
+	return ((char *)this->_tosend.c_str());
+}
+
+void		Snake::ClearToSend(void)
+{
+	this->_tosend = "";
 }

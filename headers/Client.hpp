@@ -72,6 +72,9 @@ class Client
 	int					getMaxPlayer(void);
 	int					getNBPlayers(void);
 	void				VerifySnakes(char *tmp);
+	void				Snake_Eat(char *tmp);
+	void				Snake_Take(char *tmp);
+	void				Snake_Death(char *tmp);
 
 };
 

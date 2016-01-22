@@ -261,15 +261,9 @@ void		GameManager::update(double time)
 					if (this->_me->verify_lL((e_Cardinal)input) == 1)
 					{
 						if (this->_multi == true && this->_master == true)
-						{
-							this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());
-//							this->_serv->run_serv(false);
-						}
+							this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());	
 						else if (this->_multi == true)
-						{
 							this->_client->set_write((char *)tmp.c_str());
-//							this->_client->run_clt();
-						}
 						this->_me->add_touch((e_Cardinal)input);
 					}
 				}
@@ -295,10 +289,10 @@ void		GameManager::update(double time)
 			}
 		}
 	}
-	if (this->_multi == true && this->_master == true)
-		this->_serv->run_serv(false);
-	else if (this->_multi == true)
-		this->_client->run_clt();
+//	if (this->_multi == true && this->_master == true)
+//		this->_serv->run_serv(false);
+//	else if (this->_multi == true)
+//		this->_client->run_clt();
 	if (this->_me != NULL)
 	{
 		this->_me->update(time);
@@ -310,6 +304,15 @@ void		GameManager::update(double time)
 			else if (this->_multi == true)
 				this->_client->set_write(tmp);
 			this->_me->ClearToSend();
+		}
+		char *tmp1 = this->_me->SnaketakeToSend();
+		if (tmp1 != NULL)
+		{
+			if (this->_multi == true && this->_master == true)
+				this->_serv->send_msg_to_all(this->_clients, 0, tmp1);
+			else if (this->_multi == true)
+				this->_client->set_write(tmp1);
+			this->_me->SnakeClearToSend();
 		}
 	}
 	if (this->_me2 != NULL)
@@ -323,6 +326,15 @@ void		GameManager::update(double time)
 			else if (this->_multi == true)
 				this->_client->set_write(tmp);
 			this->_me->ClearToSend();
+		}
+		char *tmp1 = this->_me2->SnaketakeToSend();
+		if (tmp1 != NULL)
+		{
+			if (this->_multi == true && this->_master == true)
+				this->_serv->send_msg_to_all(this->_clients, 0, tmp1);
+			else if (this->_multi == true)
+				this->_client->set_write(tmp1);
+			this->_me2->SnakeClearToSend();
 		}
 	}
 	if (this->_multi == true)
@@ -369,21 +381,16 @@ bool			GameManager::leaving(void)
 
 void			GameManager::restart(void)
 {
-	if (this->_me != NULL)
-		delete this->_me;
-	if (this->_pl2 == true && this->_me2 != NULL)
-		delete this->_me2;
-	MapManager::Instance().restart();
-	this->_me = new Player();
-	if (this->_pl2 == true)
-		this->_me2 = new Player(true, true, true);
-	if (this->_multi == true && this->_master == true)
+	if (this->_multi == false)
 	{
-		this->_serv->send_msg_to_all(this->_clients, 0, (char *)"Rstart");
-		for (int i = 0; i < this->_serv->getMaxFD(); i++)
-		{
-//			this->_clients[i]->
-		}
+		if (this->_me != NULL)
+			delete this->_me;
+		if (this->_pl2 == true && this->_me2 != NULL)
+			delete this->_me2;
+		MapManager::Instance().restart();
+		this->_me = new Player();
+		if (this->_pl2 == true)
+			this->_me2 = new Player(true, true, true);
 	}
 }
 

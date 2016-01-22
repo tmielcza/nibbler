@@ -1,6 +1,5 @@
 #include "Server.hpp"
 #include "MapManager.hpp"
-#include "Client.hpp"
 
 Server::Server(int port, bool wall, int width, int height, int playerMax)
 {
@@ -320,12 +319,63 @@ void	Server::VerifySnakes(char *tmp)
 	}
 }
 
+void	Server::Snake_Eat(char *tmp)
+{
+	int		i = 3;
+	int		index = atoi(tmp + i);
+	int		x;
+	int		y;
+
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	y = atoi(tmp + i);
+	MapManager::Instance().Snake_Eat(index, x, y);
+}
+
+void	Server::Snake_Take(char *tmp)
+{
+	int		i = 3;
+	int		index = atoi(tmp + i);
+	int		x;
+	int		y;
+
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	x = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	y = atoi(tmp + i);
+	MapManager::Instance().Snake_Take(index, x, y);
+}
+
+void	Server::Snake_Death(char *tmp)
+{
+	int		index = atoi(tmp + 2);
+	MapManager::Instance().Snake_Death(index);
+}
+
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
 	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
 		if (msg[0] == 'V')
 			this->VerifySnakes(msg);
+		else if (msg[0] == 'E')
+		{
+			if (msg[1] == 'F')
+				this->Snake_Eat(msg);
+			else if (msg[1] == 'B')
+				this->Snake_Take(msg);
+		}
+		else if (msg[0] == 'D')
+			this->Snake_Death(msg);
 		else
 			this->do_cmd(clients, cs, msg);
 		send_msg_to_all(clients, cs, msg);
@@ -338,7 +388,7 @@ void	Server::check_actions(S_Client **clients, int cs, char *msg)
 void	Server::check_fd(S_Client **clients)
 {
 	int		i;
-	char	*msg;
+	char	**msg;
 
 	i = 0;
 	if (FD_ISSET(ssock, &fd_read) != 0)
@@ -350,7 +400,10 @@ void	Server::check_fd(S_Client **clients)
 			if (FD_ISSET(i, &fd_read) != 0)
 			{
 				if ((msg = clients[i]->c_receive()) != NULL)
-					check_actions(clients, i, msg);
+				{
+					for (int j = 0; msg[j] != NULL; j++)
+						check_actions(clients, i, msg[j]);
+				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)
 				clients[i]->c_send();
@@ -364,7 +417,7 @@ void	Server::check_fd(S_Client **clients)
 void	Server::check_fd_noCo(S_Client **clients)
 {
 	int		i;
-	char	*msg;
+	char	**msg;
 
 	i = 0;
 	if (FD_ISSET(ssock, &fd_read) != 0)
@@ -376,7 +429,10 @@ void	Server::check_fd_noCo(S_Client **clients)
 			if (FD_ISSET(i, &fd_read) != 0)
 			{
 				if ((msg = clients[i]->c_receive()) != NULL)
-					check_actions(clients, i, msg);
+				{
+					for (int j = 0; msg[j] != NULL; j++)
+						check_actions(clients, i, msg[j]);
+				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)
 				clients[i]->c_send();

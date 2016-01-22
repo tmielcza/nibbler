@@ -60,6 +60,9 @@ class Server
 	int			getNbPlayers(void);
 	void		setPlayers(Player *me1, Player *me2);
 	void		VerifySnakes(char *tmp);
+	void		Snake_Eat(char *tmp);
+	void		Snake_Take(char *tmp);
+	void		Snake_Death(char *tmp);
 
 };
 

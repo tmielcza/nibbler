@@ -53,6 +53,8 @@ class Player
 	int			getIndex(void);
 	bool		getPL2(void);
 	void		move(void);
+	char		*SnaketakeToSend(void);
+	void		SnakeClearToSend(void);
 	char		*takeToSend(void);
 	void		ClearToSend(void);
 

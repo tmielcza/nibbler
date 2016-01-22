@@ -126,18 +126,28 @@ void	MapManager::foodpop(bool spawner)
 	Food *f = new Food(1, x, y, spawner);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
-	if (this->_tosend == "")
-		this->_tosend = "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+	if (spawner == true)
+	{
+		if (this->_tosend == "")
+			this->_tosend = "F1_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+		else
+			this->_tosend += "F1_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+	}
 	else
-		this->_tosend += "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+	{
+		if (this->_tosend == "")
+			this->_tosend = "F0_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+		else
+			this->_tosend += "F0_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+	}
 	int r = rand() % 4;
 	if (r == 2)
 		this->bonuspop();
 }
 
-void	MapManager::foodpop(int x, int y)
+void	MapManager::foodpop(bool spawner, int x, int y)
 {
-	Food *f = new Food(1, x, y, true);
+	Food *f = new Food(1, x, y, spawner);
 	this->_Map[x][y] = f;
 	this->_foods.push_back(f);
 }
@@ -159,10 +169,20 @@ void	MapManager::foodpop(Point upleft, Point downright, bool spawner, e_PopMode 
 			Food *f = new Food(1, x, y, spawner);
 			this->_Map[x][y] = f;
 			this->_foods.push_back(f);
-			if (this->_tosend == "")
-				this->_tosend = "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			if (spawner == true)
+			{
+				if (this->_tosend == "")
+					this->_tosend = "F1_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+				else
+					this->_tosend += "F1_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			}
 			else
-				this->_tosend += "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			{
+				if (this->_tosend == "")
+					this->_tosend = "F0_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+				else
+					this->_tosend += "F0_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			}
 		}
 	}
 }
@@ -189,10 +209,20 @@ void	MapManager::foodpop(Point center, int radius, bool spawner, e_PopMode mode 
 			Food *f = new Food(1, x, y, spawner);
 			this->_Map[x][y] = f;
 			this->_foods.push_back(f);
-			if (this->_tosend == "")
-				this->_tosend = "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			if (spawner == true)
+			{
+				if (this->_tosend == "")
+					this->_tosend = "F1_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+				else
+					this->_tosend += "F1_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			}
 			else
-				this->_tosend += "F_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			{
+				if (this->_tosend == "")
+					this->_tosend = "F0_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+				else
+					this->_tosend += "F0_" + std::to_string(x) + "_" + std::to_string(y) + "\n";
+			}
 		}
 	}
 }
@@ -598,4 +628,74 @@ bool				MapManager::getWall(void)
 void				MapManager::setWall(bool wall)
 {
 	this->_wall = wall;
+}
+
+void				MapManager::Snake_Eat(int index, int x, int y)
+{
+	std::list<Food *>::iterator		Fbegin = this->_foods.begin();
+	std::list<Food *>::iterator		Fend = this->_foods.end();
+
+	while (Fbegin != Fend)
+	{
+		if ((*Fbegin)->getX() == x && (*Fbegin)->getY() == y)
+		{
+			std::list<Snake *>::iterator Sbegin = this->_snakes.begin();
+			std::list<Snake *>::iterator Send = this->_snakes.end();
+
+			while (Sbegin != Send)
+			{
+				if ((*Sbegin)->getIndex() == index)
+				{
+					(*Sbegin)->eat(*(*Fbegin));
+					break;
+				}
+				Sbegin++;
+			}
+			break;
+		}
+		Fbegin++;
+	}
+}
+
+void				MapManager::Snake_Take(int index, int x, int y)
+{
+	std::list<ABonus *>::iterator		Bbegin = this->_bonus.begin();
+	std::list<ABonus *>::iterator		Bend = this->_bonus.end();
+
+	while (Bbegin != Bend)
+	{
+		if ((*Bbegin)->getX() == x && (*Bbegin)->getY() == y)
+		{
+			std::list<Snake *>::iterator Sbegin = this->_snakes.begin();
+			std::list<Snake *>::iterator Send = this->_snakes.end();
+
+			while (Sbegin != Send)
+			{
+				if ((*Sbegin)->getIndex() == index)
+				{
+					(*Sbegin)->take_bonus(*(*Bbegin));
+					break;
+				}
+				Sbegin++;
+			}
+			break;
+		}
+		Bbegin++;
+	}
+}
+
+void				MapManager::Snake_Death(int index)
+{
+	std::list<Snake *>::iterator	Sbegin = this->_snakes.begin();
+	std::list<Snake *>::iterator	Send = this->_snakes.end();
+	
+	while (Sbegin != Send)
+	{
+		if ((*Sbegin)->getIndex() == index)
+		{
+			(*Sbegin)->SetAlive(false);
+			break;
+		}
+			Sbegin++;
+	}
 }

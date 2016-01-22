@@ -32,6 +32,7 @@ class Snake
 	const int					_index;
 	static int					_curIndex;
 	std::list<Segment*>			_snake;
+	std::string					_tosend;
 	Segment						*_tail;
 	int							_nbmove;
 	int						 	_score;
@@ -40,6 +41,7 @@ class Snake
 	double						_increm;
 	bool						_alive;
 	bool						_client;
+	bool						_local;
 
 	Snake(Snake const & copy);
 
@@ -49,8 +51,8 @@ class Snake
 	public:
 
 	Snake(void);
-	Snake(bool client);
-	Snake(e_Cardinal direction, int x, int y, bool client, int index);
+	Snake(bool client, bool local);
+	Snake(e_Cardinal direction, int x, int y, bool client, bool local, int index);
 	~Snake(void);
 
 	void						init(void);
@@ -75,11 +77,13 @@ class Snake
 	double						getSpeed(void);
 	int							getScore(void);
 	bool						IsAlive(void);
+	void						SetAlive(bool alive);
 	void						draw(double time);
 	void						update_directions(void);
 	void						Slow(double time);
 	void						Cut(size_t cut);
-
+	char						*takeToSend(void);
+	void						ClearToSend(void);
 };
 
 #endif
