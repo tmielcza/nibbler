@@ -53,4 +53,8 @@ fclean: clean
 	@echo "[$(NAME)]--> Program removed"
 	@make fclean -C LibSFML/
 
+test:
+	@clear
+	@make && clear && ./Nibbler -nowall -player 2 -port 1024
+
 re: fclean all

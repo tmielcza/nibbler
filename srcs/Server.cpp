@@ -1,7 +1,7 @@
 #include "Server.hpp"
 #include "MapManager.hpp"
 
-Server::Server(int port, bool wall, int width, int height, int playerMax)
+Server::Server(int port, bool wall, int width, int height, int playerMax, int nbPlayers)
 {
 	struct rlimit	rlp;
 
@@ -16,7 +16,7 @@ Server::Server(int port, bool wall, int width, int height, int playerMax)
 	this->_width = width;
 	this->_height = height;
 	this->_maxPlayer = playerMax;
-	this->nbPlayers = 0;
+	this->nbPlayers = nbPlayers;
 }
 
 Server::~Server(void)
@@ -150,7 +150,7 @@ void		Server::create_snake(S_Client **clients, int cs, char *msg)
 	std::string tmp2 = clients[cs]->setPlayer1(true);
 	tmp += tmp2;
 	tmp1 += tmp2;
-	if (msg[0] == '2')
+	if (msg[0] == '2' && this->nbPlayers < this->_maxPlayer)
 	{
 		std::string tmp3 = "_";
 		tmp3 += clients[cs]->setPlayer2(true);

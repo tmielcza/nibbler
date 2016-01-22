@@ -121,7 +121,9 @@ void		GameManager::init_tcp(char *addr, int port)
 	else if (this->_multi == true && this->_master == true && this->_massif == false)
 	{
 		//Version Server
-		this->_serv = new Server(port, this->_wall, this->_width, this->_height, this->_nbPlayer);
+		int i = this->_nbPlayer;
+		int j = this->_curPL;
+		this->_serv = new Server(port, this->_wall, this->_width, this->_height, i, j);
 		this->_serv->init_clt(this->_clients);
 	}
 	else if (this->_multi == true && this->_master == true && this->_massif == true)
@@ -289,10 +291,6 @@ void		GameManager::update(double time)
 			}
 		}
 	}
-//	if (this->_multi == true && this->_master == true)
-//		this->_serv->run_serv(false);
-//	else if (this->_multi == true)
-//		this->_client->run_clt();
 	if (this->_me != NULL)
 	{
 		this->_me->update(time);

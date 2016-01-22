@@ -37,7 +37,7 @@ class Server
 	Server	&	operator=(const Server & src);
 	
 	public:
-	Server(int port, bool wall, int width, int height, int maxPlayer);
+	Server(int port, bool wall, int width, int height, int maxPlayer, int nbPlayers);
 	~Server(void);
 	int			run_serv(bool co);
 	void		connection(S_Client **clients);

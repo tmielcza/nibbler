@@ -137,16 +137,16 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 	this->_game->init_tcp(this->_addr, this->_port);
 	this->_game->setPlayertoServ();
 	std::cout << "Wait until everybody is here : ";
-	std::cout << this->_game->getCurPL() << "/" << this->_nbPlayers << std::endl;
-	while ((this->_game->getCurPL() + this->_game->getServPL()) < this->_nbPlayers)
+	std::cout << this->_game->getServPL() << "/" << this->_nbPlayers << std::endl;
+	while (this->_game->getServPL() < this->_nbPlayers)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
 		this->_game->Server_Check(true);
 	}
 	std::cout << "Wait until everybody is here : ";
-	std::cout << "(" << this->_game->getCurPL() << " + " << this->_game->getServPL();
-	std::cout << ")/" << this->_nbPlayers << std::endl;
+	std::cout << this->_game->getServPL();
+	std::cout << "/" << this->_nbPlayers << std::endl;
 	this->_game->Bring_Serv_Clients();
 	for (int i = 0; i < this->_nbPlayers; i++)
 		MapManager::Instance().foodpop(true);
