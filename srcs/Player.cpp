@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/11/22 17:12:29 by rduclos           #+#    #+#             //
-//   Updated: 2016/01/25 18:11:24 by rduclos          ###   ########.fr       //
+//   Updated: 2016/01/25 18:39:35 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -247,4 +247,14 @@ void		Player::ClearToSend(void)
 int			Player::getCycles(void)
 {
 	return (this->_Snake->getCycles());
+}
+
+void		Player::add_Cycle(int cycle, int x, int y, int direc)
+{
+	this->_Snake->add_Cycle(cycle, x, y, direc);
+}
+
+void		Player::CheckSnakeCycle(void)
+{
+	this->_Snake->CheckSnakeCycle();
 }

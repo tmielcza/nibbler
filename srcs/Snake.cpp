@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 17:52:27 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/11 21:11:13 by tmielcza         ###   ########.fr       //
+//   Updated: 2016/01/25 19:38:29 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -172,6 +172,7 @@ void							Snake::befor_move(void)
 	int x = (*head)->getX();
 	int y = (*head)->getY();
 
+	this->CheckSnakeCycle();
 	e_Cardinal direc = (*head)->get_Direc();
 	if (this->_cycles < 1000)
 		this->_cycles++;
@@ -291,6 +292,7 @@ void							Snake::move(void)
 				this->_slow = 0;
 			}
 		}
+		this->CheckSnakeCycle();
 	}
 }
 
@@ -545,4 +547,55 @@ char		*Snake::takeToSend(void)
 void		Snake::ClearToSend(void)
 {
 	this->_tosend = "";
+}
+
+void		Snake::add_Cycle(int cycle, int x, int y, int direc)
+{
+	t_MC	*tmp = new t_MC;
+
+	tmp->cycle = cycle;
+	tmp->x = x;
+	tmp->y = y;
+	tmp->direc = direc;
+	this->_msgCycles.push_back(tmp);
+}
+
+void		Snake::CheckSnakeCycle(void)
+{
+	if (this->_msgCycles.size() > 0)
+	{
+		std::list<t_MC *>::iterator		cycle = this->_msgCycles.begin();
+		std::list<t_MC *>::iterator		end = this->_msgCycles.end();
+
+		while (cycle != end)
+		{
+			if ((*cycle)->cycle == this->_cycles)
+			{
+				std::cout << "Snake " << this->getIndex();
+				std::cout << " for Cycle : " << this->_cycles;
+				std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
+				std::cout << " Position in : " << this->getHeadSnakeX() << "-";
+				std::cout << this->getHeadSnakeY() << std::endl;
+				if (this->getHeadSnakeX() != (*cycle)->x)
+					this->setHeadSnakeX((*cycle)->x);
+				if (this->getHeadSnakeY() != (*cycle)->y)
+					this->setHeadSnakeY((*cycle)->y);
+				if (this->getHeadSnakeDirec() != (e_Cardinal)(*cycle)->direc)
+					this->setHeadSnakeDirec((e_Cardinal)(*cycle)->direc);
+				delete (*cycle);
+				this->_msgCycles.erase(cycle);
+				break;
+			}
+			else if ((*cycle)->cycle < this->_cycles)
+			{
+				t_MC *tmp = (*cycle);
+				std::list<t_MC *>::iterator		del = cycle;
+				cycle++;
+				delete tmp;
+				this->_msgCycles.erase(del);
+			}
+			else
+				cycle++;
+		}
+	}
 }

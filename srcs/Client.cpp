@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/25 18:10:18 by rduclos           #+#    #+#             //
-//   Updated: 2016/01/25 18:10:19 by rduclos          ###   ########.fr       //
+//   Updated: 2016/01/25 19:39:59 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -125,7 +125,7 @@ void		Client::send_data()
 void		Client::Snake_direc(char *tmp)
 {
 	int		index = atoi(tmp + 1);
-	int		cycles;
+//	int		cycles;
 	int		direc;
 	int		x;
 	int		y;
@@ -135,10 +135,10 @@ void		Client::Snake_direc(char *tmp)
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
-	cycles = atoi(tmp + i);
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
+//	cycles = atoi(tmp + i);
+//	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+//		i++;
+//	i++;
 	x = atoi(tmp + i);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
@@ -422,24 +422,7 @@ void		Client::VerifySnakes(char *tmp)
 	while (player != end)
 	{
 		if ((*player)->getIndex() == index)
-		{
-			std::cout << "Cycles of " << index << " Cycles received : ";
-			std::cout << cycles << " on Cycles of Snake : " << (*player)->getCycles();
-			std::cout << std::endl;
-			if (cycles == (*player)->getCycles())
-			{
-				if ((*player)->getX() != x)
-					(*player)->setX(x);
-				if ((*player)->getY() != y)
-					(*player)->setY(y);
-				if ((*player)->getDirec() != direc)
-					(*player)->setDirec((e_Cardinal)direc);
-			}
-			else
-			{
-
-			}
-		}
+			(*player)->add_Cycle(cycles, x, y, direc);
 		player++;
 	}
 }

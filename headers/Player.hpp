@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/29 19:17:33 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/03 21:20:45 by rduclos          ###   ########.fr       //
+//   Updated: 2016/01/25 18:30:39 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -58,6 +58,8 @@ class Player
 	void		SnakeClearToSend(void);
 	char		*takeToSend(void);
 	void		ClearToSend(void);
+	void		add_Cycle(int cycle, int x, int y, int direc);
+	void		CheckSnakeCycle(void);
 
 };
 

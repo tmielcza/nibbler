@@ -6,7 +6,7 @@
 #    By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/17 17:23:01 by rduclos           #+#    #+#              #
-#    Updated: 2015/12/09 17:23:51 by tmielcza         ###   ########.fr        #
+#    Updated: 2016/01/25 19:42:58 by rduclos          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -55,6 +55,6 @@ fclean: clean
 
 test:
 	@clear
-	@make && clear && ./Nibbler -nowall -player 2 -port 1024
+	@make && clear && ./Nibbler -nowall -player 2 -port 1025
 
 re: fclean all

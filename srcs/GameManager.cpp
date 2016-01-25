@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/08 17:19:46 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/04 17:32:26 by tmielcza         ###   ########.fr       //
+//   Updated: 2016/01/25 20:00:19 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -252,24 +252,24 @@ void		GameManager::update(double time)
 			{
 				if (this->_me->getSizeTouch() < 3)
 				{
-					std::string tmp = "S";
-					tmp += std::to_string(this->_me->getIndex());
-					tmp += "_";
-					tmp += std::to_string(this->_me->getCycles());
-					tmp += "_";
-					tmp += std::to_string(this->_me->getX());
-					tmp += "_";
-					tmp += std::to_string(this->_me->getY());
-					tmp += "_";
-					tmp += std::to_string((int)input);
-					if (this->_me->verify_lL((e_Cardinal)input) == 1)
-					{
+//					if (this->_me->verify_lL((e_Cardinal)input) == 1)
+//					{
+						std::string tmp = "S";
+						tmp += std::to_string(this->_me->getIndex());
+//					tmp += "_";
+//					tmp += std::to_string(this->_me->getCycles());
+						tmp += "_";
+						tmp += std::to_string(this->_me->getX());
+						tmp += "_";
+						tmp += std::to_string(this->_me->getY());
+						tmp += "_";
+						tmp += std::to_string((int)input);
 						if (this->_multi == true && this->_master == true)
 							this->_serv->send_msg_to_all(this->_clients, 0, tmp.c_str());	
 						else if (this->_multi == true)
 							this->_client->set_write((char *)tmp.c_str());
 						this->_me->add_touch((e_Cardinal)input);
-					}
+//					}
 				}
 			}
 			else if (this->_me2 != NULL && !player1)
@@ -279,8 +279,8 @@ void		GameManager::update(double time)
 					this->_me2->add_touch((e_Cardinal)input);
 					std::string tmp = "S";
 					tmp += std::to_string(this->_me2->getIndex());
-					tmp += "_";
-					tmp += std::to_string(this->_me2->getCycles());
+//					tmp += "_";
+//					tmp += std::to_string(this->_me2->getCycles());
 					tmp += "_";
 					tmp += std::to_string(this->_me2->getX());
 					tmp += "_";

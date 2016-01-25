@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2015/04/03 16:10:59 by rduclos           #+#    #+#             //
-//   Updated: 2015/12/11 20:56:32 by tmielcza         ###   ########.fr       //
+//   Updated: 2016/01/25 18:38:57 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,6 +25,14 @@
 
 typedef std::chrono::high_resolution_clock Clock;
 
+typedef struct					s_MsgCycles
+{
+	int							cycle;
+	int							x;
+	int							y;
+	int							direc;
+}								t_MC;
+
 class Snake
 {
 	private:
@@ -32,6 +40,7 @@ class Snake
 	const int					_index;
 	static int					_curIndex;
 	std::list<Segment*>			_snake;
+	std::list<t_MC*>			_msgCycles;
 	std::string					_tosend;
 	Segment						*_tail;
 	int							_nbmove;
@@ -86,6 +95,9 @@ class Snake
 	void						Cut(size_t cut);
 	char						*takeToSend(void);
 	void						ClearToSend(void);
+	void						add_Cycle(int cycle, int x, int y, int direc);
+	void						CheckSnakeCycle(void);
+
 };
 
 #endif

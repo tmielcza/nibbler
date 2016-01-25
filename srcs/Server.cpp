@@ -6,7 +6,7 @@
 //   By: rduclos <rduclos@student.42.fr>            +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/25 18:11:54 by rduclos           #+#    #+#             //
-//   Updated: 2016/01/25 18:11:54 by rduclos          ###   ########.fr       //
+//   Updated: 2016/01/25 18:58:34 by rduclos          ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -315,41 +315,9 @@ void	Server::VerifySnakes(char *tmp)
 			tmp1 = this->clients[j]->getPlayer1();
 			tmp2 = this->clients[j]->getPlayer2();
 			if (tmp1 != NULL && tmp1->getIndex() == index)
-			{
-				std::cout << "Cycles of " << index << " Cycles received : ";
-				std::cout << cycles << " on Cycles of Snake : " << tmp1->getCycles();
-				std::cout << std::endl;
-				if (tmp1->getX() != x)
-				{
-					std::cout << "Sentence : " << tmp << std::endl;
-					tmp1->setX(x);
-				}
-				if (tmp1->getY() != y)
-				{
-					std::cout << "Sentence : " << tmp << std::endl;
-					tmp1->setY(y);
-				}
-				if (tmp1->getDirec() != (e_Cardinal)direc)
-					tmp1->setDirec((e_Cardinal)direc);
-			}
+				tmp1->add_Cycle(cycles, x, y, direc);
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
-			{
-				std::cout << "Cycles of " << index << " Cycles received : ";
-				std::cout << cycles << " on Cycles of Snake : " << tmp2->getCycles();
-				std::cout << std::endl;
-				if (tmp2->getX() != x)
-				{
-					std::cout << "Sentence : " << tmp << std::endl;
-					tmp2->setX(x);
-				}
-				if (tmp2->getY() != y)
-				{
-					std::cout << "Sentence : " << tmp << std::endl;
-					tmp2->setY(y);
-				}
-				if (tmp2->getDirec() != (e_Cardinal)direc)
-					tmp2->setDirec((e_Cardinal)direc);
-			}
+				tmp2->add_Cycle(cycles, x, y, direc);
 		}
 	}
 }
