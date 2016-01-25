@@ -269,14 +269,19 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 
 void	Server::VerifySnakes(char *tmp)
 {
-    int    i = 2;
-    int    index =atoi(tmp + i);
-    int         x;
-    int         y;
-    int         direc;
+    int			i = 2;
+    int			index =atoi(tmp + i);
+	int			cycles;
+    int			x;
+    int			y;
+    int			direc;
 
     while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 		i++;
+    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+        i++;
+    i++;
+	cycles = atoi(tmp + i);
     while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
         i++;
     i++;
@@ -299,19 +304,37 @@ void	Server::VerifySnakes(char *tmp)
 			tmp2 = this->clients[j]->getPlayer2();
 			if (tmp1 != NULL && tmp1->getIndex() == index)
 			{
+				std::cout << "Cycles of " << index << " Cycles received : ";
+				std::cout << cycles << " on Cycles of Snake : " << tmp1->getCycles();
+				std::cout << std::endl;
 				if (tmp1->getX() != x)
+				{
+					std::cout << "Sentence : " << tmp << std::endl;
 					tmp1->setX(x);
+				}
 				if (tmp1->getY() != y)
+				{
+					std::cout << "Sentence : " << tmp << std::endl;
 					tmp1->setY(y);
+				}
 				if (tmp1->getDirec() != (e_Cardinal)direc)
 					tmp1->setDirec((e_Cardinal)direc);
 			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
 			{
+				std::cout << "Cycles of " << index << " Cycles received : ";
+				std::cout << cycles << " on Cycles of Snake : " << tmp2->getCycles();
+				std::cout << std::endl;
 				if (tmp2->getX() != x)
+				{
+					std::cout << "Sentence : " << tmp << std::endl;
 					tmp2->setX(x);
+				}
 				if (tmp2->getY() != y)
+				{
+					std::cout << "Sentence : " << tmp << std::endl;
 					tmp2->setY(y);
+				}
 				if (tmp2->getDirec() != (e_Cardinal)direc)
 					tmp2->setDirec((e_Cardinal)direc);
 			}

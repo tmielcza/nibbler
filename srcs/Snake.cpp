@@ -27,6 +27,7 @@ Snake::Snake(void) : _index(Snake::_curIndex++)
 	this->_local = true;
 	this->_increm = 0.35;
 	this->_tosend = "";
+	this->_cycles = 0;
 	this->init();
 }
 
@@ -34,6 +35,7 @@ Snake::Snake(bool client, bool local) : _index(Snake::_curIndex++)
 {
 	this->_score = 0;
 	this->_nbmove = 0;
+	this->_cycles = 0;
 	this->_speed = 4;
 	this->_alive = true;
 	this->_client = client;
@@ -49,6 +51,7 @@ Snake::Snake(e_Cardinal direction, int x, int y, bool client, bool local, int in
 {
 	this->_score = 0;
 	this->_nbmove = 0;
+	this->_cycles = 0;
 	this->_speed = 4;
 	this->_increm = 0.35;
 	this->_tosend = "";
@@ -170,7 +173,10 @@ void							Snake::befor_move(void)
 	int y = (*head)->getY();
 
 	e_Cardinal direc = (*head)->get_Direc();
-
+	if (this->_cycles < 1000)
+		this->_cycles++;
+	else
+		this->_cycles = 0;
 	if (direc == North)
 	{
 		y++;
@@ -447,6 +453,11 @@ double							Snake::getSpeed(void)
 int								Snake::getScore(void)
 {
 	return (this->_score);
+}
+
+int								Snake::getCycles(void)
+{
+	return (this->_cycles);
 }
 
 bool							Snake::IsAlive(void)

@@ -255,6 +255,8 @@ void		GameManager::update(double time)
 					std::string tmp = "S";
 					tmp += std::to_string(this->_me->getIndex());
 					tmp += "_";
+					tmp += std::to_string(this->_me->getCycles());
+					tmp += "_";
 					tmp += std::to_string(this->_me->getX());
 					tmp += "_";
 					tmp += std::to_string(this->_me->getY());
@@ -277,6 +279,8 @@ void		GameManager::update(double time)
 					this->_me2->add_touch((e_Cardinal)input);
 					std::string tmp = "S";
 					tmp += std::to_string(this->_me2->getIndex());
+					tmp += "_";
+					tmp += std::to_string(this->_me2->getCycles());
 					tmp += "_";
 					tmp += std::to_string(this->_me2->getX());
 					tmp += "_";

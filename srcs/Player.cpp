@@ -124,13 +124,6 @@ void		Player::update(double time)
 		this->_Snake->update_directions();
 		if (this->_lastInputs.size() > 0)
 		{
-/*
-			while (tuchs != end && this->verify_lL(*tuchs) != true)
-			{
-				this->_lastInputs.erase(tuchs);
-				tuchs++;
-			}
-*/
 			if (tuchs != end)
 			{
 				this->_Snake->turn(*tuchs);
@@ -144,6 +137,7 @@ void		Player::update(double time)
 		{
 			this->_tosend = "VS";
 			this->_tosend += std::to_string(this->getIndex()) + "_";
+			this->_tosend += std::to_string(this->getCycles()) + "_";
 			this->_tosend += std::to_string(this->getX()) + "_";
 			this->_tosend += std::to_string(this->getY()) + "_";
 			this->_tosend += std::to_string(this->getDirec());
@@ -191,12 +185,20 @@ e_Cardinal	Player::getDirec(void)
 
 void		Player::setX(int x)
 {
+	std::cout << "Switch position of ";
+	std::cout << this->getIndex() << " at x : ";
+	std::cout << this->_Snake->getHeadSnakeX() << " to " << x << std::endl;
 	this->_Snake->setHeadSnakeX(x);
+	this->_time = 0;
 }
 
 void		Player::setY(int y)
 {
+	std::cout << "Switch position of ";
+	std::cout << this->getIndex() << " at y : ";
+	std::cout << this->_Snake->getHeadSnakeY() << " to " << y << std::endl;
 	this->_Snake->setHeadSnakeY(y);
+	this->_time = 0;
 }
 
 void		Player::setDirec(e_Cardinal direc)
@@ -216,7 +218,6 @@ bool		Player::getPL2(void)
 
 void		Player::move(void)
 {
-//	this->_Snake->befor_move();
 	this->_Snake->move();
 }
 
@@ -241,4 +242,9 @@ char		*Player::takeToSend(void)
 void		Player::ClearToSend(void)
 {
 	this->_tosend = "";
+}
+
+int			Player::getCycles(void)
+{
+	return (this->_Snake->getCycles());
 }

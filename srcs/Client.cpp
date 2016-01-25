@@ -113,12 +113,17 @@ void		Client::send_data()
 void		Client::Snake_direc(char *tmp)
 {
 	int		index = atoi(tmp + 1);
+	int		cycles;
 	int		direc;
 	int		x;
 	int		y;
 	int		i;
 
 	i = 1;
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	cycles = atoi(tmp + i);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
@@ -375,14 +380,19 @@ void		Client::init_Others(char *tmp)
 
 void		Client::VerifySnakes(char *tmp)
 {
-	int			i = 2;
+	int			i = 0;
 	int			index = atoi(tmp + i);
+	int			cycles;
 	int			x;
 	int			y;
 	int			direc;
 
 	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 		i++;
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	cycles = atoi(tmp + i);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
@@ -401,12 +411,22 @@ void		Client::VerifySnakes(char *tmp)
 	{
 		if ((*player)->getIndex() == index)
 		{
-			if ((*player)->getX() != x)
-				(*player)->setX(x);
-			if ((*player)->getY() != y)
-				(*player)->setY(y);
-			if ((*player)->getDirec() != direc)
-				(*player)->setDirec((e_Cardinal)direc);
+			std::cout << "Cycles of " << index << " Cycles received : ";
+			std::cout << cycles << " on Cycles of Snake : " << (*player)->getCycles();
+			std::cout << std::endl;
+			if (cycles == (*player)->getCycles())
+			{
+				if ((*player)->getX() != x)
+					(*player)->setX(x);
+				if ((*player)->getY() != y)
+					(*player)->setY(y);
+				if ((*player)->getDirec() != direc)
+					(*player)->setDirec((e_Cardinal)direc);
+			}
+			else
+			{
+
+			}
 		}
 		player++;
 	}

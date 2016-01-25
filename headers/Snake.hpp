@@ -36,6 +36,7 @@ class Snake
 	Segment						*_tail;
 	int							_nbmove;
 	int						 	_score;
+	int							_cycles;
 	double						_speed;
 	double						_slow;
 	double						_increm;
@@ -76,6 +77,7 @@ class Snake
 	int							getIndex(void);
 	double						getSpeed(void);
 	int							getScore(void);
+	int							getCycles(void);
 	bool						IsAlive(void);
 	void						SetAlive(bool alive);
 	void						draw(double time);

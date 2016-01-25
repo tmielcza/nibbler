@@ -51,6 +51,7 @@ class Player
 	void		setDirec(e_Cardinal direc);
 	e_Cardinal	getDirec(void);
 	int			getIndex(void);
+	int			getCycles(void);
 	bool		getPL2(void);
 	void		move(void);
 	char		*SnaketakeToSend(void);
