@@ -87,6 +87,7 @@ class Snake
 	double						getSpeed(void);
 	int							getScore(void);
 	int							getCycles(void);
+	void						setCycles(int cycle);
 	bool						IsAlive(void);
 	void						SetAlive(bool alive);
 	void						draw(double time);

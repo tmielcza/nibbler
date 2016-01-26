@@ -31,6 +31,7 @@ class GameManager
 	int						_nbPlayer;
 	int						_width;
 	int						_height;
+	bool					_start;
 	bool					_pl2;
 	bool					_master;
 	bool					_multi;

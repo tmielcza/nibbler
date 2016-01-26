@@ -306,7 +306,7 @@ void	Server::VerifySnakes(char *tmp)
         i++;
     i++;
     direc = atoi(tmp + i);
-	for (int j = 0; j < (this->fd_max + 1); j++)
+	for (int j = 0; j < (this->fd_max + 2); j++)
 	{
 		if (this->clients[j]->get_type() == CLT_FD)
 		{
@@ -405,7 +405,10 @@ void	Server::check_fd(S_Client **clients)
 				if ((msg = clients[i]->c_receive()) != NULL)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
+					{
+						std::cout << "Msg : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
+					}
 				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)
@@ -434,7 +437,10 @@ void	Server::check_fd_noCo(S_Client **clients)
 				if ((msg = clients[i]->c_receive()) != NULL)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
+					{
+						std::cout << "Msg : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
+					}
 				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)

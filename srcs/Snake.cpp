@@ -172,8 +172,10 @@ void							Snake::befor_move(void)
 	int x = (*head)->getX();
 	int y = (*head)->getY();
 
-	this->CheckSnakeCycle();
+
+//	this->CheckSnakeCycle();
 	e_Cardinal direc = (*head)->get_Direc();
+	std::cout << "Am'i passing by here2 ? : " << this->_cycles << std::endl;
 	if (this->_cycles < 1000)
 		this->_cycles++;
 	else
@@ -270,6 +272,10 @@ void							Snake::move(void)
 				x = MapManager::Instance().getWidth() - 1;
 			(*seg)->setX(x);
 		}
+		std::cout << "am'I passing by here ?" << std::endl;
+		this->CheckSnakeCycle();
+		x = (*seg)->getX();
+		y = (*seg)->getY();
 		MapManager::Instance()._Map[x][y] = (*seg);
 		seg++;
 		while (seg != end)
@@ -292,7 +298,6 @@ void							Snake::move(void)
 				this->_slow = 0;
 			}
 		}
-		this->CheckSnakeCycle();
 	}
 }
 
@@ -462,6 +467,11 @@ int								Snake::getCycles(void)
 	return (this->_cycles);
 }
 
+void							Snake::setCycles(int cycle)
+{
+	this->_cycles = cycle;
+}
+
 bool							Snake::IsAlive(void)
 {
 	return (this->_alive);
@@ -558,6 +568,7 @@ void		Snake::add_Cycle(int cycle, int x, int y, int direc)
 	tmp->y = y;
 	tmp->direc = direc;
 	this->_msgCycles.push_back(tmp);
+//	std::cout << "Creating MSG Cycle n" << cycle << " at " << x << "-" << y << std::endl;
 }
 
 void		Snake::CheckSnakeCycle(void)
@@ -569,6 +580,8 @@ void		Snake::CheckSnakeCycle(void)
 
 		while (cycle != end)
 		{
+			std::cout << "Trying Cycle out " << (*cycle)->cycle;
+			std::cout << " For Cycle in : " << this->_cycles << std::endl;
 			if ((*cycle)->cycle == this->_cycles)
 			{
 				std::cout << "Snake " << this->getIndex();
@@ -598,4 +611,6 @@ void		Snake::CheckSnakeCycle(void)
 				cycle++;
 		}
 	}
+	else
+		std::cout << "No MSG Cycle." << std::endl;
 }

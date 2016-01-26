@@ -60,6 +60,7 @@ void	MapManager::init(int nbplayer, int width, int height)
 	this->_berase = false;
 }
 
+/*
 void		MapManager::move(int index)
 {
 	for (auto i = this->_snakes.begin(), end = this->_snakes.end(); i != end; i++)
@@ -72,6 +73,7 @@ void		MapManager::move(int index)
 		}
 	}
 }
+*/
 
 void		MapManager::setSnakeDir(int index, bool left)
 {

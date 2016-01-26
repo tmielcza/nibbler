@@ -156,6 +156,7 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 		GraphicsManager::Instance().display();
 		this->_game->Server_Check(false);
 	}
+//	usleep(30);
 }
 
 bool			MultiMode::check_end(void)
@@ -180,10 +181,10 @@ void			MultiMode::run(void)
 			this->_game->update(delta);
 			MapManager::Instance().update(delta);
 			GraphicsManager::Instance().display();
-			if (this->_master == true)
-				this->_game->Server_Check(false);
-			else
+			if (this->_master != true)
 				this->_game->Client_Check();
+			else
+				this->_game->Server_Check(false);
 			delta = this->_game->deltaTime();
 //			this->_game->update(delta);
 //			MapManager::Instance().update(delta);

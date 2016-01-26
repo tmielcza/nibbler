@@ -74,7 +74,7 @@ char	**S_Client::c_receive(void)
 		if (b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
-//			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
+			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
 			char **tab = ft_strtab(this->tmp_read);
 			return (tab);
 		}

@@ -22,6 +22,7 @@ GameManager::GameManager(void)
 	this->_massif = false;
 	this->_leave = false;
 	this->_pl2 = false;
+	this->_start = false;
 	this->_curPL = 1;
 }
 
@@ -32,6 +33,7 @@ GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 	this->_massif = massif;
 	this->_master = master;
 	this->_leave = false;
+	this->_start = false;
 	this->_curPL = 1;
 	this->_pl2 = pl2;
 }
@@ -43,7 +45,7 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-	if (this->_players != NULL)
+	if (this->_players != NULL && this->_players->size() > 0)
 	{
 		std::list<Player *>::iterator		pl = this->_players->begin();
 		std::list<Player *>::iterator		end = this->_players->end();
@@ -51,7 +53,7 @@ GameManager::~GameManager(void)
 		while (pl != end)
 		{
 			Player *del;
-			del = *pl;
+			del = (*pl);
 			this->_players->erase(pl);
 			pl = this->_players->begin();
 			delete del;
@@ -228,6 +230,7 @@ void		GameManager::update(double time)
 	e_Input								input = I_Nope;
 	std::list<e_Input>					inputs;
 	bool								player1;
+	int									cycle1 = 0;
 
 	inputs = GraphicsManager::Instance().getInput();
 	GraphicsManager::Instance().clear();
@@ -298,6 +301,8 @@ void		GameManager::update(double time)
 	if (this->_me != NULL)
 	{
 		this->_me->update(time);
+		if (this->_start == false)
+			cycle1 = this->_me->getCycles();
 		char *tmp = this->_me->takeToSend();
 		if (tmp != NULL)
 		{
@@ -343,6 +348,7 @@ void		GameManager::update(double time)
 	{
 		if (this->_master == true)
 		{
+			this->Server_Check(false);
 			char *tmp = MapManager::Instance().takeToSend();
 			if (tmp != NULL)
 			{
@@ -356,9 +362,23 @@ void		GameManager::update(double time)
 					Player *tmp1;
 					Player *tmp2;
 					if ((tmp1 = this->_clients[i]->getPlayer1()) != NULL)
+					{
 						tmp1->update(time);
+						if (this->_start == false)
+						{
+							this->_start = true;
+//							tmp1->setCycles(-1);
+						}
+					}
 					if ((tmp2 = this->_clients[i]->getPlayer2()) != NULL)
+					{
 						tmp2->update(time);
+						if (this->_start == false)
+						{
+							this->_start = true;
+//							tmp2->setCycles(0);
+						}
+					}
 				}
 			}
 		}

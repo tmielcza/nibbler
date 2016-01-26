@@ -249,6 +249,11 @@ int			Player::getCycles(void)
 	return (this->_Snake->getCycles());
 }
 
+void		Player::setCycles(int cycle)
+{
+	this->_Snake->setCycles(cycle);
+}
+
 void		Player::add_Cycle(int cycle, int x, int y, int direc)
 {
 	this->_Snake->add_Cycle(cycle, x, y, direc);

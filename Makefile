@@ -55,6 +55,6 @@ fclean: clean
 
 test:
 	@clear
-	@make && clear && ./Nibbler -nowall -player 2 -port 1025
+	@make && clear && ./Nibbler -nowall -player 2 -port 1024
 
 re: fclean all
