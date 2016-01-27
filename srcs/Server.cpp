@@ -220,6 +220,8 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 			i++;
 		i++;
 		int direc = atoi(msg + i);
+		std::cout << "Changing Direction of Snake " << index << " at pos : ";
+		std::cout << x << "-" << y << " for direc : " << direc << std::endl;
 		if (tmp1 != NULL && tmp1->getIndex() == index)
 		{
 			int mydirec = (int)tmp1->getDirec();
@@ -315,9 +317,33 @@ void	Server::VerifySnakes(char *tmp)
 			tmp1 = this->clients[j]->getPlayer1();
 			tmp2 = this->clients[j]->getPlayer2();
 			if (tmp1 != NULL && tmp1->getIndex() == index)
-				tmp1->add_Cycle(cycles, x, y, direc);
+			{
+				if (tmp1->getCycles() < cycles)
+					tmp1->add_Cycle(cycles, x, y, direc);
+				else if (tmp1->getCycles() == cycles)
+				{
+					if (tmp1->getX() != x)
+						tmp1->setX(x);
+					if (tmp1->getY() != y)
+						tmp1->setY(y);
+					if (tmp1->getDirec() != (e_Cardinal)direc)
+						tmp1->setDirec((e_Cardinal)direc);
+				}
+			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
-				tmp2->add_Cycle(cycles, x, y, direc);
+			{
+				if (tmp2->getCycles() < cycles)
+					tmp2->add_Cycle(cycles, x, y, direc);
+				else if (tmp2->getCycles() == cycles)
+				{
+					if (tmp2->getX() != x)
+						tmp2->setX(x);
+					if (tmp2->getY() != y)
+						tmp2->setY(y);
+					if (tmp2->getDirec() != (e_Cardinal)direc)
+						tmp2->setDirec((e_Cardinal)direc);
+				}
+			}
 		}
 	}
 }
@@ -379,7 +405,7 @@ void	Server::check_actions(S_Client **clients, int cs, char *msg)
 		}
 		else if (msg[0] == 'D')
 			this->Snake_Death(msg);
-		else
+		else if (msg[0] == 'S')
 			this->do_cmd(clients, cs, msg);
 		send_msg_to_all(clients, cs, msg);
 	}
@@ -405,10 +431,7 @@ void	Server::check_fd(S_Client **clients)
 				if ((msg = clients[i]->c_receive()) != NULL)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
-					{
-						std::cout << "Msg : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
-					}
 				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)
@@ -437,10 +460,7 @@ void	Server::check_fd_noCo(S_Client **clients)
 				if ((msg = clients[i]->c_receive()) != NULL)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
-					{
-						std::cout << "Msg : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
-					}
 				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)

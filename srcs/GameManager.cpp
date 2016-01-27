@@ -22,7 +22,6 @@ GameManager::GameManager(void)
 	this->_massif = false;
 	this->_leave = false;
 	this->_pl2 = false;
-	this->_start = false;
 	this->_curPL = 1;
 }
 
@@ -33,7 +32,6 @@ GameManager::GameManager(bool pl2, bool multi, bool massif, bool master)
 	this->_massif = massif;
 	this->_master = master;
 	this->_leave = false;
-	this->_start = false;
 	this->_curPL = 1;
 	this->_pl2 = pl2;
 }
@@ -346,9 +344,15 @@ void		GameManager::update(double time)
 	}
 	if (this->_multi == true)
 	{
+		if (this->_master != true)
+			this->Client_Check();
+		else
+			this->Server_Check(false);
+	}
+	if (this->_multi == true)
+	{
 		if (this->_master == true)
 		{
-			this->Server_Check(false);
 			char *tmp = MapManager::Instance().takeToSend();
 			if (tmp != NULL)
 			{
@@ -362,23 +366,9 @@ void		GameManager::update(double time)
 					Player *tmp1;
 					Player *tmp2;
 					if ((tmp1 = this->_clients[i]->getPlayer1()) != NULL)
-					{
 						tmp1->update(time);
-						if (this->_start == false)
-						{
-							this->_start = true;
-//							tmp1->setCycles(-1);
-						}
-					}
 					if ((tmp2 = this->_clients[i]->getPlayer2()) != NULL)
-					{
 						tmp2->update(time);
-						if (this->_start == false)
-						{
-							this->_start = true;
-//							tmp2->setCycles(0);
-						}
-					}
 				}
 			}
 		}

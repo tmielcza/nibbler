@@ -48,11 +48,19 @@ void	check_args(int ac, char **av, t_env *env)
 		else if (strcmp(av[i], "-player") == 0)
 		{
 			i++;
-			env->nbPlayers = atoi(av[i]);
-			if (env->nbPlayers < 0)
+			if (av[i] != NULL)
 			{
-				std::cout << "Error: Number of players can't be negatif !" << std::endl;
+				env->nbPlayers = atoi(av[i]);
+				if (env->nbPlayers < 0)
+				{
+					std::cout << "Error: Number of players can't be negatif !" << std::endl;
 					exit(-42);
+				}
+			}
+			else
+			{
+				std::cout << "Player number is missing." << std::endl;
+				exit(-42);
 			}
 		}
 		else if (strcmp(av[i], "-height") == 0)
@@ -62,19 +70,35 @@ void	check_args(int ac, char **av, t_env *env)
 		else if (strcmp(av[i], "-host") == 0)
 		{
 			i++;
-			env->master = false;
-			env->solo = false;
-			env->addr = av[i];
+			if (av[i] != NULL)
+			{
+				env->master = false;
+				env->solo = false;
+				env->addr = av[i];
+			}
+			else
+			{
+				std::cout << "Address Host is missing." << std::endl;
+				exit(-42);
+			}
 		}
 		else if (strcmp(av[i], "-port") == 0)
 		{
 			i++;
-			env->solo = false;
-			env->port = atoi(av[i]);
-			std::cout << "Port : " << env->port << std::endl;
-			if (env->port < 1024 || env->port >= 49151)
+			if (av[i] != NULL)
 			{
-				std::cout << "Error : port ins't valide." << std::endl;
+				env->solo = false;
+				env->port = atoi(av[i]);
+				if (env->port < 1024 || env->port >= 49151)
+				{
+					std::cout << "Error : port ins't valide." << std::endl;
+					exit(-42);
+				}
+				std::cout << "Port : " << env->port << std::endl;
+			}
+			else
+			{
+				std::cout << "Port is missing." << std::endl;
 				exit(-42);
 			}
 		}
@@ -98,20 +122,36 @@ void	check_args(int ac, char **av, t_env *env)
 		if (strcmp(av[i], "-height") == 0)
 		{
 			i++;
-			env->height = atoi(av[i]);
-			if (env->height > ((env->nbPlayers * 2) + 4) || env->height < 16)
+			if (av[i] != NULL)
 			{
-				std::cout << "Error: Map height isn't enought !" << std::endl;
+				env->height = atoi(av[i]);
+				if (env->height > ((env->nbPlayers * 2) + 4) || env->height < 16)
+				{
+					std::cout << "Error: Map height isn't enought !" << std::endl;
+					exit(-42);
+				}
+			}
+			else
+			{
+				std::cout << "Height is missing." << std::endl;
 				exit(-42);
 			}
 		}
 		else if (strcmp(av[i], "-width") == 0)
 		{
 			i++;
-			env->width = atoi(av[i]);
-			if ((env->width / env->nbPlayers) < 10 || env->width < 16)
+			if (av[i] != NULL)
 			{
-				std::cout << "Error: Map width isn't enought !" << std::endl;
+				env->width = atoi(av[i]);
+				if ((env->width / env->nbPlayers) < 10 || env->width < 16)
+				{
+					std::cout << "Error: Map width isn't enought !" << std::endl;
+					exit(-42);
+				}
+			}
+			else
+			{
+				std::cout << "Width is missing." << std::endl;
 				exit(-42);
 			}
 		}

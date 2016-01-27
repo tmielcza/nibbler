@@ -125,7 +125,6 @@ void		Client::send_data()
 void		Client::Snake_direc(char *tmp)
 {
 	int		index = atoi(tmp + 1);
-//	int		cycles;
 	int		direc;
 	int		x;
 	int		y;
@@ -135,10 +134,6 @@ void		Client::Snake_direc(char *tmp)
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
-//	cycles = atoi(tmp + i);
-//	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-//		i++;
-//	i++;
 	x = atoi(tmp + i);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
@@ -422,7 +417,19 @@ void		Client::VerifySnakes(char *tmp)
 	while (player != end)
 	{
 		if ((*player)->getIndex() == index)
-			(*player)->add_Cycle(cycles, x, y, direc);
+		{
+			if ((*player)->getCycles() < cycles)
+				(*player)->add_Cycle(cycles, x, y, direc);
+			else if ((*player)->getCycles() == cycles)
+			{
+				if ((*player)->getX() != x)
+					(*player)->setX(x);
+				if ((*player)->getY() != y)
+					(*player)->setY(y);
+				if ((*player)->getDirec() != (e_Cardinal)direc)
+					(*player)->setDirec((e_Cardinal)direc);
+			}
+		}
 		player++;
 	}
 }
@@ -526,10 +533,7 @@ void		Client::receive_data(void)
 			for (int i = 0; tab[i] != NULL; i++)
 			{
 				if (tab[i] != NULL && tab[i][0] != '\0')
-				{
-//					std::cout << "Receive : " << tab[i] << std::endl;
 					make_cmd(tab[i]);
-				}
 			}
 		}
 	}

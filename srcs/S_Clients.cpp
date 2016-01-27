@@ -57,7 +57,8 @@ void	S_Client::c_send(void)
 
 char	**S_Client::c_receive(void)
 {
-	int		r;
+	int			r;
+	char		*tmp;
 
 	r = recv(sock, tmp_read, BC_SIZE, 0);
 	if (r <= 0)
@@ -69,12 +70,14 @@ char	**S_Client::c_receive(void)
 	}
 	else
 	{
+		this->tmp_read[r] = '\0';
 		b_read.bc_write(tmp_read, 0);
 		bzero(tmp_read, BC_SIZE + 1);
 		if (b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
-			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
+			tmp = strdup(this->tmp_read);
+//			std::cout << "Receiving from " << this->sock << " : " << tmp_read;
 			char **tab = ft_strtab(this->tmp_read);
 			return (tab);
 		}

@@ -175,7 +175,7 @@ void							Snake::befor_move(void)
 
 //	this->CheckSnakeCycle();
 	e_Cardinal direc = (*head)->get_Direc();
-	std::cout << "Am'i passing by here2 ? : " << this->_cycles << std::endl;
+//	std::cout << "Am'i passing by here2 ? : " << this->_cycles << std::endl;
 	if (this->_cycles < 1000)
 		this->_cycles++;
 	else
@@ -226,7 +226,7 @@ void							Snake::befor_move(void)
 		{
 			if (dynamic_cast<Food*>(MapManager::Instance()._Map[x][y]))
 				this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
-			else
+			else if (dynamic_cast<ABonus*>(MapManager::Instance()._Map[x][y]))
 				this->take_bonus(*dynamic_cast<ABonus *>(MapManager::Instance()._Map[x][y]));
 		}
 	}
@@ -272,8 +272,9 @@ void							Snake::move(void)
 				x = MapManager::Instance().getWidth() - 1;
 			(*seg)->setX(x);
 		}
-		std::cout << "am'I passing by here ?" << std::endl;
-		this->CheckSnakeCycle();
+//		std::cout << "am'I passing by here ?" << std::endl;
+		if (this->_local == false)
+			this->CheckSnakeCycle();
 		x = (*seg)->getX();
 		y = (*seg)->getY();
 		MapManager::Instance()._Map[x][y] = (*seg);
@@ -580,15 +581,15 @@ void		Snake::CheckSnakeCycle(void)
 
 		while (cycle != end)
 		{
-			std::cout << "Trying Cycle out " << (*cycle)->cycle;
-			std::cout << " For Cycle in : " << this->_cycles << std::endl;
+//			std::cout << "Trying Cycle out " << (*cycle)->cycle;
+//			std::cout << " For Cycle in : " << this->_cycles << std::endl;
 			if ((*cycle)->cycle == this->_cycles)
 			{
-				std::cout << "Snake " << this->getIndex();
-				std::cout << " for Cycle : " << this->_cycles;
-				std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
-				std::cout << " Position in : " << this->getHeadSnakeX() << "-";
-				std::cout << this->getHeadSnakeY() << std::endl;
+//				std::cout << "Snake " << this->getIndex();
+//				std::cout << " for Cycle : " << this->_cycles;
+//				std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
+//				std::cout << " Position in : " << this->getHeadSnakeX() << "-";
+//				std::cout << this->getHeadSnakeY() << std::endl;
 				if (this->getHeadSnakeX() != (*cycle)->x)
 					this->setHeadSnakeX((*cycle)->x);
 				if (this->getHeadSnakeY() != (*cycle)->y)
@@ -611,6 +612,6 @@ void		Snake::CheckSnakeCycle(void)
 				cycle++;
 		}
 	}
-	else
-		std::cout << "No MSG Cycle." << std::endl;
+//	else
+//		std::cout << "No MSG Cycle." << std::endl;
 }
