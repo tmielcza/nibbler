@@ -250,9 +250,17 @@ void		Client::popBonus(char *tmp)
 void		Client::init_Game(char *tmp)
 {
 	int			i = 3;
+	int			wall;
 	
 	std::cout << "Sentances : " << tmp << "." << std::endl;
-	this->_wall = (bool)atoi(tmp + 4);
+	wall = atoi(tmp + i);
+	this->_wall = (bool)wall;
+	std::cout << "Wall set to : ";
+	if (this->_wall == true)
+		std::cout << "True : " << wall;
+	else
+		std::cout << "False : " << wall;
+	std::cout << std::endl;
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;

@@ -185,18 +185,12 @@ e_Cardinal	Player::getDirec(void)
 
 void		Player::setX(int x)
 {
-	std::cout << "Switch position of ";
-	std::cout << this->getIndex() << " at x : ";
-	std::cout << this->_Snake->getHeadSnakeX() << " to " << x << std::endl;
 	this->_Snake->setHeadSnakeX(x);
 	this->_time = 0;
 }
 
 void		Player::setY(int y)
 {
-	std::cout << "Switch position of ";
-	std::cout << this->getIndex() << " at y : ";
-	std::cout << this->_Snake->getHeadSnakeY() << " to " << y << std::endl;
 	this->_Snake->setHeadSnakeY(y);
 	this->_time = 0;
 }

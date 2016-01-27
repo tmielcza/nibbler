@@ -220,8 +220,6 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 			i++;
 		i++;
 		int direc = atoi(msg + i);
-		std::cout << "Changing Direction of Snake " << index << " at pos : ";
-		std::cout << x << "-" << y << " for direc : " << direc << std::endl;
 		if (tmp1 != NULL && tmp1->getIndex() == index)
 		{
 			int mydirec = (int)tmp1->getDirec();
