@@ -240,6 +240,7 @@ void	MapManager::foodepop(int x, int y)
 		int _y = (*start)->getY();
 		if (_x == x && _y == y)
 		{
+			this->_Map[x][y] = NULL;
 			this->_berase = true;
 			this->_foods.erase(start);
 			return;
@@ -572,7 +573,6 @@ void					MapManager::restart(void)
 		fbegin = this->_foods.begin();
 		delete f;
 	}
-
 	while (bbegin != bend)
 	{
 		ABonus *b = *bbegin;
