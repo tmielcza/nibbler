@@ -224,10 +224,13 @@ void							Snake::befor_move(void)
 		}
 		else
 		{
-			if (dynamic_cast<Food*>(MapManager::Instance()._Map[x][y]))
-				this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
-			else if (dynamic_cast<ABonus*>(MapManager::Instance()._Map[x][y]))
-				this->take_bonus(*dynamic_cast<ABonus *>(MapManager::Instance()._Map[x][y]));
+			if (this->_local == true)
+			{
+				if (dynamic_cast<Food*>(MapManager::Instance()._Map[x][y]))
+					this->eat(*dynamic_cast<Food *>(MapManager::Instance()._Map[x][y]));
+				else if (dynamic_cast<ABonus*>(MapManager::Instance()._Map[x][y]))
+					this->take_bonus(*dynamic_cast<ABonus *>(MapManager::Instance()._Map[x][y]));
+			}
 		}
 	}
 }

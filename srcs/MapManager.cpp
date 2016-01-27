@@ -456,6 +456,7 @@ void	MapManager::bonusdepop(int x, int y)
 		int _y = (*start)->getY();
 		if (_x == x && _y == y)
 		{
+			this->_Map[x][y] = NULL;
 			this->_berase = true;
 			this->_bonus.erase(start);
 			std::cout << "Bonus depop at : " << _x << "_" << _y << std::endl;
