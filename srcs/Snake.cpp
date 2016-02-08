@@ -173,9 +173,7 @@ void							Snake::befor_move(void)
 	int y = (*head)->getY();
 
 
-//	this->CheckSnakeCycle();
 	e_Cardinal direc = (*head)->get_Direc();
-//	std::cout << "Am'i passing by here2 ? : " << this->_cycles << std::endl;
 	if (this->_cycles < 1000)
 		this->_cycles++;
 	else
@@ -426,9 +424,9 @@ void							Snake::setHeadSnakeX(int x)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 
-	int _x = (*head)->getX();
+//	int _x = (*head)->getX();
 	int _y = (*head)->getY();
-	MapManager::Instance()._Map[_x][_y] = NULL;
+//	MapManager::Instance()._Map[_x][_y] = NULL;
 	(*head)->setX(x);
 	MapManager::Instance()._Map[x][_y] = (*head);
 }
@@ -438,8 +436,8 @@ void							Snake::setHeadSnakeY(int y)
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 
 	int _x = (*head)->getX();
-	int _y = (*head)->getY();
-	MapManager::Instance()._Map[_x][_y] = NULL;
+//	int _y = (*head)->getY();
+//	MapManager::Instance()._Map[_x][_y] = NULL;
 	(*head)->setY(y);
 	MapManager::Instance()._Map[_x][y] = (*head);
 }
@@ -588,22 +586,37 @@ void		Snake::CheckSnakeCycle(void)
 //			std::cout << " For Cycle in : " << this->_cycles << std::endl;
 			if ((*cycle)->cycle == this->_cycles)
 			{
-//				std::cout << "Snake " << this->getIndex();
-//				std::cout << " for Cycle : " << this->_cycles;
-//				std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
-//				std::cout << " Position in : " << this->getHeadSnakeX() << "-";
-//				std::cout << this->getHeadSnakeY() << std::endl;
 				if (this->getHeadSnakeX() != (*cycle)->x)
+				{
+					std::cout << "Snake " << this->getIndex();
+					std::cout << " for Cycle : " << this->_cycles;
+					std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
+					std::cout << " Position in : " << this->getHeadSnakeX() << "-";
+					std::cout << this->getHeadSnakeY() << std::endl;
 					this->setHeadSnakeX((*cycle)->x);
+				}
 				if (this->getHeadSnakeY() != (*cycle)->y)
+				{
+					std::cout << "Snake " << this->getIndex();
+					std::cout << " for Cycle : " << this->_cycles;
+					std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
+					std::cout << " Position in : " << this->getHeadSnakeX() << "-";
+					std::cout << this->getHeadSnakeY() << std::endl;
 					this->setHeadSnakeY((*cycle)->y);
+				}
 				if (this->getHeadSnakeDirec() != (e_Cardinal)(*cycle)->direc)
+				{
+					this->_nbmove++;
 					this->setHeadSnakeDirec((e_Cardinal)(*cycle)->direc);
+				}
 				delete (*cycle);
 				this->_msgCycles.erase(cycle);
 				break;
 			}
-			else if ((*cycle)->cycle < this->_cycles)
+			else
+				cycle++;
+/*
+			else if ((*cycle)->cycle > this->_cycles)
 			{
 				t_MC *tmp = (*cycle);
 				std::list<t_MC *>::iterator		del = cycle;
@@ -611,8 +624,7 @@ void		Snake::CheckSnakeCycle(void)
 				delete tmp;
 				this->_msgCycles.erase(del);
 			}
-			else
-				cycle++;
+*/
 		}
 	}
 //	else

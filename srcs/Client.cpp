@@ -81,7 +81,6 @@ void		Client::check_actions(void)
 		{
 			this->r--;
 			this->send_data();
-
 		}
 	}
 }
@@ -538,6 +537,19 @@ void		Client::receive_data(void)
 	if (r <= 0)
 	{
 		close(this->sock);
+		if (this->_me1 != NULL)
+			delete this->_me1;
+		if (this->_me2 != NULL)
+			delete this->_me2;
+		std::list<Player*>::iterator pl = this->_players.begin();
+		std::list<Player*>::iterator end = this->_players.end();
+		while (pl != end)
+		{
+			Player *del = (*pl);
+			this->_players.erase(pl);
+			delete del;
+			pl = this->_players.begin();
+		}
 		exit(0);
 	}
 	else

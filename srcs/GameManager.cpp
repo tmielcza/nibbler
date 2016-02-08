@@ -43,24 +43,39 @@ GameManager::GameManager(const GameManager & copy)
 
 GameManager::~GameManager(void)
 {
-	if (this->_players != NULL && this->_players->size() > 0)
+	if (this->_multi == true && this->_master == false)
 	{
-		std::list<Player *>::iterator		pl = this->_players->begin();
-		std::list<Player *>::iterator		end = this->_players->end();
-		
-		while (pl != end)
+		if (this->_players != NULL && this->_players->size() > 0)
 		{
-			Player *del;
-			del = (*pl);
-			this->_players->erase(pl);
-			pl = this->_players->begin();
-			delete del;
+			std::list<Player *>::iterator		pl = this->_players->begin();
+			std::list<Player *>::iterator		end = this->_players->end();
+			
+			while (pl != end)
+			{
+				Player *del;
+				del = (*pl);
+				this->_players->erase(pl);
+				pl = this->_players->begin();
+				delete del;
+			}
 		}
-		if (this->_me != NULL)
-			delete this->_me;
-		if (this->_me2 != NULL)
-			delete this->_me2;
 	}
+	else if (this->_multi == true && this->_master == true)
+	{
+		int max_fd = this->_serv->getMaxFD();
+		for (int i = 0; i < max_fd; i++)
+		{
+			if (this->_clients[i]->get_type() == CLT_FD)
+			{
+				this->_clients[i]->EndingP2();
+				this->_clients[i]->EndingP2();
+			}
+		}
+	}
+	if (this->_me != NULL)
+		delete this->_me;
+	if (this->_me2 != NULL)
+		delete this->_me2;
 	std::cout << "Destroying GameManager !" << std::endl;
 }
 GameManager	&	GameManager::operator=(const GameManager & ass)
@@ -144,6 +159,7 @@ bool		GameManager::IsAlive(void)
 			test = true;
 		else
 		{
+
 			std::cout << "Player1 " << std ::endl;
 			delete this->_me;
 			this->_me = NULL;
@@ -257,8 +273,6 @@ void		GameManager::update(double time)
 //					{
 						std::string tmp = "S";
 						tmp += std::to_string(this->_me->getIndex());
-//					tmp += "_";
-//					tmp += std::to_string(this->_me->getCycles());
 						tmp += "_";
 						tmp += std::to_string(this->_me->getX());
 						tmp += "_";
@@ -280,8 +294,6 @@ void		GameManager::update(double time)
 					this->_me2->add_touch((e_Cardinal)input);
 					std::string tmp = "S";
 					tmp += std::to_string(this->_me2->getIndex());
-//					tmp += "_";
-//					tmp += std::to_string(this->_me2->getCycles());
 					tmp += "_";
 					tmp += std::to_string(this->_me2->getX());
 					tmp += "_";
@@ -296,6 +308,7 @@ void		GameManager::update(double time)
 			}
 		}
 	}
+	std::cout << "Here ?1" << std::endl;
 	if (this->_me != NULL)
 	{
 		this->_me->update(time);
@@ -320,6 +333,7 @@ void		GameManager::update(double time)
 			this->_me->SnakeClearToSend();
 		}
 	}
+	std::cout << "Here ?2" << std::endl;
 	if (this->_me2 != NULL)
 	{
 		this->_me2->update(time);
@@ -330,7 +344,7 @@ void		GameManager::update(double time)
 				this->_serv->send_msg_to_all(this->_clients, 0, tmp);
 			else if (this->_multi == true)
 				this->_client->set_write(tmp);
-			this->_me->ClearToSend();
+			this->_me2->ClearToSend();
 		}
 		char *tmp1 = this->_me2->SnaketakeToSend();
 		if (tmp1 != NULL)
@@ -342,6 +356,7 @@ void		GameManager::update(double time)
 			this->_me2->SnakeClearToSend();
 		}
 	}
+	std::cout << "Here ?" << std::endl;
 	if (this->_multi == true)
 	{
 		if (this->_master != true)

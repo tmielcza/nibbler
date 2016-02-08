@@ -67,7 +67,6 @@ class Server
 	void		stop_serv(void);
 	S_Client	**getClients(void);
 	int			disconnection(void);
-	int			getLimit(void);
 	int			getMaxFD(void);
 	int			getNbPlayers(void);
 	void		setPlayers(Player *me1, Player *me2);

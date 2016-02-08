@@ -496,11 +496,6 @@ S_Client	**Server::getClients(void)
 	return this->clients;
 }
 
-int			Server::getLimit(void)
-{
-	return this->max_fd;
-}
-
 int			Server::getMaxFD(void)
 {
 	return (this->max_fd);

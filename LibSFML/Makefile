@@ -30,8 +30,8 @@ LIB=$(addprefix -L, $(library_dir)) $(LIBRARY)
 
 NAME=gfx-sfml.so
 TEST=test
-CPPFLAGS = -Wall -Wextra -Werror -std=c++11 $(INCLUDE)
-CPPFLAGS += -g # Debug
+CPPFLAGS = -g3 -Wall -Wextra -Werror -std=c++11 $(INCLUDE)
+#CPPFLAGS += -g # Debug
 VPATH=$(include_dir) $(library_dir) $(src_dir)
 vpath %.dylib $(library_dir)
 

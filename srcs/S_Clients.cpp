@@ -184,12 +184,18 @@ bool		S_Client::P2IsAlive(void)
 
 void		S_Client::EndingP1(void)
 {
-	delete this->_pl1;
-	this->_pl1 = NULL;
+	if (this->_pl1 != NULL)
+	{
+		delete this->_pl1;
+		this->_pl1 = NULL;
+	}
 }
 
 void		S_Client::EndingP2(void)
 {
-	delete this->_pl2;
-	this->_pl2 = NULL;
+	if (this->_pl2 != NULL)
+	{
+		delete this->_pl2;
+		this->_pl2 = NULL;
+	}
 }

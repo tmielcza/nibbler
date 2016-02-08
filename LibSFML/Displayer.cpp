@@ -27,7 +27,6 @@ Displayer::Displayer(int x, int y)
 		wx = x * 40;
 		wy = y * 40;
 	}
-	std::cout << " sizes " << wx << " " << wy << std::endl;
 	this->_win = new sf::RenderWindow(sf::VideoMode(wx, wy), "Nibbler");
 	this->_bg = new Background(vec2(wx / 2, wy / 2));
 	this->_size = {x, y};

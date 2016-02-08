@@ -12,10 +12,9 @@
 
 NAME = Nibbler
 GFXLIBS = gfx-sfml.so
-FLAGS = -Wall -Wextra -Werror -std=c++11
-FLAGS += -g # Debug
+FLAGS = -g3 -Wall -Wextra -Werror -std=c++11
 
-CC = g++
+CC = clang++
 
 DIROBJ = objs/
 DIRSRC = srcs/
