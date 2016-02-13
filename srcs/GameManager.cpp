@@ -308,7 +308,6 @@ void		GameManager::update(double time)
 			}
 		}
 	}
-	std::cout << "Here ?1" << std::endl;
 	if (this->_me != NULL)
 	{
 		this->_me->update(time);
@@ -333,7 +332,6 @@ void		GameManager::update(double time)
 			this->_me->SnakeClearToSend();
 		}
 	}
-	std::cout << "Here ?2" << std::endl;
 	if (this->_me2 != NULL)
 	{
 		this->_me2->update(time);
@@ -356,7 +354,6 @@ void		GameManager::update(double time)
 			this->_me2->SnakeClearToSend();
 		}
 	}
-	std::cout << "Here ?" << std::endl;
 	if (this->_multi == true)
 	{
 		if (this->_master != true)

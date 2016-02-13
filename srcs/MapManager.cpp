@@ -647,11 +647,15 @@ void				MapManager::Snake_Eat(int index, int x, int y)
 
 			while (Sbegin != Send)
 			{
+				std::cout << "Snake " << (*Sbegin)->getIndex() << " Search : ";
 				if ((*Sbegin)->getIndex() == index)
 				{
 					(*Sbegin)->eat(*(*Fbegin));
+					std::cout << " Right."<<  std::endl;
 					break;
 				}
+				else
+					std::cout << " Wrong."<<  std::endl;
 				Sbegin++;
 			}
 			break;

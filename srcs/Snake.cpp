@@ -66,7 +66,7 @@ Snake::~Snake(void)
 	std::list<Segment*>::iterator		tmp = this->_snake.begin();
 	std::list<Segment*>::iterator		end = this->_snake.end();
 
-	std::cout << "Destroying Snake !!" << std::endl;
+	std::cout << "Destroying Snake : " << this->_index << std::endl;
 	while (tmp != end)
 	{
 		Segment *s = *tmp;
@@ -273,7 +273,6 @@ void							Snake::move(void)
 				x = MapManager::Instance().getWidth() - 1;
 			(*seg)->setX(x);
 		}
-//		std::cout << "am'I passing by here ?" << std::endl;
 		if (this->_local == false)
 			this->CheckSnakeCycle();
 		x = (*seg)->getX();
@@ -362,7 +361,9 @@ void							Snake::turn_right(void)
 
 void							Snake::eat(Food const & eaten)
 {
-	GraphicsManager::Instance().popWave(this->getHeadSnakeX(), this->getHeadSnakeY());
+	int x = this->getHeadSnakeX();
+	int y = this->getHeadSnakeY();
+	GraphicsManager::Instance().popWave(x, y);
 	this->add_to_tail();
 	this->_tosend = "EFS";
 	this->_tosend += std::to_string(this->_index);
@@ -409,37 +410,53 @@ e_Cardinal						Snake::getHeadSnakeDirec(void)
 int								Snake::getHeadSnakeX(void)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	return ((*head)->getX());
+	if (head != end)
+		return ((*head)->getX());
+	else
+		return 0;
 }
 
 int								Snake::getHeadSnakeY(void)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	return ((*head)->getY());
+	if (head != end)
+		return ((*head)->getY());
+	else
+		return 0;
 }
 
 void							Snake::setHeadSnakeX(int x)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			end = this->_snake.end();
 
-//	int _x = (*head)->getX();
-	int _y = (*head)->getY();
-//	MapManager::Instance()._Map[_x][_y] = NULL;
-	(*head)->setX(x);
-	MapManager::Instance()._Map[x][_y] = (*head);
+	if (head != end)
+	{
+		int _x = (*head)->getX();
+		int _y = (*head)->getY();
+		MapManager::Instance()._Map[_x][_y] = NULL;
+		(*head)->setX(x);
+		MapManager::Instance()._Map[x][_y] = (*head);
+	}
 }
 
 void							Snake::setHeadSnakeY(int y)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	int _x = (*head)->getX();
-//	int _y = (*head)->getY();
-//	MapManager::Instance()._Map[_x][_y] = NULL;
-	(*head)->setY(y);
-	MapManager::Instance()._Map[_x][y] = (*head);
+	if (head != end)
+	{
+		int _x = (*head)->getX();
+		int _y = (*head)->getY();
+		MapManager::Instance()._Map[_x][_y] = NULL;
+		(*head)->setY(y);
+		MapManager::Instance()._Map[_x][y] = (*head);
+	}
 }
 
 void							Snake::setHeadSnakeDirec(e_Cardinal direc)

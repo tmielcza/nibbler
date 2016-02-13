@@ -430,19 +430,9 @@ void		Client::VerifySnakes(char *tmp)
 			else if ((*player)->getCycles() == cycles)
 			{
 				if ((*player)->getX() != x)
-				{
-					int _x = (*player)->getX();
-					int _y = (*player)->getY();
-					MapManager::Instance()._Map[_x][_y] = NULL;
 					(*player)->setX(x);
-				}
 				if ((*player)->getY() != y)
-				{
-					int _x = (*player)->getX();
-					int _y = (*player)->getY();
-					MapManager::Instance()._Map[_x][_y] = NULL;
 					(*player)->setY(y);
-				}
 				if ((*player)->getDirec() != (e_Cardinal)direc)
 					(*player)->setDirec((e_Cardinal)direc);
 			}
