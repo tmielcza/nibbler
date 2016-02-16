@@ -60,6 +60,23 @@ void	MapManager::init(int nbplayer, int width, int height)
 	this->_berase = false;
 }
 
+void		MapManager::removeSnake(Snake *snake)
+{
+	std::list<Snake*>::iterator		begin = this->_snakes.begin();
+	std::list<Snake*>::iterator		end = this->_snakes.end();
+	int								index = snake->getIndex();
+
+	while (begin != end)
+	{
+		if ((*begin)->getIndex() == index)
+		{
+			this->_snakes.remove((*begin));
+			break;
+		}
+		begin++;
+	}
+}
+
 /*
 void		MapManager::move(int index)
 {
@@ -703,6 +720,6 @@ void				MapManager::Snake_Death(int index)
 			(*Sbegin)->SetAlive(false);
 			break;
 		}
-			Sbegin++;
+		Sbegin++;
 	}
 }

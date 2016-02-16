@@ -395,7 +395,7 @@ void		Client::init_Others(char *tmp)
 void		Client::VerifySnakes(char *tmp)
 {
 	int			i = 0;
-	int			index = atoi(tmp + i);
+	int			index = atoi(tmp + 2);
 	int			cycles;
 	int			x;
 	int			y;
@@ -425,6 +425,9 @@ void		Client::VerifySnakes(char *tmp)
 	{
 		if ((*player)->getIndex() == index)
 		{
+			std::cout << "MSG : " << tmp << std::endl;
+			std::cout << index << " : " << x << "-" << y << ":" << direc;
+			std::cout << " Cycles : " << cycles << std::endl;
 			if ((*player)->getCycles() < cycles)
 				(*player)->add_Cycle(cycles, x, y, direc);
 			else if ((*player)->getCycles() == cycles)
@@ -481,6 +484,7 @@ void		Client::Snake_Take(char *tmp)
 void		Client::Snake_Death(char *tmp)
 {
 	int		index = atoi(tmp + 2);
+	std::cout << "Death of Snake : " << index << std::endl;
 	MapManager::Instance().Snake_Death(index);
 }
 

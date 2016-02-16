@@ -64,6 +64,7 @@ class MapManager
 	static MapManager&	Instance(void);
 	void				init(int nbplayer, int width, int height);
 	void				move(int index);
+	void				removeSnake(Snake *snake);
 	void				setSnakeDir(int index, bool left);
 	bool				InZone(Point point, Point upleft, Point downright, e_PopMode mode);
 	void				foodpop(bool spawner);

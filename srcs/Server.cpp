@@ -385,11 +385,13 @@ void	Server::Snake_Take(char *tmp)
 void	Server::Snake_Death(char *tmp)
 {
 	int		index = atoi(tmp + 2);
+	std::cout << "Death of Snake : " << index << std::endl;
 	MapManager::Instance().Snake_Death(index);
 }
 
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
+//	std::cout << "MSG : " << msg << std::endl;
 	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
 		if (msg[0] == 'V')

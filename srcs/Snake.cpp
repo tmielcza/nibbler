@@ -77,6 +77,7 @@ Snake::~Snake(void)
 		tmp = this->_snake.begin();
 		delete s;
 	}
+	MapManager::Instance().removeSnake(this);
 }
 
 bool							Snake::check_place_snake(int x, int y)
@@ -321,7 +322,7 @@ void							Snake::turn(e_Cardinal direction)
 	if (this->_nbmove == -1)
 		this->_nbmove = 0;
 	this->_nbmove++;
-	if (this->_nbmove == 3)
+	if (this->_local == true && this->_nbmove == 3)
 		GraphicsManager::Instance().switchFoodMode();
 }
 
@@ -383,7 +384,7 @@ void							Snake::eat(Food const & eaten)
 	if (this->_client == true && eaten.getSpawner() == true)
 		MapManager::Instance().foodpop(true);
 	eaten.eaten(*this);
-	if (this->_nbmove > 2)
+	if (this->_local == true && this->_nbmove > 2)
 		GraphicsManager::Instance().switchFoodMode();
 	this->_nbmove = 0;
 }
@@ -404,18 +405,28 @@ void							Snake::take_bonus(ABonus & taken)
 e_Cardinal						Snake::getHeadSnakeDirec(void)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	return ((*head)->get_Direc());
+	if (head != end && (*head) != NULL)
+		return ((*head)->get_Direc());
+	else
+	{
+		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
+		return ((e_Cardinal)0);
+	}
 }
 int								Snake::getHeadSnakeX(void)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	if (head != end)
+	if (head != end && (*head) != NULL)
 		return ((*head)->getX());
 	else
+	{
+		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
 		return 0;
+	}
 }
 
 int								Snake::getHeadSnakeY(void)
@@ -423,10 +434,13 @@ int								Snake::getHeadSnakeY(void)
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	if (head != end)
+	if (head != end && (*head) != NULL)
 		return ((*head)->getY());
 	else
+	{
+		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
 		return 0;
+	}
 }
 
 void							Snake::setHeadSnakeX(int x)
@@ -434,7 +448,7 @@ void							Snake::setHeadSnakeX(int x)
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	if (head != end)
+	if (head != end && (*head) != NULL)
 	{
 		int _x = (*head)->getX();
 		int _y = (*head)->getY();
@@ -442,6 +456,8 @@ void							Snake::setHeadSnakeX(int x)
 		(*head)->setX(x);
 		MapManager::Instance()._Map[x][_y] = (*head);
 	}
+	else
+		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
 }
 
 void							Snake::setHeadSnakeY(int y)
@@ -449,7 +465,7 @@ void							Snake::setHeadSnakeY(int y)
 	std::list<Segment*>::iterator			head = this->_snake.begin();
 	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	if (head != end)
+	if (head != end && (*head) != NULL)
 	{
 		int _x = (*head)->getX();
 		int _y = (*head)->getY();
@@ -457,13 +473,20 @@ void							Snake::setHeadSnakeY(int y)
 		(*head)->setY(y);
 		MapManager::Instance()._Map[_x][y] = (*head);
 	}
+	else
+		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
+
 }
 
 void							Snake::setHeadSnakeDirec(e_Cardinal direc)
 {
 	std::list<Segment*>::iterator			head = this->_snake.begin();
+	std::list<Segment*>::iterator			end = this->_snake.end();
 
-	(*head)->set_Direc(direc);
+	if (head != end && (*head) != NULL)
+		(*head)->set_Direc(direc);
+	else
+		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
 }
 
 int								Snake::getIndex(void)
@@ -599,28 +622,12 @@ void		Snake::CheckSnakeCycle(void)
 
 		while (cycle != end)
 		{
-//			std::cout << "Trying Cycle out " << (*cycle)->cycle;
-//			std::cout << " For Cycle in : " << this->_cycles << std::endl;
 			if ((*cycle)->cycle == this->_cycles)
 			{
 				if (this->getHeadSnakeX() != (*cycle)->x)
-				{
-					std::cout << "Snake " << this->getIndex();
-					std::cout << " for Cycle : " << this->_cycles;
-					std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
-					std::cout << " Position in : " << this->getHeadSnakeX() << "-";
-					std::cout << this->getHeadSnakeY() << std::endl;
 					this->setHeadSnakeX((*cycle)->x);
-				}
 				if (this->getHeadSnakeY() != (*cycle)->y)
-				{
-					std::cout << "Snake " << this->getIndex();
-					std::cout << " for Cycle : " << this->_cycles;
-					std::cout << " Position out : " << (*cycle)->x << "-" << (*cycle)->y;
-					std::cout << " Position in : " << this->getHeadSnakeX() << "-";
-					std::cout << this->getHeadSnakeY() << std::endl;
 					this->setHeadSnakeY((*cycle)->y);
-				}
 				if (this->getHeadSnakeDirec() != (e_Cardinal)(*cycle)->direc)
 				{
 					this->_nbmove++;
@@ -644,6 +651,4 @@ void		Snake::CheckSnakeCycle(void)
 */
 		}
 	}
-//	else
-//		std::cout << "No MSG Cycle." << std::endl;
 }
