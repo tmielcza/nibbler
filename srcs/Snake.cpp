@@ -63,7 +63,7 @@ Snake::Snake(e_Cardinal direction, int x, int y, bool client, bool local, int in
 
 Snake::~Snake(void)
 {
-	if (this != NULL && this->_snake.size() > 0)
+	if (this->_snake.size() > 0)
 	{
 		std::list<Segment*>::iterator		tmp = this->_snake.begin();
 		std::list<Segment*>::iterator		end = this->_snake.end();
