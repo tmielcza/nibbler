@@ -23,6 +23,8 @@ Client::Client(void)
 	this->r = 1;
 	this->_pl2 = false;
 	this->_init = false;
+	this->_null1 = false;
+	this->_null2 = false;
 }
 
 Client::Client(bool pl2)
@@ -34,6 +36,8 @@ Client::Client(bool pl2)
 	this->r = 1;
 	this->_pl2 = pl2;
 	this->_init = false;
+	this->_null1 = false;
+	this->_null2 = false;
 	this->_nbPlayer = 0;
 }
 
@@ -400,6 +404,7 @@ void		Client::VerifySnakes(char *tmp)
 	int			x;
 	int			y;
 	int			direc;
+	int			score;
 
 	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 		i++;
@@ -419,15 +424,16 @@ void		Client::VerifySnakes(char *tmp)
 		i++;
 	i++;
 	direc = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	score = atoi(tmp + i);
 	std::list<Player*>::iterator player = this->_players.begin();
 	std::list<Player*>::iterator end = this->_players.end();
 	while (player != end)
 	{
 		if ((*player)->getIndex() == index)
 		{
-			std::cout << "MSG : " << tmp << std::endl;
-			std::cout << index << " : " << x << "-" << y << ":" << direc;
-			std::cout << " Cycles : " << cycles << std::endl;
 			if ((*player)->getCycles() < cycles)
 				(*player)->add_Cycle(cycles, x, y, direc);
 			else if ((*player)->getCycles() == cycles)
@@ -438,6 +444,8 @@ void		Client::VerifySnakes(char *tmp)
 					(*player)->setY(y);
 				if ((*player)->getDirec() != (e_Cardinal)direc)
 					(*player)->setDirec((e_Cardinal)direc);
+				if ((*player)->getScore() != score)
+					(*player)->setScore(score);
 			}
 		}
 		player++;
@@ -535,14 +543,17 @@ void		Client::receive_data(void)
 			delete this->_me1;
 		if (this->_me2 != NULL)
 			delete this->_me2;
-		std::list<Player*>::iterator pl = this->_players.begin();
-		std::list<Player*>::iterator end = this->_players.end();
-		while (pl != end)
+		if (this->_players.size() > 0)
 		{
-			Player *del = (*pl);
-			this->_players.erase(pl);
-			delete del;
-			pl = this->_players.begin();
+			std::list<Player*>::iterator pl = this->_players.begin();
+			std::list<Player*>::iterator end = this->_players.end();
+			while (pl != end)
+			{
+				Player *del = (*pl);
+				this->_players.erase(pl);
+				delete del;
+				pl = this->_players.begin();
+			}
 		}
 		exit(0);
 	}
@@ -618,6 +629,30 @@ Player				*Client::getPlayer1(void)
 Player				*Client::getPlayer2(void)
 {
 	return (this->_me2);
+}
+
+bool				Client::getNull1(void)
+{
+	return this->_null1;
+}
+
+void				Client::setNull1(bool null1)
+{
+	this->_null1 = null1;
+	if (this->_null1 == true)
+		this->_me1 = NULL;
+}
+
+bool				Client::getNull2(void)
+{
+	return this->_null2;
+}
+
+void				Client::setNull2(bool null2)
+{
+	this->_null2 = null2;
+	if (this->_null2 == true)
+		this->_me2 = NULL;
 }
 
 char				**ft_strtab(char *str)

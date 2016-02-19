@@ -46,6 +46,8 @@ class Client
 	bool					_pl2;
 	bool					_init;
 	bool					_wall;
+	bool					_null1;
+	bool					_null2;
 	int						_width;
 	int						_height;
 	int						_maxPlayer;
@@ -87,6 +89,10 @@ class Client
 	void				Snake_Eat(char *tmp);
 	void				Snake_Take(char *tmp);
 	void				Snake_Death(char *tmp);
+	bool				getNull1(void);
+	void				setNull1(bool null1);
+	bool				getNull2(void);
+	void				setNull2(bool null2);
 
 };
 

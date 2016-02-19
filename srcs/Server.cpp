@@ -287,6 +287,7 @@ void	Server::VerifySnakes(char *tmp)
     int			x;
     int			y;
     int			direc;
+	int			score;
 
     while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 		i++;
@@ -306,6 +307,10 @@ void	Server::VerifySnakes(char *tmp)
         i++;
     i++;
     direc = atoi(tmp + i);
+    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+        i++;
+    i++;
+	score = atoi(tmp + i);
 	for (int j = 0; j < (this->fd_max + 2); j++)
 	{
 		if (this->clients[j]->get_type() == CLT_FD)
@@ -326,6 +331,8 @@ void	Server::VerifySnakes(char *tmp)
 						tmp1->setY(y);
 					if (tmp1->getDirec() != (e_Cardinal)direc)
 						tmp1->setDirec((e_Cardinal)direc);
+					if (tmp1->getScore() != score)
+						tmp1->setScore(score);
 				}
 			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
@@ -340,6 +347,8 @@ void	Server::VerifySnakes(char *tmp)
 						tmp2->setY(y);
 					if (tmp2->getDirec() != (e_Cardinal)direc)
 						tmp2->setDirec((e_Cardinal)direc);
+					if (tmp2->getScore() != score)
+						tmp2->setScore(score);
 				}
 			}
 		}

@@ -254,7 +254,7 @@ void		GameManager::update(double time)
 			this->_leave = true;
 		if ((*it & I_Restart) != 0)
 		{
-			if (this->_master == true)
+			if (this->_multi == false && this->_master == true)
 			{
 				this->restart();
 				for (int i = 0; i < this->_nbPlayer; i++)
@@ -332,6 +332,11 @@ void		GameManager::update(double time)
 			this->_me->SnakeClearToSend();
 		}
 	}
+	else if (this->_multi == true && this->_master == false)
+	{
+		if (this->_client->getNull1() == false)
+			this->_client->setNull1(true);
+	}
 	if (this->_me2 != NULL)
 	{
 		this->_me2->update(time);
@@ -353,6 +358,11 @@ void		GameManager::update(double time)
 				this->_client->set_write(tmp1);
 			this->_me2->SnakeClearToSend();
 		}
+	}
+	else if (this->_multi == true && this->_master == false)
+	{
+		if (this->_client->getNull2() == false)
+			this->_client->setNull2(true);
 	}
 	if (this->_multi == true)
 	{

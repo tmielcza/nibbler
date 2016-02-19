@@ -50,6 +50,8 @@ class Player
 	void		setY(int y);
 	void		setDirec(e_Cardinal direc);
 	e_Cardinal	getDirec(void);
+	void		setScore(int score);
+	int			getScore(void);
 	int			getIndex(void);
 	int			getCycles(void);
 	void		setCycles(int cycle);

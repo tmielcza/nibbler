@@ -70,7 +70,8 @@ Player::Player(const Player & copy)
 
 Player::~Player(void)
 {
-	delete this->_Snake;
+	if (this->_Snake != NULL)
+		delete this->_Snake;
 	std::cout << "Destroying Player !" << std::endl;
 }
 
@@ -140,7 +141,8 @@ void		Player::update(double time)
 			this->_tosend += std::to_string(this->getCycles()) + "_";
 			this->_tosend += std::to_string(this->getX()) + "_";
 			this->_tosend += std::to_string(this->getY()) + "_";
-			this->_tosend += std::to_string(this->getDirec());
+			this->_tosend += std::to_string(this->getDirec()) + "_";
+			this->_tosend += std::to_string(this->getScore());
 		}
 	}
 	this->_Snake->draw(this->_time);
@@ -198,6 +200,16 @@ void		Player::setY(int y)
 void		Player::setDirec(e_Cardinal direc)
 {
 	this->_Snake->setHeadSnakeDirec(direc);
+}
+
+void		Player::setScore(int score)
+{
+	this->_Snake->setScore(score);
+}
+
+int			Player::getScore(void)
+{
+	return (this->_Snake->getScore());
 }
 
 int			Player::getIndex(void)

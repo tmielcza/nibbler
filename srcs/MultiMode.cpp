@@ -197,9 +197,9 @@ void			MultiMode::run(void)
 				leave = true;
 			if (this->_master == true && (*it & I_Restart) != 0)
 			{
-				this->_game->restart();
-				for (int i = 0; i < this->_nbPlayers; i++)
-					MapManager::Instance().foodpop(true);
+//				this->_game->restart();
+//				for (int i = 0; i < this->_nbPlayers; i++)
+//					MapManager::Instance().foodpop(true);
 			}
 		}
 	}

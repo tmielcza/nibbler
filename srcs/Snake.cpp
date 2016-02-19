@@ -63,19 +63,27 @@ Snake::Snake(e_Cardinal direction, int x, int y, bool client, bool local, int in
 
 Snake::~Snake(void)
 {
-	std::list<Segment*>::iterator		tmp = this->_snake.begin();
-	std::list<Segment*>::iterator		end = this->_snake.end();
-
-	std::cout << "Destroying Snake : " << this->_index << std::endl;
-	while (tmp != end)
+	if (this != NULL && this->_snake.size() > 0)
 	{
-		Segment *s = *tmp;
-		int x = s->getX();
-		int y = s->getY();
-		MapManager::Instance()._Map[x][y] = NULL;
-		this->_snake.erase(tmp);
-		tmp = this->_snake.begin();
-		delete s;
+		std::list<Segment*>::iterator		tmp = this->_snake.begin();
+		std::list<Segment*>::iterator		end = this->_snake.end();
+		
+		std::cout << "Destroying Snake : " << this->_index << std::endl;
+		while (tmp != end)
+		{
+			if ((*tmp) != NULL)
+			{
+				Segment *s = *tmp;
+				int x = s->getX();
+				int y = s->getY();
+				MapManager::Instance()._Map[x][y] = NULL;
+				this->_snake.erase(tmp);
+				delete s;
+			}
+			else
+				this->_snake.remove((*tmp));
+			tmp = this->_snake.begin();
+		}
 	}
 	MapManager::Instance().removeSnake(this);
 }
@@ -484,9 +492,20 @@ void							Snake::setHeadSnakeDirec(e_Cardinal direc)
 	std::list<Segment*>::iterator			end = this->_snake.end();
 
 	if (head != end && (*head) != NULL)
-		(*head)->set_Direc(direc);
+	{
+		if ((*head)->get_Direc() != direc)
+		{
+			this->_nbmove++;
+			(*head)->set_Direc(direc);
+		}
+	}
 	else
 		std::cout << "FUCKING SHIT : " << this->_index << std::endl;
+}
+
+void							Snake::setScore(int score)
+{
+	this->_score = score;
 }
 
 int								Snake::getIndex(void)

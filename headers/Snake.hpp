@@ -83,6 +83,7 @@ class Snake
 	void						setHeadSnakeX(int x);
 	void						setHeadSnakeY(int y);
 	void						setHeadSnakeDirec(e_Cardinal direc);
+	void						setScore(int score);
 	int							getIndex(void);
 	double						getSpeed(void);
 	int							getScore(void);
