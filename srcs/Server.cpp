@@ -325,15 +325,17 @@ void	Server::VerifySnakes(char *tmp)
 					tmp1->add_Cycle(cycles, x, y, direc);
 				else if (tmp1->getCycles() == cycles)
 				{
+					std::cout << "Snake " << index << " : " << x << "-" << y;
+					std::cout << "_" << direc << " score : " << score << std::endl;
 					if (tmp1->getX() != x)
 						tmp1->setX(x);
 					if (tmp1->getY() != y)
 						tmp1->setY(y);
 					if (tmp1->getDirec() != (e_Cardinal)direc)
 						tmp1->setDirec((e_Cardinal)direc);
-					if (tmp1->getScore() != score)
-						tmp1->setScore(score);
 				}
+				if (tmp1->getScore() != score)
+					tmp1->setScore(score);
 			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
 			{
@@ -341,15 +343,17 @@ void	Server::VerifySnakes(char *tmp)
 					tmp2->add_Cycle(cycles, x, y, direc);
 				else if (tmp2->getCycles() == cycles)
 				{
+					std::cout << "Snake " << index << " : " << x << "-" << y;
+					std::cout << "_" << direc << " score : " << score << std::endl;
 					if (tmp2->getX() != x)
 						tmp2->setX(x);
 					if (tmp2->getY() != y)
 						tmp2->setY(y);
 					if (tmp2->getDirec() != (e_Cardinal)direc)
 						tmp2->setDirec((e_Cardinal)direc);
-					if (tmp2->getScore() != score)
-						tmp2->setScore(score);
 				}
+				if (tmp2->getScore() != score)
+					tmp2->setScore(score);
 			}
 		}
 	}
@@ -440,7 +444,10 @@ void	Server::check_fd(S_Client **clients)
 				if ((msg = clients[i]->c_receive()) != NULL)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
+					{
+						std::cout << "Receive : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
+					}
 				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)

@@ -120,7 +120,7 @@ void		Client::send_data()
 
 	this->b_write.bc_read(this->tmp_write);
 	i = strlen(tmp_write);
-//	std::cout << "Sending : " << this->tmp_write;
+	std::cout << "Sending : " << this->tmp_write;
 	send(sock, this->tmp_write, i, 0);
 	bzero(&this->tmp_write, i);
 }
@@ -438,15 +438,17 @@ void		Client::VerifySnakes(char *tmp)
 				(*player)->add_Cycle(cycles, x, y, direc);
 			else if ((*player)->getCycles() == cycles)
 			{
+				std::cout << "Snake " << index << " : " << x << "-" << y;
+				std::cout << "_" << direc << " score : " << score << std::endl;
 				if ((*player)->getX() != x)
 					(*player)->setX(x);
 				if ((*player)->getY() != y)
 					(*player)->setY(y);
 				if ((*player)->getDirec() != (e_Cardinal)direc)
 					(*player)->setDirec((e_Cardinal)direc);
-				if ((*player)->getScore() != score)
-					(*player)->setScore(score);
 			}
+			if ((*player)->getScore() != score)
+				(*player)->setScore(score);
 		}
 		player++;
 	}
@@ -569,7 +571,10 @@ void		Client::receive_data(void)
 			for (int i = 0; tab[i] != NULL; i++)
 			{
 				if (tab[i] != NULL && tab[i][0] != '\0')
+				{
+					std::cout << "Receive : " << tab[i] << std::endl;
 					make_cmd(tab[i]);
+				}
 			}
 		}
 	}
