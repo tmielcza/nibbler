@@ -238,15 +238,9 @@ void	Server::VerifySnakes(char *tmp)
 			tmp1 = this->clients[j]->getPlayer1();
 			tmp2 = this->clients[j]->getPlayer2();
 			if (tmp1 != NULL && tmp1->getIndex() == index)
-			{
 				MapManager::Instance().VerifySnake(tmp, tmp1);
-				break;
-			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
-			{
 				MapManager::Instance().VerifySnake(tmp, tmp2);
-				break;
-			}
 		}
 	}
 }
@@ -296,7 +290,7 @@ void	Server::Snake_Death(char *tmp)
 
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
-//	std::cout << "MSG : " << msg << std::endl;
+	std::cout << "MSG : " << msg << std::endl;
 	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
 		send_msg_to_all(clients, cs, msg);

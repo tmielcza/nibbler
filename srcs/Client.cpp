@@ -369,10 +369,7 @@ void		Client::VerifySnakes(char *tmp)
 	while (player != end)
 	{
 		if ((*player)->getIndex() == index)
-		{
 			MapManager::Instance().VerifySnake(tmp, (*player));
-			break;
-		}
 		player++;
 	}
 }
@@ -423,6 +420,7 @@ void		Client::Snake_Death(char *tmp)
 
 void		Client::make_cmd(char *tmp)
 {
+	std::cout << "MSG : " << tmp << std::endl;
 	if (tmp[0] == 'V')
 		this->VerifySnakes(tmp);
 	else if (tmp[0] == 'S')

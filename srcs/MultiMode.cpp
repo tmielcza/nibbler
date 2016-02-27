@@ -162,15 +162,15 @@ void			MultiMode::run(void)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
+		if (this->_master != true)
+			this->_game->Client_Check();
+		else
+			this->_game->Server_Check(false);
 		while (this->check_end())
 		{
 			this->_game->update(delta);
 			MapManager::Instance().update(delta);
 			GraphicsManager::Instance().display();
-			if (this->_master != true)
-				this->_game->Client_Check();
-			else
-				this->_game->Server_Check(false);
 			delta = this->_game->deltaTime();
 //			this->_game->update(delta);
 //			MapManager::Instance().update(delta);
@@ -189,4 +189,5 @@ void			MultiMode::run(void)
 			}
 		}
 	}
+	std::cout << "End of Game" << std::endl;
 }

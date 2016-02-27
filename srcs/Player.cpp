@@ -136,6 +136,7 @@ void		Player::verifyTurn(void)
 
 void		Player::Verify_Snake(char *tmp)
 {
+	this->_time = 0;
 	this->_Snake->Verify_Snake(tmp);
 }
 
@@ -205,13 +206,11 @@ e_Cardinal	Player::getDirec(void)
 void		Player::setX(int x)
 {
 	this->_Snake->setHeadSnakeX(x);
-//	this->_time = 0;
 }
 
 void		Player::setY(int y)
 {
 	this->_Snake->setHeadSnakeY(y);
-//	this->_time = 0;
 }
 
 void		Player::setDirec(e_Cardinal direc)

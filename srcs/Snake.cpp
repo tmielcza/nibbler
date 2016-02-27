@@ -707,12 +707,14 @@ void		Snake::Verify_Snake(char *tmp)
 				(*sbegin)->set_Direc((e_Cardinal)direc);
 			sbegin++;
 		}
+/*
 		else
 		{
 			Segment *seg = new Segment(x, y, (e_Cardinal)direc, this->_index);
 			this->_snake.push_back(seg);
 			MapManager::Instance()._Map[x][y] = seg;
 		}
+*/
 	}
 }
 
