@@ -120,7 +120,7 @@ void		Client::send_data()
 
 	this->b_write.bc_read(this->tmp_write);
 	i = strlen(tmp_write);
-	std::cout << "Sending : " << this->tmp_write;
+//	std::cout << "Sending : " << this->tmp_write;
 	send(sock, this->tmp_write, i, 0);
 	bzero(&this->tmp_write, i);
 }
@@ -129,19 +129,9 @@ void		Client::Snake_direc(char *tmp)
 {
 	int		index = atoi(tmp + 1);
 	int		direc;
-	int		x;
-	int		y;
 	int		i;
 
 	i = 1;
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	x = atoi(tmp + i);
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	y = atoi(tmp + i);
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
@@ -156,31 +146,7 @@ void		Client::Snake_direc(char *tmp)
 			if ((*snake)->getIndex() == index)
 			{
 				if ((*snake)->getSizeTouch() < 3)
-				{
-					if ((*snake)->getSizeTouch() == 0)
-					{
-						int mydirec = (int)(*snake)->getDirec();
-						if (((direc == 1 || direc == 2) &&
-							 (mydirec == 4 || mydirec == 8)) ||
-							((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
-						{
-							int _x = (*snake)->getX();
-							int _y = (*snake)->getY();
-							if (_x != x || _y != y)
-								(*snake)->add_touch((e_Cardinal)direc);
-							else
-								(*snake)->add_touch((e_Cardinal)direc);
-						}
-					}
-					else
-					{
-						int mydirec = (int)(*snake)->getFirstTouch();
-						if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8))
-							||
-							((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
-							(*snake)->add_touch((e_Cardinal)direc);
-					}
-				}
+					(*snake)->add_touch((e_Cardinal)direc);
 			}
 			snake++;
 		}
@@ -229,7 +195,7 @@ void		Client::popBonus(char *tmp)
 	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
 		i++;
 	int y = atoi(tmp + i);
-	std::cout << "popBonus at : " << x << "-" << y << std::endl;
+//	std::cout << "popBonus at : " << x << "-" << y << std::endl;
 	if (b == 3 || b == 4)
 	{
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
@@ -255,10 +221,8 @@ void		Client::init_Game(char *tmp)
 	int			i = 3;
 	int			wall;
 	
-	std::cout << "Sentances : " << tmp << "." << std::endl;
 	wall = atoi(tmp + i);
 	this->_wall = (bool)wall;
-	std::cout << "Wall set to : ";
 	if (this->_wall == true)
 		std::cout << "True : " << wall;
 	else
@@ -298,6 +262,7 @@ void		Client::init_Game(char *tmp)
 	i++;
 	int y = atoi(tmp + i);
 	this->_me1 = new Player((e_Cardinal)direc, x, y, index, false, false, true);
+	this->_me1->setReady(true);
 	this->_nbPlayer++;
 	if (this->_pl2 == true)
 	{
@@ -320,6 +285,7 @@ void		Client::init_Game(char *tmp)
 		i++;
 		y = atoi(tmp + i);
 		this->_me2 = new Player((e_Cardinal)direc, x, y, index, true, false, true);
+		this->_me2->setReady(true);
 		this->_nbPlayer++;
 	}
 	else
@@ -388,8 +354,6 @@ void		Client::init_Others(char *tmp)
 		y = atoi(tmp + i);
 		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 			i++;
-		std::cout << "Creating Player index : " << index << std::endl;
-		std::cout << "Pos : " << x << "-" << y << " to " << direc << std::endl;
 		Player *clt = new Player((e_Cardinal)direc, x, y, index, false, false, false);
 		this->_players.push_back(clt);
 		this->_nbPlayer++;
@@ -398,57 +362,16 @@ void		Client::init_Others(char *tmp)
 
 void		Client::VerifySnakes(char *tmp)
 {
-	int			i = 0;
 	int			index = atoi(tmp + 2);
-	int			cycles;
-	int			x;
-	int			y;
-	int			direc;
-	int			score;
 
-	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
-		i++;
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	cycles = atoi(tmp + i);
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	x = atoi(tmp + i);
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	y = atoi(tmp + i);
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	direc = atoi(tmp + i);
-	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-		i++;
-	i++;
-	score = atoi(tmp + i);
 	std::list<Player*>::iterator player = this->_players.begin();
 	std::list<Player*>::iterator end = this->_players.end();
 	while (player != end)
 	{
 		if ((*player)->getIndex() == index)
 		{
-			if ((*player)->getCycles() < cycles)
-				(*player)->add_Cycle(cycles, x, y, direc);
-			else if ((*player)->getCycles() == cycles)
-			{
-				std::cout << "Snake " << index << " : " << x << "-" << y;
-				std::cout << "_" << direc << " score : " << score << std::endl;
-				if ((*player)->getX() != x)
-					(*player)->setX(x);
-				if ((*player)->getY() != y)
-					(*player)->setY(y);
-				if ((*player)->getDirec() != (e_Cardinal)direc)
-					(*player)->setDirec((e_Cardinal)direc);
-			}
-			if ((*player)->getScore() != score)
-				(*player)->setScore(score);
+			MapManager::Instance().VerifySnake(tmp, (*player));
+			break;
 		}
 		player++;
 	}
@@ -461,7 +384,7 @@ void		Client::Snake_Eat(char *tmp)
 	int		x;
 	int		y;
 
-	std::cout << "Snake Eating : " << tmp << std::endl;
+//	std::cout << "Snake Eating : " << tmp << std::endl;
 	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
 		i++;
 	i++;
@@ -567,12 +490,13 @@ void		Client::receive_data(void)
 		while (this->b_read.bc_iscmd() == 1)
 		{
 			b_read.bc_read(this->tmp_read);
+//			std::cout << "Receive Groups : " << this->tmp_read << std::endl;
 			char **tab = ft_strtab(tmp_read);
 			for (int i = 0; tab[i] != NULL; i++)
 			{
 				if (tab[i] != NULL && tab[i][0] != '\0')
 				{
-					std::cout << "Receive : " << tab[i] << std::endl;
+//					std::cout << "Receive : " << tab[i] << std::endl;
 					make_cmd(tab[i]);
 				}
 			}

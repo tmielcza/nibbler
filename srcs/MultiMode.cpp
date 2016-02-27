@@ -80,30 +80,22 @@ void			MultiMode::init_clt(void)
 	int		i = 0;
 	this->_game = new GameManager(this->_pl2, true, false, this->_master);
 	this->_game->init_tcp(this->_addr, this->_port);
-	std::cout << "Wait until everybody is here : ";
-	std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
 	while (this->_game->getCltPL() < this->_nbPlayers)
 	{
 		if (this->_game->Client_init() == true)
 		{
 			if (i == 0)
 			{
-				std::cout << "Init my Client." << std::endl;
 				this->_game->init_from_clt();
 				this->_nbPlayers = this->_game->getMaxPlayer();
 				i = 1;
-				std::cout << "Wait until everybody is here : ";
-				std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
 			}
 			GraphicsManager::Instance().clear();
 			GraphicsManager::Instance().display();
 		}
 		this->_game->Client_Check();
 	}
-	std::cout << "Wait until everybody is here : ";
-	std::cout << this->_game->getCltPL() << "/" << this->_nbPlayers << std::endl;
 	this->_game->Bring_Client_Serv();
-
 	while ((time(NULL) % 7) != 0)
 	{
 		GraphicsManager::Instance().clear();
@@ -136,17 +128,12 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 	this->_game->init(this->_nbPlayers, this->_width, this->_height, wall);
 	this->_game->init_tcp(this->_addr, this->_port);
 	this->_game->setPlayertoServ();
-	std::cout << "Wait until everybody is here : ";
-	std::cout << this->_game->getServPL() << "/" << this->_nbPlayers << std::endl;
 	while (this->_game->getServPL() < this->_nbPlayers)
 	{
 		GraphicsManager::Instance().clear();
 		GraphicsManager::Instance().display();
 		this->_game->Server_Check(true);
 	}
-	std::cout << "Wait until everybody is here : ";
-	std::cout << this->_game->getServPL();
-	std::cout << "/" << this->_nbPlayers << std::endl;
 	this->_game->Bring_Serv_Clients();
 	for (int i = 0; i < this->_nbPlayers; i++)
 		MapManager::Instance().foodpop(true);
@@ -156,7 +143,6 @@ void			MultiMode::init_serv(int nbPlayers, int width, int height, bool wall)
 		GraphicsManager::Instance().display();
 		this->_game->Server_Check(false);
 	}
-//	usleep(30);
 }
 
 bool			MultiMode::check_end(void)
@@ -188,7 +174,7 @@ void			MultiMode::run(void)
 			delta = this->_game->deltaTime();
 //			this->_game->update(delta);
 //			MapManager::Instance().update(delta);
-//			GraphicsManager::Instance().display();
+			GraphicsManager::Instance().display();
 		}
 		inputs = GraphicsManager::Instance().getInput();
 		for (auto it = inputs.begin(); it != inputs.end(); it++)

@@ -15,6 +15,7 @@
 
 # include "Snake.hpp"
 # include "Food.hpp"
+# include "Player.hpp"
 # include "ABonus.hpp"
 # include "SuperFood.hpp"
 # include "MultiFood.hpp"
@@ -93,6 +94,7 @@ class MapManager
 	void				Snake_Eat(int index, int x, int y);
 	void				Snake_Take(int index, int x, int y);
 	void				Snake_Death(int index);
+	void				VerifySnake(char *tmp, Player *pl);
 
 };
 

@@ -77,21 +77,6 @@ void		MapManager::removeSnake(Snake *snake)
 	}
 }
 
-/*
-void		MapManager::move(int index)
-{
-	for (auto i = this->_snakes.begin(), end = this->_snakes.end(); i != end; i++)
-	{
-		if ((*i)->getIndex() == index)
-		{
-			(*i)->befor_move();
-			(*i)->move();
-			return ;
-		}
-	}
-}
-*/
-
 void		MapManager::setSnakeDir(int index, bool left)
 {
 	for (auto i = this->_snakes.begin(), end = this->_snakes.end(); i != end; i++)
@@ -390,7 +375,7 @@ void	MapManager::bonuspop(void)
 		y = rand() % this->_height;
 	}
 	int r = rand() % 100;
-	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
+//	std::cout << "Bonus poped at x: " << x << " y: " << y << std::endl;
 	if (r < 20)
 	{
 		SlowBonus *b = new SlowBonus(10, x, y);
@@ -476,7 +461,7 @@ void	MapManager::bonusdepop(int x, int y)
 			this->_Map[x][y] = NULL;
 			this->_berase = true;
 			this->_bonus.erase(start);
-			std::cout << "Bonus depop at : " << _x << "_" << _y << std::endl;
+//			std::cout << "Bonus depop at : " << _x << "_" << _y << std::endl;
 			return;
 		}
 		start++;
@@ -664,15 +649,11 @@ void				MapManager::Snake_Eat(int index, int x, int y)
 
 			while (Sbegin != Send)
 			{
-				std::cout << "Snake " << (*Sbegin)->getIndex() << " Search : ";
 				if ((*Sbegin)->getIndex() == index)
 				{
 					(*Sbegin)->eat(*(*Fbegin));
-					std::cout << " Right."<<  std::endl;
 					break;
 				}
-				else
-					std::cout << " Wrong."<<  std::endl;
 				Sbegin++;
 			}
 			break;
@@ -722,4 +703,11 @@ void				MapManager::Snake_Death(int index)
 		}
 		Sbegin++;
 	}
+}
+
+void				MapManager::VerifySnake(char *tmp, Player *pl)
+{
+	int			index = atoi(tmp + 2);
+	if (pl->getIndex() == index)
+		pl->Verify_Snake(tmp);
 }

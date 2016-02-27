@@ -211,106 +211,24 @@ void	Server::do_cmd(S_Client **clients, int cs, char *msg)
 		while (msg[i] != '\0' && msg[i] >= '0' && msg[i] <='9')
 			i++;
 		i++;
-		int x = atoi(msg + i);
-		while (msg[i] != '\0' && msg[i] >= '0' && msg[i] <='9')
-			i++;
-		i++;
-		int y = atoi(msg + i);
-		while (msg[i] != '\0' && msg[i] >= '0' && msg[i] <='9')
-			i++;
-		i++;
 		int direc = atoi(msg + i);
 		if (tmp1 != NULL && tmp1->getIndex() == index)
 		{
-			int mydirec = (int)tmp1->getDirec();
 			if (tmp1->getSizeTouch() < 3)
-			{
-				if (tmp1->getSizeTouch() == 0)
-				{
-					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
-						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
-					{
-						int _x = tmp1->getX();
-						int _y = tmp1->getY();
-						if (x != _x || y != _y)
-							tmp1->add_touch((e_Cardinal)direc);
-						else
-							tmp1->add_touch((e_Cardinal)direc);
-					}
-				}
-				else
-				{
-					int mydirec = (int)tmp1->getFirstTouch();
-					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
-						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
-						tmp1->add_touch((e_Cardinal)direc);
-				}
-			}
+				tmp1->add_touch((e_Cardinal)direc);
 		}
 		else if (tmp2 != NULL && tmp2->getIndex() == index)
 		{
 			if (tmp2->getSizeTouch() < 3)
-			{
-				if (tmp2->getSizeTouch() == 0)
-				{
-					int mydirec = (int)tmp2->getDirec();
-					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
-						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
-					{
-						int _x = tmp2->getX();
-						int _y = tmp2->getY();
-						if (x != _x || y != _y)
-						{
-							tmp2->add_touch((e_Cardinal)direc);
-						}
-						else
-							tmp2->add_touch((e_Cardinal)direc);
-					}
-				}
-				else
-				{
-					int mydirec = (int)tmp2->getFirstTouch();
-					if (((direc == 1 || direc == 2) && (mydirec == 4 || mydirec == 8)) ||
-						((direc == 4 || direc == 8) && (mydirec == 1 || mydirec == 2)))
-						tmp2->add_touch((e_Cardinal)direc);
-				}
-			}
+				tmp2->add_touch((e_Cardinal)direc);
 		}
 	}
 }
 
 void	Server::VerifySnakes(char *tmp)
 {
-    int			i = 2;
-    int			index =atoi(tmp + i);
-	int			cycles;
-    int			x;
-    int			y;
-    int			direc;
-	int			score;
+    int			index = atoi(tmp + 2);
 
-    while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
-		i++;
-    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-        i++;
-    i++;
-	cycles = atoi(tmp + i);
-    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-        i++;
-    i++;
-    x = atoi(tmp + i);
-    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-        i++;
-    i++;
-    y = atoi(tmp + i);
-    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-        i++;
-    i++;
-    direc = atoi(tmp + i);
-    while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
-        i++;
-    i++;
-	score = atoi(tmp + i);
 	for (int j = 0; j < (this->fd_max + 2); j++)
 	{
 		if (this->clients[j]->get_type() == CLT_FD)
@@ -321,39 +239,13 @@ void	Server::VerifySnakes(char *tmp)
 			tmp2 = this->clients[j]->getPlayer2();
 			if (tmp1 != NULL && tmp1->getIndex() == index)
 			{
-				if (tmp1->getCycles() < cycles)
-					tmp1->add_Cycle(cycles, x, y, direc);
-				else if (tmp1->getCycles() == cycles)
-				{
-					std::cout << "Snake " << index << " : " << x << "-" << y;
-					std::cout << "_" << direc << " score : " << score << std::endl;
-					if (tmp1->getX() != x)
-						tmp1->setX(x);
-					if (tmp1->getY() != y)
-						tmp1->setY(y);
-					if (tmp1->getDirec() != (e_Cardinal)direc)
-						tmp1->setDirec((e_Cardinal)direc);
-				}
-				if (tmp1->getScore() != score)
-					tmp1->setScore(score);
+				MapManager::Instance().VerifySnake(tmp, tmp1);
+				break;
 			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
 			{
-				if (tmp2->getCycles() < cycles)
-					tmp2->add_Cycle(cycles, x, y, direc);
-				else if (tmp2->getCycles() == cycles)
-				{
-					std::cout << "Snake " << index << " : " << x << "-" << y;
-					std::cout << "_" << direc << " score : " << score << std::endl;
-					if (tmp2->getX() != x)
-						tmp2->setX(x);
-					if (tmp2->getY() != y)
-						tmp2->setY(y);
-					if (tmp2->getDirec() != (e_Cardinal)direc)
-						tmp2->setDirec((e_Cardinal)direc);
-				}
-				if (tmp2->getScore() != score)
-					tmp2->setScore(score);
+				MapManager::Instance().VerifySnake(tmp, tmp2);
+				break;
 			}
 		}
 	}
@@ -407,6 +299,7 @@ void	Server::check_actions(S_Client **clients, int cs, char *msg)
 //	std::cout << "MSG : " << msg << std::endl;
 	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
+		send_msg_to_all(clients, cs, msg);
 		if (msg[0] == 'V')
 			this->VerifySnakes(msg);
 		else if (msg[0] == 'E')
@@ -420,7 +313,6 @@ void	Server::check_actions(S_Client **clients, int cs, char *msg)
 			this->Snake_Death(msg);
 		else if (msg[0] == 'S')
 			this->do_cmd(clients, cs, msg);
-		send_msg_to_all(clients, cs, msg);
 	}
 	else if (clients[cs]->getAlive() == true)
 		create_snake(clients, cs, msg);
@@ -445,7 +337,7 @@ void	Server::check_fd(S_Client **clients)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
 					{
-						std::cout << "Receive : " << msg[j] << std::endl;
+//						std::cout << "Receive : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
 					}
 				}
@@ -476,7 +368,10 @@ void	Server::check_fd_noCo(S_Client **clients)
 				if ((msg = clients[i]->c_receive()) != NULL)
 				{
 					for (int j = 0; msg[j] != NULL; j++)
+					{
+//						std::cout << "Receive : " << msg[j] << std::endl;
 						check_actions(clients, i, msg[j]);
+					}
 				}
 			}
 			else if (FD_ISSET(i, &fd_write) != 0)

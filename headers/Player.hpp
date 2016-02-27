@@ -27,6 +27,7 @@ class Player
 	bool					_local;
 	bool					_client;
 	bool					_pl2;
+	bool					_ready;
 
 	public:
 
@@ -40,6 +41,7 @@ class Player
 	Player	&	operator=(const Player & ass);
 	bool		IsAlive(void);
 	bool		verify_lL(e_Cardinal d);
+	void		verifyTurn(void);
 	void		update(double time);
 	void		add_touch(e_Cardinal touch);
 	int			getSizeTouch(void);
@@ -55,12 +57,15 @@ class Player
 	int			getIndex(void);
 	int			getCycles(void);
 	void		setCycles(int cycle);
+	bool		getReady(void);
+	void		setReady(bool ready);
 	bool		getPL2(void);
 	void		move(void);
 	char		*SnaketakeToSend(void);
 	void		SnakeClearToSend(void);
 	char		*takeToSend(void);
 	void		ClearToSend(void);
+	void		Verify_Snake(char *tmp);
 	void		add_Cycle(int cycle, int x, int y, int direc);
 	void		CheckSnakeCycle(void);
 

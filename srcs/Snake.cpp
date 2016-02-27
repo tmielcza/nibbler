@@ -497,6 +497,7 @@ void							Snake::setHeadSnakeDirec(e_Cardinal direc)
 		{
 			this->_nbmove++;
 			(*head)->set_Direc(direc);
+			
 		}
 	}
 	else
@@ -632,6 +633,119 @@ void		Snake::add_Cycle(int cycle, int x, int y, int direc)
 //	std::cout << "Creating MSG Cycle n" << cycle << " at " << x << "-" << y << std::endl;
 }
 
+void		Snake::Verify_Snake(char *tmp)
+{
+	std::list<Segment*>::iterator		sbegin = this->_snake.begin();
+	std::list<Segment*>::iterator		send = this->_snake.end();
+	int				i = 0;
+	int				score;
+	int				nbmove;
+	double			speed;
+	int				x;
+	int				y;
+	int				direc;
+
+	while (tmp[i] != '\0' && (tmp[i] < '0' || tmp[i] > '9'))
+		i++;
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	score = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	nbmove = atoi(tmp + i);
+	while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+		i++;
+	i++;
+	speed = atof(tmp + i);
+	while ((tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9') || tmp[i] == '.')
+		i++;
+	i++;
+	if (this->_score != score)
+		this->_score = score;
+	if (this->_nbmove != nbmove)
+		this->_nbmove = nbmove;
+	if (this->_speed != speed)
+		this->_speed = speed;
+	while (tmp[i] != '\0')
+	{
+		x = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
+			i++;
+		y = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
+			i++;
+		direc = atoi(tmp + i);
+		while (tmp[i] != '\0' && tmp[i] >= '0' && tmp[i] <= '9')
+			i++;
+		if (tmp[i] != '\0')
+			i++;
+		if (sbegin != send)
+		{
+			if ((*sbegin)->getX() != x)
+			{
+				int _x = (*sbegin)->getX();
+				int _y = (*sbegin)->getY();
+				MapManager::Instance()._Map[_x][_y] = NULL;
+				(*sbegin)->setX(x);
+				MapManager::Instance()._Map[x][_y] = (*sbegin);
+			}
+			if ((*sbegin)->getX() != y)
+			{
+				int _x = (*sbegin)->getX();
+				int _y = (*sbegin)->getY();
+				MapManager::Instance()._Map[_x][_y] = NULL;
+				(*sbegin)->setY(y);
+				MapManager::Instance()._Map[_x][y] = (*sbegin);
+			}
+			if ((*sbegin)->get_Direc() != (e_Cardinal)direc)
+				(*sbegin)->set_Direc((e_Cardinal)direc);
+			sbegin++;
+		}
+		else
+		{
+			Segment *seg = new Segment(x, y, (e_Cardinal)direc, this->_index);
+			this->_snake.push_back(seg);
+			MapManager::Instance()._Map[x][y] = seg;
+		}
+	}
+}
+
+std::string	Snake::make_vtosend(void)
+{
+	std::list<Segment*>::iterator		sbegin = this->_snake.begin();
+	std::list<Segment*>::iterator		send = this->_snake.end();
+	std::string		tmp;
+
+	tmp = "VS";
+	tmp += std::to_string(this->_index) + "_";
+	tmp += std::to_string(this->_score) + "_";
+	tmp += std::to_string(this->_nbmove) + "_";
+	tmp += std::to_string(this->_speed) + "_";
+	while (sbegin != send)
+	{
+		if ((*sbegin) != this->_tail)
+		{
+			tmp += std::to_string((*sbegin)->getX()) + "_";
+			tmp += std::to_string((*sbegin)->getY()) + "_";
+			tmp += std::to_string((*sbegin)->get_Direc()) + "_";
+		}
+		else
+		{
+			tmp += std::to_string((*sbegin)->getX()) + "_";
+			tmp += std::to_string((*sbegin)->getY()) + "_";
+			tmp += std::to_string((*sbegin)->get_Direc());
+		}
+		sbegin++;
+	}
+	return (tmp);
+}
+
 void		Snake::CheckSnakeCycle(void)
 {
 	if (this->_msgCycles.size() > 0)
@@ -644,11 +758,24 @@ void		Snake::CheckSnakeCycle(void)
 			if ((*cycle)->cycle == this->_cycles)
 			{
 				if (this->getHeadSnakeX() != (*cycle)->x)
+				{
+					std::cout << "CheckSnakeCycle of snake : " << this->_index;
+					std::cout << " X change to " << (*cycle)->x << " from ";
+					std::cout << this->getHeadSnakeX() << std::endl;
 					this->setHeadSnakeX((*cycle)->x);
+				}
 				if (this->getHeadSnakeY() != (*cycle)->y)
+				{
+					std::cout << "CheckSnakeCycle of snake : " << this->_index;
+					std::cout << " Y change to " << (*cycle)->y << " from ";
+					std::cout << this->getHeadSnakeY() << std::endl;
 					this->setHeadSnakeY((*cycle)->y);
+				}
 				if (this->getHeadSnakeDirec() != (e_Cardinal)(*cycle)->direc)
 				{
+					std::cout << "CheckSnakeCycle of snake : " << this->_index;
+					std::cout << " Direc change to " << (*cycle)->direc << " from ";
+					std::cout << this->getHeadSnakeDirec() << std::endl;
 					this->_nbmove++;
 					this->setHeadSnakeDirec((e_Cardinal)(*cycle)->direc);
 				}

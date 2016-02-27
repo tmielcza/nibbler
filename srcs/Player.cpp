@@ -20,6 +20,7 @@ Player::Player(void)
 	this->_pl2 = false;
 	this->_client = true;
 	this->_local = true;
+	this->_ready = false;
 	this->_time = 0;
 	this->_Snake = new Snake();
 	this->_tosend = "";
@@ -33,6 +34,7 @@ Player::Player(bool pl2, bool client, bool local)
 	this->_pl2 = pl2;
 	this->_local = local;
 	this->_client = client;
+	this->_ready = false;
 	this->_time = 0;
 	this->_Snake = new Snake(client, local);
 	MapManager::Instance().setSnake(this->_Snake);
@@ -44,6 +46,7 @@ Player::Player(e_Cardinal direc, int x, int y, int index, bool pl2, bool client,
 	this->_pl2 = pl2;
 	this->_local = local;
 	this->_client = client;
+	this->_ready = false;
 	this->_time = 0;
 	std::cout << "Creating Player in Player index : " << index << std::endl;
 	this->_Snake = new Snake(direc, x, y, client, local, index);
@@ -57,6 +60,7 @@ Player::Player(Snake *snake)
 		std::cout << "Creating Player !" << std::endl;
 		this->_Snake = snake;
 		this->_pl2 = false;
+		this->_ready = false;
 		this->_tosend = "";
 		this->_client = true;
 		MapManager::Instance().setSnake(this->_Snake);
@@ -114,6 +118,27 @@ bool		Player::verify_lL(e_Cardinal d)
 	}
 }
 
+void		Player::verifyTurn(void)
+{
+	std::list<e_Cardinal>::iterator		tuchs = this->_lastInputs.begin();
+	std::list<e_Cardinal>::iterator		end = this->_lastInputs.end();
+
+	this->_Snake->update_directions();
+	if (this->_lastInputs.size() > 0)
+	{
+		if (tuchs != end)
+		{
+			this->_Snake->turn(*tuchs);
+			this->_lastInputs.erase(tuchs);
+		}
+	}
+}
+
+void		Player::Verify_Snake(char *tmp)
+{
+	this->_Snake->Verify_Snake(tmp);
+}
+
 void		Player::update(double time)
 {
 	std::list<e_Cardinal>::iterator		tuchs = this->_lastInputs.begin();
@@ -135,15 +160,7 @@ void		Player::update(double time)
 		this->_Snake->move();
 		this->_time = 0.;
 		if (this->_local == true)
-		{
-			this->_tosend = "VS";
-			this->_tosend += std::to_string(this->getIndex()) + "_";
-			this->_tosend += std::to_string(this->getCycles()) + "_";
-			this->_tosend += std::to_string(this->getX()) + "_";
-			this->_tosend += std::to_string(this->getY()) + "_";
-			this->_tosend += std::to_string(this->getDirec()) + "_";
-			this->_tosend += std::to_string(this->getScore());
-		}
+			this->_tosend = this->_Snake->make_vtosend();
 	}
 	this->_Snake->draw(this->_time);
 	GraphicsManager::Instance().drawScore(this->_time, this->_Snake->getHeadSnakeX(),
@@ -188,13 +205,13 @@ e_Cardinal	Player::getDirec(void)
 void		Player::setX(int x)
 {
 	this->_Snake->setHeadSnakeX(x);
-	this->_time = 0;
+//	this->_time = 0;
 }
 
 void		Player::setY(int y)
 {
 	this->_Snake->setHeadSnakeY(y);
-	this->_time = 0;
+//	this->_time = 0;
 }
 
 void		Player::setDirec(e_Cardinal direc)
@@ -217,6 +234,16 @@ int			Player::getIndex(void)
 	return (this->_Snake->getIndex());
 }
 
+bool		Player::getReady(void)
+{
+	return this->_ready;
+}
+
+void		Player::setReady(bool ready)
+{
+	this->_ready = ready;
+}
+
 bool		Player::getPL2(void)
 {
 	return (this->_pl2);
@@ -224,7 +251,16 @@ bool		Player::getPL2(void)
 
 void		Player::move(void)
 {
+	this->verifyTurn();
+	this->_Snake->befor_move();
 	this->_Snake->move();
+	this->_time = 0;
+	this->_Snake->draw(this->_time);
+	GraphicsManager::Instance().drawScore(this->_time, this->_Snake->getHeadSnakeX(),
+										  this->_Snake->getHeadSnakeY(),
+										  (e_Dir)this->_Snake->getHeadSnakeDirec(),
+										  this->_Snake->getScore());
+	
 }
 
 char		*Player::SnaketakeToSend(void)
@@ -262,6 +298,8 @@ void		Player::setCycles(int cycle)
 
 void		Player::add_Cycle(int cycle, int x, int y, int direc)
 {
+//	if (cycle == 1)
+//		this->_ready = true;
 	this->_Snake->add_Cycle(cycle, x, y, direc);
 }
 

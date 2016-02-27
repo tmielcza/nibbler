@@ -16,7 +16,7 @@
 
 Food::Food(void)
 {
-	std::cout << "Food's poped from the big Tree !" << std::endl;
+//	std::cout << "Food's poped from the big Tree !" << std::endl;
 }
 
 Food::Food(Food const & copy)
@@ -26,7 +26,7 @@ Food::Food(Food const & copy)
 
 Food::Food(int value, int x, int y, bool spawner)
 {
-	std::cout << "Food's poped from the big Tree at " << x << "-" << y << " !" << std::endl;
+//	std::cout << "Food's poped from the big Tree at " << x << "-" << y << " !" << std::endl;
 	this->_value = value;
 	this->_pos.setX(x);
 	this->_pos.setY(y);
@@ -42,7 +42,7 @@ Food::~Food(void)
 	int x = this->_pos.getX();
 	int y = this->_pos.getY();
 	GraphicsManager::Instance().depopFood(x, y);
-	std::cout << "Food in " << x << "-" << y << " has been eaten !" << std::endl;
+//	std::cout << "Food in " << x << "-" << y << " has been eaten !" << std::endl;
 }
 
 Food	&	Food::operator=(Food const & ass)

@@ -88,7 +88,7 @@ class Snake
 	double						getSpeed(void);
 	int							getScore(void);
 	int							getCycles(void);
-	void						setCycles(int cycle);
+	void						setCycles(int cycsle);
 	bool						IsAlive(void);
 	void						SetAlive(bool alive);
 	void						draw(double time);
@@ -98,6 +98,8 @@ class Snake
 	char						*takeToSend(void);
 	void						ClearToSend(void);
 	void						add_Cycle(int cycle, int x, int y, int direc);
+	void						Verify_Snake(char *tmp);
+	std::string					make_vtosend(void);
 	void						CheckSnakeCycle(void);
 
 };

@@ -108,13 +108,17 @@ void		GameManager::init(int nbplayer, int width, int height, bool wall)
 	this->_height = height;
 	this->_wall = wall;
 	if (this->_master == true)
+	{
 		this->_me = new Player(false, this->_master, true);
+		this->_me->setReady(true);
+	}
 	else
 		this->_me = NULL;
 	if (this->_master == true && this->_pl2 == true)
 	{
 		this->_curPL++;
 		this->_me2 = new Player(true, this->_master, true);
+		this->_me2->setReady(true);
 	}
 	else
 		this->_me2 = NULL;
@@ -269,14 +273,10 @@ void		GameManager::update(double time)
 			{
 				if (this->_me->getSizeTouch() < 3)
 				{
-//					if (this->_me->verify_lL((e_Cardinal)input) == 1)
-//					{
+					if (this->_me->verify_lL((e_Cardinal)input) == 1)
+					{
 						std::string tmp = "S";
 						tmp += std::to_string(this->_me->getIndex());
-						tmp += "_";
-						tmp += std::to_string(this->_me->getX());
-						tmp += "_";
-						tmp += std::to_string(this->_me->getY());
 						tmp += "_";
 						tmp += std::to_string((int)input);
 						if (this->_multi == true && this->_master == true)
@@ -284,7 +284,7 @@ void		GameManager::update(double time)
 						else if (this->_multi == true)
 							this->_client->set_write((char *)tmp.c_str());
 						this->_me->add_touch((e_Cardinal)input);
-//					}
+					}
 				}
 			}
 			else if (this->_me2 != NULL && !player1)
@@ -294,10 +294,6 @@ void		GameManager::update(double time)
 					this->_me2->add_touch((e_Cardinal)input);
 					std::string tmp = "S";
 					tmp += std::to_string(this->_me2->getIndex());
-					tmp += "_";
-					tmp += std::to_string(this->_me2->getX());
-					tmp += "_";
-					tmp += std::to_string(this->_me2->getY());
 					tmp += "_";
 					tmp += std::to_string((int)input);
 					if (this->_multi == true && this->_master == true)
