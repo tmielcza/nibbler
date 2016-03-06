@@ -100,7 +100,6 @@ class Snake
 	void						add_Cycle(int cycle, int x, int y, int direc);
 	void						Verify_Snake(char *tmp);
 	std::string					make_vtosend(void);
-	void						CheckSnakeCycle(void);
 
 };
 

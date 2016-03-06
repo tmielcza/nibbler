@@ -95,6 +95,7 @@ class MapManager
 	void				Snake_Take(int index, int x, int y);
 	void				Snake_Death(int index);
 	void				VerifySnake(char *tmp, Player *pl);
+	void				VerifyFB(void);
 
 };
 

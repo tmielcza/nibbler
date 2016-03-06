@@ -63,11 +63,10 @@ class Player
 	void		move(void);
 	char		*SnaketakeToSend(void);
 	void		SnakeClearToSend(void);
-	char		*takeToSend(void);
+ 	char		*takeToSend(void);
 	void		ClearToSend(void);
 	void		Verify_Snake(char *tmp);
 	void		add_Cycle(int cycle, int x, int y, int direc);
-	void		CheckSnakeCycle(void);
 
 };
 

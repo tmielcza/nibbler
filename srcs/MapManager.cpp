@@ -652,6 +652,7 @@ void				MapManager::Snake_Eat(int index, int x, int y)
 				if ((*Sbegin)->getIndex() == index)
 				{
 					(*Sbegin)->eat(*(*Fbegin));
+					std::cout << " at cycles : " << (*Sbegin)->getCycles() << std::endl;
 					break;
 				}
 				Sbegin++;
@@ -679,6 +680,7 @@ void				MapManager::Snake_Take(int index, int x, int y)
 				if ((*Sbegin)->getIndex() == index)
 				{
 					(*Sbegin)->take_bonus(*(*Bbegin));
+					std::cout << " at cycles : " << (*Sbegin)->getCycles() << std::endl;
 					break;
 				}
 				Sbegin++;
@@ -699,6 +701,7 @@ void				MapManager::Snake_Death(int index)
 		if ((*Sbegin)->getIndex() == index)
 		{
 			(*Sbegin)->SetAlive(false);
+			std::cout << " at cycles : " << (*Sbegin)->getCycles() << std::endl;
 			break;
 		}
 		Sbegin++;
@@ -710,4 +713,36 @@ void				MapManager::VerifySnake(char *tmp, Player *pl)
 	int			index = atoi(tmp + 2);
 	if (pl->getIndex() == index)
 		pl->Verify_Snake(tmp);
+}
+
+void				MapManager::VerifyFB(void)
+{
+	if (this->_foods.size() > 0)
+	{
+		std::list<Food *>::iterator		Fbegin = this->_foods.begin();
+		std::list<Food *>::iterator		Fend = this->_foods.end();
+
+		while (Fbegin != Fend)
+		{
+			int x = (*Fbegin)->getX();
+			int y = (*Fbegin)->getY();
+			if (this->_Map[x][y] == NULL)
+				this->_Map[x][y] = (*Fbegin);
+			Fbegin++;
+		}
+	}
+	if (this->_bonus.size() > 0)
+	{
+		std::list<ABonus *>::iterator		Bbegin = this->_bonus.begin();
+		std::list<ABonus *>::iterator		Bend = this->_bonus.end();
+
+		while (Bbegin != Bend)
+		{
+			int x = (*Bbegin)->getX();
+			int y = (*Bbegin)->getY();
+			if (this->_Map[x][y] == NULL)
+				this->_Map[x][y] = (*Bbegin);
+			Bbegin++;
+		}
+	}
 }

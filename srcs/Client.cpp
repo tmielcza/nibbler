@@ -120,7 +120,8 @@ void		Client::send_data()
 
 	this->b_write.bc_read(this->tmp_write);
 	i = strlen(tmp_write);
-//	std::cout << "Sending : " << this->tmp_write;
+	if (this->_me1 != NULL)
+		std::cout << "MSG " << this->_me1->getCycles() << " Sending : " << this->tmp_write;
 	send(sock, this->tmp_write, i, 0);
 	bzero(&this->tmp_write, i);
 }
@@ -369,7 +370,10 @@ void		Client::VerifySnakes(char *tmp)
 	while (player != end)
 	{
 		if ((*player)->getIndex() == index)
+		{
+			std::cout << " at cycles : " << (*player)->getCycles() << std::endl;
 			MapManager::Instance().VerifySnake(tmp, (*player));
+		}
 		player++;
 	}
 }
@@ -420,7 +424,7 @@ void		Client::Snake_Death(char *tmp)
 
 void		Client::make_cmd(char *tmp)
 {
-	std::cout << "MSG : " << tmp << std::endl;
+	std::cout << "MSG rcv : " << tmp;// << std::endl;
 	if (tmp[0] == 'V')
 		this->VerifySnakes(tmp);
 	else if (tmp[0] == 'S')

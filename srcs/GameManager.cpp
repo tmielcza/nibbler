@@ -252,6 +252,7 @@ void		GameManager::update(double time)
 
 	inputs = GraphicsManager::Instance().getInput();
 	GraphicsManager::Instance().clear();
+	//Gestions des touches
 	for (auto it = inputs.begin(); it != inputs.end(); it++)
 	{
 		if ((*it & I_Close) != 0)
@@ -304,6 +305,9 @@ void		GameManager::update(double time)
 			}
 		}
 	}
+	// verify foods & bonus
+	MapManager::Instance().VerifyFB();
+	// update player 1 local
 	if (this->_me != NULL)
 	{
 		this->_me->update(time);
@@ -333,6 +337,7 @@ void		GameManager::update(double time)
 		if (this->_client->getNull1() == false)
 			this->_client->setNull1(true);
 	}
+	// update player 2 local
 	if (this->_me2 != NULL)
 	{
 		this->_me2->update(time);
@@ -360,6 +365,7 @@ void		GameManager::update(double time)
 		if (this->_client->getNull2() == false)
 			this->_client->setNull2(true);
 	}
+	// update Clients/Serv
 	if (this->_multi == true)
 	{
 		if (this->_master != true)

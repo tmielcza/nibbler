@@ -301,8 +301,3 @@ void		Player::add_Cycle(int cycle, int x, int y, int direc)
 //		this->_ready = true;
 	this->_Snake->add_Cycle(cycle, x, y, direc);
 }
-
-void		Player::CheckSnakeCycle(void)
-{
-	this->_Snake->CheckSnakeCycle();
-}

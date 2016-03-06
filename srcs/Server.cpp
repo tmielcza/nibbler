@@ -238,9 +238,15 @@ void	Server::VerifySnakes(char *tmp)
 			tmp1 = this->clients[j]->getPlayer1();
 			tmp2 = this->clients[j]->getPlayer2();
 			if (tmp1 != NULL && tmp1->getIndex() == index)
+			{
+				std::cout << " at cycles : " << tmp1->getCycles() << std::endl;
 				MapManager::Instance().VerifySnake(tmp, tmp1);
+			}
 			else if (tmp2 != NULL && tmp2->getIndex() == index)
+			{
+				std::cout << " at cycles : " << tmp2->getCycles() << std::endl;
 				MapManager::Instance().VerifySnake(tmp, tmp2);
+			}
 		}
 	}
 }
@@ -284,13 +290,12 @@ void	Server::Snake_Take(char *tmp)
 void	Server::Snake_Death(char *tmp)
 {
 	int		index = atoi(tmp + 2);
-	std::cout << "Death of Snake : " << index << std::endl;
 	MapManager::Instance().Snake_Death(index);
 }
 
 void	Server::check_actions(S_Client **clients, int cs, char *msg)
 {
-	std::cout << "MSG : " << msg << std::endl;
+	std::cout << "MSG Received : " << msg;// << std::endl;
 	if (clients[cs]->getPlayer1() != NULL || clients[cs]->getPlayer2() != NULL)
 	{
 		send_msg_to_all(clients, cs, msg);

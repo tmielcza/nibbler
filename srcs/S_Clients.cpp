@@ -50,7 +50,8 @@ void	S_Client::c_send(void)
 
 	b_write.bc_read(tmp_write);
 	i = strlen(tmp_write);
-//	std::cout << "Sending to " << this->sock << " : " << this->tmp_write;
+	if (this->_pl1 != NULL)
+		std::cout << "MSG " << this->_pl1->getCycles() << " Sending : " << this->tmp_write;
 	send(sock, tmp_write, i, 0);
 	bzero(tmp_write, i + 1);
 }
