@@ -125,9 +125,15 @@ void	check_args(int ac, char **av, t_env *env)
 			if (av[i] != NULL)
 			{
 				env->height = atoi(av[i]);
-				if (env->height > ((env->nbPlayers * 2) + 4) || env->height < 16)
+				int k;
+				if (env->height < (k = ((env->nbPlayers * 2) + 4)) || env->height < 16)
 				{
 					std::cout << "Error: Map height isn't enought !" << std::endl;
+					std::cout << "Try at least more then ";
+					if (env->height < k)
+						std::cout << k << std::endl;
+					else
+						std::cout << "16" << std::endl;
 					exit(-42);
 				}
 			}
@@ -146,6 +152,11 @@ void	check_args(int ac, char **av, t_env *env)
 				if ((env->width / env->nbPlayers) < 10 || env->width < 16)
 				{
 					std::cout << "Error: Map width isn't enought !" << std::endl;
+					std::cout << "Try at least more then ";
+					if (env->nbPlayers != 1)
+						std::cout << env->nbPlayers * 10 << std::endl;
+					else
+						std::cout << "16" << std::endl;
 					exit(-42);
 				}
 			}
