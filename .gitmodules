@@ -1,0 +1,6 @@
+[submodule "LibPLPLOT/-name"]
+	path = LibPLPLOT/-name
+	url = git://git.code.sf.net/p/plplot/plplot
+[submodule "LibPLPLOT/plplot"]
+	path = LibPLPLOT/plplot
+	url = git://git.code.sf.net/p/plplot/plplot
