@@ -1,126 +1,126 @@
-//--------------------------------------------------------------------------
-// Copyright (C) 2004  Andrew Ross
-// Copyright (C) 2004  Alan W. Irwin
-//
-// This file is part of PLplot.
-//
-// PLplot is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Library General Public License as published by
-// the Free Software Foundation; version 2 of the License.
-//
-// PLplot is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public License
-// along with PLplot; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
-//--------------------------------------------------------------------------
-//
-//--------------------------------------------------------------------------
-// Implementation of PLplot example 12 in C++.
-//--------------------------------------------------------------------------
+#include "plstream.h"
 
-#include "plc++demos.h"
-
-#ifdef PL_USE_NAMESPACE
-using namespace std;
-#endif
-
-class x12 {
+class x08 {
 public:
-    x12( int, char ** );
-    void plfbox( PLFLT, PLFLT );
+	x08( int, char ** );
+	void cmap1_init( int );
+
 private:
-    plstream           *pls;
+	plstream			*pls;
 
-    static const PLFLT y0[];
-
-    static PLFLT       pos[], red[], green[], blue[];
+	static const int	XPTS;
+	static const int	YPTS;
+	static int			ROTZ;
+	static int			ROTY;
+	static const char	*title[];
 };
 
-const PLFLT x12::y0[10] = { 5., 15., 12., 24., 28., 30., 20., 8., 12., 3. };
+const int x08::XPTS = 10;
+const int x08::YPTS = 10;
 
-PLFLT       x12::      pos[] = { 0.0, 0.25, 0.5, 0.75, 1.0 };
-PLFLT       x12::      red[] = { 0.0, 0.25, 0.5, 1.0, 1.0 };
-PLFLT       x12::      green[] = { 1.0, 0.5, 0.5, 0.5, 1.0 };
-PLFLT       x12::      blue[] = { 1.0, 1.0, 0.5, 0.25, 0.0 };
+int x08::ROTZ = 60;
+int x08::ROTY = 30;
 
-x12::x12( int argc, char **argv )
+const char    *x08::  title[] = { "#frNIBBLER" };
+
+// cmap1_init1
+
+// Initializes color map 1 in HLS space.
+// Basic grayscale variation from half-dark (which makes more interesting
+// looking plot compared to dark) to light.
+// An interesting variation on this:
+// s[1] = 1.0
+
+void x08::cmap1_init( int gray )
 {
-    int  i;
-    char string[20];
+	PLFLT i[] = {0.0, 1.0};
+	PLFLT h[] = {2400, 0}; // blue -> green -> yellow -> red
+	PLFLT l[] = {0.6, 0.6};
+	PLFLT s[] = {0.8, 0.8};
+	bool rev[] = {false, false};
 
-    pls = new plstream();
+	pls->scmap1n( 256 );
+	pls->scmap1l( false, 2, i, h, l, s, rev );
+}
 
-    // Parse and process command line arguments.
+x08::x08( int argc, char **argv )
+{
+	int k;
+	const int LEVELS = 10;
 
-    pls->parseopts( &argc, argv, PL_PARSE_FULL );
+	PLFLT     *x = new PLFLT[ XPTS ];
+	PLFLT     *y = new PLFLT[ YPTS ];
+	PLFLT     **z;
+	PLFLT     *clevel = new PLFLT[LEVELS];
+	PLFLT     dx      = 2. / (PLFLT) ( XPTS - 1 );
+	PLFLT     dy      = 2. / (PLFLT) ( YPTS - 1 );
 
+	PLFLT     zmin = 0, zmax = 10;
 
-    // Initialize plplot.
-
+	pls = new plstream();
+	// Set device
+	pls->sdev("ntk");
+	//pls->sdev("xwin");
     pls->init();
 
+    pls->Alloc2dGrid( &z, XPTS, YPTS );
 
+	for (int y = 0; y < XPTS; y++) {
+		for (int x = 0; x < YPTS; x++) {
+			z[y][x] = 5;
+		}
+	}
+	z[3][3] = 6;
+	z[3][4] = 6;
+	z[3][5] = 6;
+	z[3][6] = 6;
+	for (int i = 0; i < XPTS; i++ ) {
+		x[i] = -1. + (PLFLT) i * dx;
+	}
+	for (int i = 0; i < YPTS; i++ ) {
+        y[i] = -1. + (PLFLT) i * dy;
+	}
+	for (int i = 0; i < LEVELS; i++ )
+		clevel[i] = 1;
 
-    pls->adv( 0 );
-    pls->vsta();
-    pls->wind( 1980.0, 1990.0, 0.0, 35.0 );
-    pls->box( "bc", 1.0, 0, "bcnv", 10.0, 0 );
-    pls->col0( 2 );
-    pls->lab( "Year", "Widget Sales (millions)", "#frPLplot Example 12" );
+	pls->lightsource( 1., 1., 1. );
 
-    pls->scmap1l( true, 5, pos, red, green, blue, NULL );
+	pls->adv( 0 );
+	pls->vpor( 0.0, 1.0, 0.0, 0.9 );
+	pls->wind( -1.0, 1.0, -0.9, 1.1 );
+	pls->col0( 3 );
+	pls->mtex( "t", 1.0, 0.5, 0.5, title[k] );
+	pls->col0( 1 );
 
-    for ( i = 0; i < 10; i++ )
-    {
-        //pls->col0(i + 1);
-        pls->col1( i / 9.0 );
-        pls->psty( 0 );
-        plfbox( ( 1980. + i ), y0[i] );
-        sprintf( string, "%.0f", y0[i] );
-        pls->ptex( ( 1980. + i + .5 ), ( y0[i] + 1. ), 1.0, 0.0, .5, string );
-        sprintf( string, "%d", 1980 + i );
-        pls->mtex( "b", 1.0, ( ( i + 1 ) * .1 - .05 ), 0.5, string );
-    }
-    //pls->end();
-    delete pls;
+	pls->w3d( 1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0, zmin, zmax, ROTZ, ROTY);
+
+	pls->box3( "bnstu", "x axis", 0.0, 0,
+			   "bnstu", "y axis", 0.0, 0,
+			   "bcdmnstuv", "z axis", 0.0, 0 );
+
+	pls->col0( 2 );
+
+	cmap1_init( 1 );
+//	pls->surf3d( x, y, z, XPTS, YPTS, MAG_COLOR, NULL, 0 );
+	pls->surf3d( x, y, z, XPTS, YPTS, MAG_COLOR | FACETED, NULL, 0 );
+//	pls->surf3d( x, y, z, XPTS, YPTS, 0, NULL, 0 );
+	/*
+	pls->surf3d( x, y, z, XPTS, YPTS, MAG_COLOR, NULL, 0 );
+	pls->surf3d( x, y, z, XPTS, YPTS, MAG_COLOR | FACETED, NULL, 0 );
+	pls->surf3d( x, y, z, XPTS, YPTS, MAG_COLOR | SURF_CONT | BASE_CONT, clevel, LEVELS );
+	*/
+
+	pls->Free2dGrid( z, XPTS, YPTS );
+
+	delete[] x;
+	delete[] y;
+	delete[] clevel;
+	delete pls;
 }
-
-void x12::plfbox( PLFLT x0, PLFLT y0 )
-{
-    PLFLT *x = new PLFLT[4];
-    PLFLT *y = new PLFLT[4];
-
-    x[0] = x0;
-    y[0] = 0.;
-    x[1] = x0;
-    y[1] = y0;
-    x[2] = x0 + 1.;
-    y[2] = y0;
-    x[3] = x0 + 1.;
-    y[3] = 0.;
-    pls->fill( 4, x, y );
-    pls->col0( 1 );
-    pls->lsty( 1 );
-    pls->line( 4, x, y );
-
-    delete[] x;
-    delete[] y;
-}
-
-
 
 int main( int argc, char **argv )
 {
-    x12 *x = new x12( argc, argv );
+	x08 *x = new x08( argc, argv );
 
-    delete x;
+	delete x;
 }
-
-
-//--------------------------------------------------------------------------
-//                              End of x12.cc
-//--------------------------------------------------------------------------

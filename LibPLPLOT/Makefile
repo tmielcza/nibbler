@@ -6,15 +6,18 @@
 #    By: tmielcza <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/19 20:57:11 by tmielcza          #+#    #+#              #
-#    Updated: 2016/03/21 19:23:09 by tmielcza         ###   ########.fr        #
+#    Updated: 2016/04/28 20:43:21 by tmielcza         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
+
+PLPLOT_INSTALL_DIR=$(PWD)/plplot_install
+LIBPLPLOT = $(PLPLOT_INSTALL_DIR)/lib/libplplotcxx.dylib
 
 includedir =	include/ \
 				plplot/bindings/c++ \
 				plplot/include
 
-libdir =		plplot/bindings/c++
+libdir =		$(PLPLOT_INSTALL_DIR)/lib
 
 libs =			plplotcxx
 
@@ -36,8 +39,14 @@ CXXFLAGS = $(FLAGS) $(INCLUDE)
 PWD=$(shell pwd)
 
 SUBMODULES = plplot/.git
-LIBPLPLOT = plplot/bindings/c++/libplplotcxx.dylib
 BUILDLIBS = $(LIBPLPLOT)
+
+CMAKE_VAR = -DCMAKE_INSTALL_PREFIX=$(PLPLOT_INSTALL_DIR)
+CMAKE_VAR += -DDEFAULT_NO_CAIRO_DEVICES=ON
+CMAKE_VAR += -DBUILD_DOC=OFF
+CMAKE_VAR += -DBUILD_DOX_DOC=OFF
+CMAKE_VAR += -DBUILD_TEST=OFF
+CMAKE_VAR += -DBUILD_SHARED_LIBS=ON
 
 vpath %.cpp $(SRCDIR)
 
@@ -73,14 +82,14 @@ $(NAME) : $(BUILDLIBS) $(OBJ)
 #Sed la merd
 	@echo "$@ : Done!"
 
-test : $(BUILDLIBS)
-	@$(CXX) $(CPPFLAGS) -o $@ test.cpp $(INCLUDE) $(LIBS) -rpath $(PWD)"/plplot/bindings/c++"
+test : $(BUILDLIBS) test.cpp
+	@$(CXX) $(CPPFLAGS) -o $@ test.cpp $(INCLUDE) $(LIBS) -rpath $(PLPLOT_INSTALL_DIR)"/lib"
 
 $(SUBMODULES) :
 	@git submodule update --init --recursive
 
 $(LIBPLPLOT) : plplot/.git
-	@cd plplot && cmake . && make
+	@cd plplot && cmake $(CMAKE_VAR) . && make && make install
 
 clean :
 	@rm -rf $(OBJ)
