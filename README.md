@@ -1,7 +1,7 @@
 # nibbler
 
 ## Overview
-A little 'Snake' clone. Made with SMFL.
+A little 'Snake' clone. Made with SMFL. OS X only.
 
 ## Screenshots
 ![alt tag](https://github.com/tmielcza/nibbler/blob/master/screenshots/nibbler4.gif)
